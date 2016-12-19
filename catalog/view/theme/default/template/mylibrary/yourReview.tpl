@@ -12,16 +12,16 @@
 <h3>My Library</h3>
 <a href="<?php echo $createnewshelf; ?>"class="btn btn-default btn-lg" id="button-newshelf" >Create new Shelf</a> <br><br>
 <div class="list-group">
-<a href = "<?php echo $books_on_library; ?>" class = "list-group-item"> My Books on Library </a>
-<a href = "<?php echo $purchased_books; ?>" class = "list-group-item"> Purchased Books </a>
-<a href = "<?php echo $reviewed_books; ?>" class = "list-group-item"> Reviewed Books </a>
-<a href = "<?php echo $wishlist; ?> " class = "list-group-item"> Favourites </a>
+<a href = "<?php echo $books_in_library; ?>" class = "list-group-item"> My Books </a>
+<a href = "<?php echo $purchased_books; ?>" class = "list-group-item"> Purchased  </a>
+<a href = "<?php echo $reviewed_books; ?>" class = "list-group-item"> Reviewed  </a>
+<a href = "<?php echo $favorite_books; ?> " class = "list-group-item"> Favourites </a>
 </div>
 </aside>
 
 <div id="content" class="col-sm-9">
 
-<h2><?php echo $text_write; ?></h2>
+<h2>Your Review</h2>
 <div class="bookdetails">
                     <img class ="img-responsive" src="<?php echo $product_info['image'];?>"style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"><br>
                     <div class="caption-full">
@@ -37,8 +37,19 @@
 
  
 </div>
+
+<form class="form-horizontal" id="form-review">
+   <div class="form-group required">
+        <div class="col-sm-12">
+            <label ><?php echo $entry_review; ?></label>
+             <textarea name="text" rows="5" id="input-review" class="form-control"><?php echo $yourReview['text']; ?></textarea>
+                    <!-- <div class="help-block"><?php echo $text_note; ?></div> -->
+        </div>
+  </div>
+</form>
 </div>
-<div id = "your_review" class="col-sm-offset-3"><h3>Your Review:<?php echo $yourReview['text']; ?></h3></div>
+
+<!-- <div id = "your_review" class="col-sm-offset-3"><h3>Your Review:<?php echo $yourReview['text']; ?></h3></div> -->
 </div>
 </div>
 <?php echo $footer; ?>

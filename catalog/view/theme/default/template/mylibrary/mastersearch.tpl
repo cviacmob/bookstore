@@ -12,10 +12,10 @@
 <h3>My Library</h3>
 <a href="<?php echo $createnewshelf; ?>"class="btn btn-default btn-lg" id="button-newshelf" >Create new Shelf</a> <br><br>
 <div class="list-group">
-<a href = "<?php echo $books_on_library; ?>" class = "list-group-item"> My Books on Library </a>
-<a href = "<?php echo $purchased_books; ?>" button type = "button" class = "list-group-item"> Purchased Books </a> </button>
-<a href = " " class = "list-group-item"> Reviewed Books </a>
-<a href = "<?php echo $wishlist; ?>" class = "list-group-item"> Favourites </a>
+<a href = "<?php echo $books_in_library; ?>" class = "list-group-item"> My Books </a>
+<a href = "<?php echo $purchased_books; ?>" button type = "button" class = "list-group-item"> Purchased </a> </button>
+<a href = "<?php echo $reviewed_books; ?> " class = "list-group-item"> Reviewed </a>
+<a href = "<?php echo $favorite_books; ?>" class = "list-group-item"> Favourites </a>
 </div>
 </aside>
 
@@ -37,6 +37,8 @@
         </div>
    </div>
  </form>
+
+ 
 
  <div class="bookdetails">
                     <img class ="img-responsive" src="<?php echo $bookresult['image'];?>"style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"><br>

@@ -3,21 +3,40 @@ class ModelMylibraryMylibrary extends Model {
 
  public function addToMylibrary($isbn)
  {
-    $this->db->query("DELETE FROM mylibrary WHERE customer_id = '" . (int)$this->customer->getId() . "' AND isbn = '" . $isbn. "'");
     
-    $this->db->query("INSERT INTO mylibrary SET customer_id = '" . (int)$this->customer->getId() . "', isbn = '" . $isbn. "',date_added = NOW()");
+	$query=$this->db->query("SELECT*FROM mylibrary WHERE isbn ='" . $isbn. "' AND customer_id = '" . (int)$this->customer->getId() . "'");
 
-   return true;
+	if($query->num_rows)
+	{
+		return true;
+	}
+
+	else
+	{
+		$this->db->query("INSERT INTO mylibrary SET customer_id = '" . (int)$this->customer->getId() . "', isbn = '" . $isbn. "',date_added = NOW()");
+	} 
+    
+	 
+  // return true;
+
+   
       
  }
 
  public function addToProduct($book)
  {
-     
+     $query=$this->db->query("SELECT*FROM oc_product WHERE model ='" . $book['isbn']. "' ");
 
-    $this->db->query("INSERT INTO oc_product SET image = '" . $book['image']. "', author = '" . $book['author']. "', publisher = '" . $book['publisher']. "', cover_type = '" . $book['cover_type']. "', no_of_pages = '" . $book['no_of_pages']. "', status = '0', quantity = '1',stock_status_id = '6', model = '" . $book['isbn']. "'");
-    
-    $product_id = (int)$this->db->getLastId();
+	 if($query->num_rows)
+	 {
+		 $this->db->query("UPDATE oc_product SET quantity = quantity + 1 WHERE model='". $book['isbn']. "'");
+	 }
+
+	 else
+	 {
+		 $this->db->query("INSERT INTO oc_product SET image = '" . $book['image']. "', author = '" . $book['author']. "', publisher = '" . $book['publisher']. "', cover_type = '" . $book['cover_type']. "', no_of_pages = '" . $book['no_of_pages']. "',sell_price ='" . $this->request->post['sell_price']. "', share_price ='" . $this->request->post['share_price']. "',lend_price ='" .$this->request->post['lend_price']. "', min_bid_price ='" .$this->request->post['min_bid_price']. "',max_bid_price ='" .$this->request->post['max_bid_price']. "', status = '0', quantity = '1',stock_status_id = '6', model = '" . $book['isbn']. "'"); 
+
+		 $product_id = (int)$this->db->getLastId();
 
     $this->db->query("INSERT INTO oc_product_description SET product_id = '" .$product_id. "', language_id = '1', name = '". $book['title']."', meta_title = '" . $book['title']. "'");
 
@@ -25,7 +44,11 @@ class ModelMylibraryMylibrary extends Model {
 
     $this->db->query("INSERT INTO oc_product_to_store SET product_id = '" .$product_id. "',store_id = '". (int)$this->config->get('config_store_id') ."'");
 
-   return true;
+  // return true;		
+	 }
+
+	 
+    
       
  }
 
@@ -74,13 +97,13 @@ class ModelMylibraryMylibrary extends Model {
 
      foreach($query->rows as $result)
 	 {
-		 $book_data[$result['product_id']] = $this->getPurchasedBook($result['product_id']);
+		 $book_data[$result['product_id']] = $this->getCustomerBook($result['product_id']);
 	 }
      
 	  return $book_data;
  }
  
- public function getPurchasedBook($product_id)
+ public function getCustomerBook($product_id)
  {
 
 	 $query = $this->db->query("SELECT pd.name, p.image, p.product_id FROM oc_product_description pd INNER JOIN oc_product p ON pd.product_id = p.product_id WHERE pd.product_id = '" .$product_id. "'");
@@ -108,7 +131,7 @@ class ModelMylibraryMylibrary extends Model {
 
      foreach($query->rows as $result)
 	 {
-		 $book_data[$result['product_id']] = $this->getPurchasedBook($result['product_id']);
+		 $book_data[$result['product_id']] = $this->getCustomerBook($result['product_id']);
 	 }
      
 	  return $book_data;
@@ -154,5 +177,31 @@ class ModelMylibraryMylibrary extends Model {
 		}
  
  }
+
+ public function addToFavorite($product_id)
+ {
+	 $this->db->query("DELETE FROM " . DB_PREFIX . "customer_favorite WHERE customer_id = '" . (int)$this->customer->getId() . "' AND product_id = '" . (int)$product_id . "'");
+
+	 $this->db->query("INSERT INTO " . DB_PREFIX . "customer_favorite SET customer_id = '" . (int)$this->customer->getId() . "', product_id = '" . (int)$product_id . "', date_added = NOW()");
+ }
+
+ public function deleteFavorite($product_id) 
+ {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_favorite WHERE customer_id = '" . (int)$this->customer->getId() . "' AND product_id = '" . (int)$product_id . "'");
+ }
+
+public function getFavorite() 
+{
+        $query = $this->db->query("SELECT product_id FROM " . DB_PREFIX . "customer_favorite WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+
+		$book_data = array();
+		foreach($query->rows as $result)
+	 	{
+		 	$book_data[$result['product_id']] = $this->getCustomerBook($result['product_id']);
+	 	}
+     
+	  	return $book_data;
+}
+
 
 }

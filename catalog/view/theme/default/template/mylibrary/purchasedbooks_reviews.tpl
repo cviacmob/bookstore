@@ -12,10 +12,10 @@
 <h3>My Library</h3>
 <a href="<?php echo $createnewshelf; ?>"class="btn btn-default btn-lg" id="button-newshelf" >Create new Shelf</a> <br><br>
 <div class="list-group">
-<a href = "<?php echo $books_on_library; ?>" class = "list-group-item"> My Books on Library </a>
-<a href = "<?php echo $purchased_books; ?>" class = "list-group-item"> Purchased Books </a>
-<a href = "<?php echo $reviewed_books; ?>" class = "list-group-item"> Reviewed Books </a>
-<a href = "<?php echo $wishlist; ?> " class = "list-group-item"> Favourites </a>
+<a href = "<?php echo $books_in_library; ?>" class = "list-group-item"> My Books </a>
+<a href = "<?php echo $purchased_books; ?>" class = "list-group-item"> Purchased  </a>
+<a href = "<?php echo $reviewed_books; ?>" class = "list-group-item"> Reviewed  </a>
+<a href = "<?php echo $favorite_books; ?> " class = "list-group-item"> Favourites </a>
 </div>
 </aside>
 
@@ -27,10 +27,10 @@
                     <div class="caption-full">
                         <h3 class="pull-right"></h3>
                         <h2><?php echo $product_info['name'];?></h2>
-                        <?php echo $product_info['product_id'];?>
+                        
                         
 
-                <!--         <h3><span>by </span><?php echo $bookresult['author'];?></h3>    -->
+                <!--   <h3><span>by </span><?php echo $bookresult['author'];?></h3>    -->
                         <h3>ISBN:<?php echo $product_info['model'];?></h3>
                 <!--         <h3>Publisher:<?php echo $bookresult['publisher'];?></h3>    -->
                <!--         <h3><?php echo $bookresult['cover_type'];?>:<?php echo $bookresult['no_of_pages'];?><span>pages</span><h3><br>    -->
@@ -40,7 +40,7 @@
 </div>
  <form class="form-horizontal" id="form-review" action ="<?php echo $write_review.$product_info['product_id']; ?>" method="post">
                 <div id="review"></div>
-                <h2><?php echo $text_write; ?></h2>
+                <!--<h2><?php echo $text_write; ?></h2>-->
                
                 <div class="form-group required">
                   <div class="col-sm-12">
