@@ -18,7 +18,7 @@ define('DIR_LOGS', 'C:/wamp64/www/bookstore/system/storage/logs/');
 define('DIR_MODIFICATION', 'C:/wamp64/www/bookstore/system/storage/modification/');
 define('DIR_UPLOAD', 'C:/wamp64/www/bookstore/system/storage/upload/');
 
-// DB credentials
+// DB 
 define('DB_DRIVER', 'mysqli');
 define('DB_HOSTNAME', 'localhost');
 define('DB_USERNAME', 'root');
