@@ -160,6 +160,178 @@ return false;
      $this->db->query("INSERT INTO oc_readingclub_post SET  group_id = '". $groupid ."' , posted_by = 'customer' , image = 'image/books/book.jpg' , customer_id = '" . (int)$this->customer->getId() . "', message = '" . $this->request->post['text_name']. "' ");
        }
 
-   
+ 
+
+ public function getAuthorFromMaster($author_name) 
+ {
+ 
+		$query = $this->db->query("SELECT * FROM  authors_master WHERE author_name = '". $author_name . "'" );
+		
+		if ($query->num_rows) {
+			return array(
+				'author_id'                => $query->row['author_id'],
+				'author_name'              => $query->row['author_name'],
+				'author_image'             => $query->row['author_image'],
+				'author_description'       => $query->row['author_description'],
+				'like_count'               => $query->row['like_count']
+				 
+			);
+		}
+		else {
+			return false;
+		}
+ 
+ }
+
+ public function addToLikedauthor($author_id)
+  {
+      $this->db->query("DELETE FROM liked_author WHERE customer_id = '" . (int)$this->customer->getId() . "'AND author_id = '" . $author_id. "'");
+
+    $this->db->query("INSERT INTO  liked_author SET customer_id = '" . (int)$this->customer->getId() . "', author_id = '" . $author_id. "',created_at = NOW()");
+    
+  }
+
+  public function getAuthor($author_id) {
+
+       $query = $this->db->query("SELECT * FROM authors_master WHERE author_id = '".$author_id."'");
+
+          if($query->num_rows) {
+		   	  return array(
+
+                    'author_id'              => $query->row['author_id'],
+                    'author_name'            => $query->row['author_name'],
+			        'author_image'            => $query->row['author_image']
+					
+
+						);
+			  }
+		  
+	else {
+return false;
+	}
+  
+}
+
+public function getAuthors($customer_id)
+ {
+
+     $author_id = array();
+     $query = $this->db->query("SELECT author_id from liked_author WHERE customer_id = '". (int)$this->customer->getId() ."'");
+
+     foreach($query->rows as $result)
+     {
+         $author_id[$result['author_id']] = $this->getAuthor($result['author_id']);
+     }
+
+     return $author_id;
+ }
+
+
+ public function addToLikedpublisher($publisher_id)
+  {
+      $this->db->query("DELETE FROM liked_publisher WHERE customer_id = '" . (int)$this->customer->getId() . "'AND publisher_id = '" . $publisher_id. "'");
+
+    $this->db->query("INSERT INTO  liked_publisher SET customer_id = '" . (int)$this->customer->getId() . "', publisher_id = '" . $publisher_id. "',created_at = NOW()");
+    
+  }
+
+  public function getPublisher($publisher_id) {
+
+       $query = $this->db->query("SELECT * FROM publishers_master WHERE publisher_id = '".$publisher_id."'");
+
+          if($query->num_rows) {
+		   	  return array(
+
+                    'publisher_id'              => $query->row['publisher_id'],
+                    'publisher_name'            => $query->row['publisher_name'],
+			        'publisher_image'           => $query->row['publisher_image'],
+                    'publisher_description'     => $query->row['publisher_description'],
+					'publisher_address'         => $query->row['publisher_address'],
+                    'like_count'                => $query->row['like_count']
+
+						);
+			  }
+		  
+	else {
+return false;
+	}
+  
+}
+
+public function getPublishers($customer_id)
+ {
+
+     $publisher_id = array();
+     $query = $this->db->query("SELECT publisher_id from liked_publisher WHERE customer_id = '". (int)$this->customer->getId() ."'");
+
+     foreach($query->rows as $result)
+     {
+         $publisher_id[$result['publisher_id']] = $this->getPublisher($result['publisher_id']);
+     }
+
+     return $publisher_id;
+ }
+
+ public function getPublisherFromMaster($publisher_name) 
+ {
+ 
+		$query = $this->db->query("SELECT * FROM  publishers_master WHERE publisher_name = '". $publisher_name . "'" );
+		
+		if ($query->num_rows) {
+			return array(
+
+				    'publisher_id'              => $query->row['publisher_id'],
+                    'publisher_name'            => $query->row['publisher_name'],
+			        'publisher_image'           => $query->row['publisher_image'],
+                    'publisher_description'     => $query->row['publisher_description'],
+					'publisher_address'         => $query->row['publisher_address'],
+                    'like_count'                => $query->row['like_count']
+
+				 
+			);
+		}
+		else {
+			return false;
+		}
+ 
+ }
+
+public function getShared() {
+
+      $group_data = array();
+
+       $query = $this->db->query("SELECT isbn FROM my where enable= 'true'");
+
+       foreach($query->rows as $result)
+      {
+         $group_data[$result['shared_id']] = $this->getShare($result['shared_id']);
+      }
+
+      return $group_data;
+ 
+}
+
+ public function getShare($shared_id)
+ {
+    $query = $this->db->query("SELECT*FROM shared_books WHERE shared_id = '" .$shared_id. "'");
+
+    if ($query->num_rows) {
+            return array(
+
+                'shared_id'                      => $query->row['shared_id'],
+                'shared_book_name'               => $query->row['shared_book_name'],
+                'shared_book_image'              => $query->row['shared_book_image'],
+                'shared_book_description'        => $query->row['shared_book_description']
+                  
+            );
+        }
+        else {
+            return false;
+             }
+     
+ }     
+
+
+
 }
 

@@ -10,7 +10,7 @@
 
 <aside id="column_left"class="col-sm-3 hidden-xs">
 <h2>Community</h2>   
-<div class="tabbable-panel">
+<div class="tabbable-panel-left">
 <div class="tabbable-line">
 <img src="<?php echo $group_info['group_image'];?>" height="203" width ="240" />
 <!--<h3>Tamil Readers</h3>-->
@@ -25,19 +25,25 @@
 <div id="text">
 <div class="tabbable-panel">
 <div class="tabbable-line">    
-<img class="img-circle"  alt="" width="50" height="50" src="<?php echo $post['customer_image']; ?>" />      
- <input type="text" class="" data-toggle="modal" placeholder="Share something..."data-target="#myPost">
+
+<img class="img-circle"  alt="" width="50" height="50" src="<?php echo $post['customer_image']; ?>" />    
+&nbsp 
+ <input type="text" class="text_share" data-toggle="modal" placeholder="<?php echo $text_sharesomething;?>"data-target="#myPost">
 <i class="fa fa-camera" aria-hidden="true"></i> 
+
+
 </div>
+
 </div>  
+
 &nbsp 
 </div>
 
 
-<div class="tabbable-panel">
+<div class="tabbable-panel-right">
 <div class="tabbable-line">
     <?php foreach($post_info as $post) {?>
-<img class="img-circle"  alt="" width="50" height="50" src="<?php echo $post['customer_image']; ?>" />   
+<img class="img-circle"   alt="" width="50" height="50" src="<?php echo $post['customer_image']; ?>" />   
 <div class = "head">
 <h4><?php echo $first_name; ?>   <?php echo $last_name; ?>    <i class="fa fa-caret-right"  aria-hidden="true"></i>   <?php echo $group_info['group_name']; ?></h4>
 </div>
@@ -48,18 +54,18 @@
 <br>
 <br>
 
-<i class="fa fa-thumbs-up" style="font-size: 2.00em;"  aria-hidden="true"></i>
-<i class="fa fa-share-alt" style="margin-left: 600px; font-size: 2.00em;" aria-hidden="true"></i>
+<i class="fa fa-thumbs-up" style="font-size: 2.00em;"  aria-hidden="true"><i class="fa fa-share-alt" style="margin-left: 373px; font-size: 1em;" aria-hidden="true"></i></i>
+<!--<i class="fa fa-share-alt" style="margin-left: 397px; font-size: 2.00em;" aria-hidden="true"></i>-->
+<br>
+<br>
 
 
-
-
-
+<?php } ?>
 
 </div>    
 <br>
 <br>
-<?php } ?>
+
 </div>
 
 
@@ -77,11 +83,11 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <img class="img-circle"  alt="" width="50" height="50" src="<?php echo $post_info['customer_image']; ?>" />   
+          <img class="img-circle"  alt="" width="50" height="50" src="<?php echo $post['customer_image']; ?>" />   
          <div class = "head">
         <h4><?php echo $first_name; ?>   <?php echo $last_name; ?>    <i class="fa fa-caret-right"  aria-hidden="true"></i>   <?php echo $group_info['group_name']; ?></h4>
         <br>
-       <textarea class = "sharesomething" rows="10" cols="80" name="text_name" placeholder="Share something..." ></textarea>
+       <textarea class = "sharesomething" rows="10" cols="80" name="text_name" placeholder="<?php echo $text_sharesomething;?>" ></textarea>
         <br>
         <br>
         <div class="">
@@ -96,9 +102,9 @@
            
         
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $button_cancel;?></button>
      <!--      <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>-->
-         <input id="post" type="submit" class="btn btn-default"  value="Done">
+         <button id = "done" type="submit" class="btn btn-default" ><?php echo $button_done;?></button>
         </div>
      </form>
       </div>

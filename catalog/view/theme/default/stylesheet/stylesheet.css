@@ -12,6 +12,7 @@ h1, h2, h3, h4, h5, h6 {
 /* default font size */
 .fa {
 	font-size: 14px;
+	cursor: pointer;
 }
 /* Override the bootstrap defaults */
 h1 {
@@ -747,27 +748,6 @@ h2.price {
     background-image: none;
     background-color: #df5c39;
 }
-
-caption-full{
-	 color:#df5c39;
-} 
-
-
-
-.addbooks{
-   width: 189.38px;
-   height: 296px;
-   text-align: center;
-
-}
-.btn-like{
-	width:50%;
-	border-radius: 0px;
-}
-.btn-width{
-	width:100%;
-}
-
 .addbooks{
     width: 189.38px;
     height: 210px;
@@ -778,7 +758,7 @@ caption-full{
 .tabbable-panel {
   border:1px solid #eee;
   padding: 10px;
-
+ 
 }
 
 /* Default mode */
@@ -832,7 +812,7 @@ caption-full{
 .portlet .tabbable-line > .tab-content {
   padding-bottom: 0;
 }
-.join {
+.myBtn {
 	font-weight: 300;
     font-size: 15px;
     background-color: inherit;
@@ -854,7 +834,7 @@ caption-full{
 .share{
 	font-size: 2.73em;
 	cursor: pointer;
-	margin-left:600px;
+	margin-left:397px;
 	margin-top:10px;
 }
 .sharesomething {
@@ -863,4 +843,13 @@ caption-full{
     border-top: 0px;
     border-left: 0px;
     border-right: 0px;
+}
+.text_share{
+	width:340px;
+	height:50px;
+}
+.tabbable-panel-right{
+	border:1px solid #eee;
+    padding: 10px;
+	width:440px;
 }
