@@ -172,7 +172,13 @@ return false;
 				'author_id'                => $query->row['author_id'],
 				'author_name'              => $query->row['author_name'],
 				'author_image'             => $query->row['author_image'],
-				'author_description'       => $query->row['author_description'],
+				'author_dob'               => $query->row['author_dob'],
+                'author_occupation'        => $query->row['author_occupation'],  
+                'author_nationality'       => $query->row['author_nationality'],  
+                'author_education'         => $query->row['author_education'],
+                'author_awards'            => $query->row['author_awards'],
+                'author_references'        => $query->row['author_references'],
+                'author_external_links'    => $query->row['author_external_links'], 
 				'like_count'               => $query->row['like_count']
 				 
 			);
@@ -198,9 +204,17 @@ return false;
           if($query->num_rows) {
 		   	  return array(
 
-                    'author_id'              => $query->row['author_id'],
-                    'author_name'            => $query->row['author_name'],
-			        'author_image'            => $query->row['author_image']
+                'author_id'                => $query->row['author_id'],
+				'author_name'              => $query->row['author_name'],
+				'author_image'             => $query->row['author_image'],
+				'author_dob'               => $query->row['author_dob'],
+                'author_occupation'        => $query->row['author_occupation'],  
+                'author_nationality'       => $query->row['author_nationality'],  
+                'author_education'         => $query->row['author_education'],
+                'author_awards'            => $query->row['author_awards'],
+                'author_references'        => $query->row['author_references'],
+                'author_external_links'    => $query->row['author_external_links'], 
+				'like_count'               => $query->row['like_count']
 					
 
 						);
@@ -296,42 +310,41 @@ public function getPublishers($customer_id)
  
  }
 
-public function getShared() {
 
-      $group_data = array();
-
-       $query = $this->db->query("SELECT isbn FROM my where enable= 'true'");
-
-       foreach($query->rows as $result)
-      {
-         $group_data[$result['shared_id']] = $this->getShare($result['shared_id']);
-      }
-
-      return $group_data;
- 
-}
-
- public function getShare($shared_id)
+ public function getSharedbooks()
  {
-    $query = $this->db->query("SELECT*FROM shared_books WHERE shared_id = '" .$shared_id. "'");
+     $query = $this->db->query("SELECT isbn FROM shared_books");
 
-    if ($query->num_rows) {
-            return array(
-
-                'shared_id'                      => $query->row['shared_id'],
-                'shared_book_name'               => $query->row['shared_book_name'],
-                'shared_book_image'              => $query->row['shared_book_image'],
-                'shared_book_description'        => $query->row['shared_book_description']
-                  
-            );
-        }
-        else {
-            return false;
-             }
+     $book_data = array();
+		foreach($query->rows as $result)
+	 	{
+		 	$book_data[$result['isbn']] = $this->model_mylibrary_mylibrary->getBook($result['isbn']);
+	 	}
      
- }     
+	  	return $book_data;
+ }  
+
+ public function requestedbooks($isbn){
+
+       $query = $this->db->query("DELETE FROM requested_books WHERE customer_id = '" . (int)$this->customer->getId() . "'AND isbn = '" . $isbn. "'");
+      
+      $query = $this->db->query("INSERT INTO requested_books SET customer_id = '" . (int)$this->customer->getId() . "', isbn = $isbn , date_added = NOW()");
 
 
+ }  
+
+ public function getrequestedbooks(){
+
+     $book_data = array();
+
+     $query = $this->db->query("SELECT isbn FROM requested_books WHERE customer_id = '" . (int)$this->customer->getId() . "'" );
+
+     foreach($query->rows as $result) {
+
+         $book_data[$result['isbn']]=$this->model_mylibrary_mylibrary->getBook($result['isbn']);
+     }
+     return $book_data;
+ }
 
 }
 

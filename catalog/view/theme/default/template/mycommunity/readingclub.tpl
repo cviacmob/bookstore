@@ -77,7 +77,7 @@
 
 <div class="tab-pane" id="tab_default_3">
 <div class="row">
-<button type="button" style="float:left" data-toggle="modal" data-target="#myModal" class="addbooks" value="add books"/><?php echo $button_create_club;?> <i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+<button type="button" style="float:left" data-toggle="modal" data-target="#myModal" class="add" value="add books"/><?php echo $button_create_club;?> <i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
 <?php foreach($clubs as $club) {?>
 <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
 <div class="product-thumb transition ">

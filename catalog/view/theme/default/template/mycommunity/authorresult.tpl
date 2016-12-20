@@ -33,7 +33,7 @@
  </form>
 
 <div class="image">
-<a href= "<?php echo $author.$authorresult['author_id'];?>"><img class="img-responsive" src="<?php echo $authorresult['author_image'];?>" style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"> </a>
+<a href= "<?php echo $author.$authorresult['author_id'];?>"><img class="img-responsive" src="<?php echo $authorresult['author_image'];?>" style="height:323px;width:323px;" align="left" alt="" vspace="20" hspace="20"> </a>
 </div>
 
 <!--<img class ="img-responsive" src="<?php echo $authorresult['author_image'];?>"style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"><br>-->

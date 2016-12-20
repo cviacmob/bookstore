@@ -203,5 +203,10 @@ public function getFavorite()
 	  	return $book_data;
 }
 
+public function shared_books($isbn)
+{
+	 $query = $this->db->query("INSERT INTO shared_books SET customer_id = '" . (int)$this->customer->getId() . "', isbn = '" . $isbn. "',date_added = NOW()");
+}
+
 
 }

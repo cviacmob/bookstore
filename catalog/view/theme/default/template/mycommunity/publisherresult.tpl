@@ -35,15 +35,16 @@
 <div class="image">
 <a href= "<?php echo $publisher.$publisherresult['publisher_id'];?>"><img class="img-responsive" src="<?php echo $publisherresult['publisher_image'];?>" style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"> </a>
 </div>
+<br>
 
-<!--<img class ="img-responsive" src="<?php echo $authorresult['author_image'];?>"style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"><br>-->
 <h4><?php echo $publisherresult['publisher_name'];?></h4>
+
 
 <form action="<?php echo $add_to_liked_publisher;?>" method="post" >
 
 <input type="hidden" name="publisher_id" value="<?php echo $publisherresult['publisher_id']; ?>">
 
-<button type = "submit "id = "myBtn"> LIKE </button>
+<button type = "submit "id = "myBtn"> LIKE  </button>
 
 </form>
 

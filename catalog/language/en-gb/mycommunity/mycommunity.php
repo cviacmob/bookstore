@@ -20,6 +20,8 @@ $_['text_publisher_info_page']     = 'About the Publisher';
 $_['text_available_books']         = 'Available Books';
 $_['text_requested_books']         = 'Requested Books';
 $_['text_shared_books']            = 'Shared Books';
+$_['text_reading_club']            = 'Reading Club';
+$_['text_publishers']              = 'Publishers';
 
 //Button
 $_['button_reading_club']      = 'Reading Club';
@@ -30,6 +32,9 @@ $_['button_create_club']       = 'Create a Club';
 $_['button_cancel']            = 'Cancel';
 $_['button_done']              = 'Done';
 $_['button_join']              = 'JOIN';
+$_['button_share_with_me']     = 'SHARE WITH ME';
+$_['button_shared']            = 'SHARED';
+
 
 $_['text_authors']           = 'Authors';
 $_['text_authors']           = 'Authors';

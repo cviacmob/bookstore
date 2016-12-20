@@ -40,7 +40,7 @@
 <a href= "<?php echo $author_image.$author['author_id'];?>"><img class="img-responsive" src="<?php echo $author['author_image']; ?>" style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"> </a>
 </div>
 <div class="caption">
-<h4><a href="<?php echo $author['author_name']; ?>"></a></h4>
+<h4><?php echo $author['author_name']; ?></h4>
 
 
 </div>

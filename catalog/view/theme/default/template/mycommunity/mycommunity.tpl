@@ -36,47 +36,58 @@
 <div class="tab-content">
 <div class="tab-pane active" id="tab_default_1">
 <div class="row">
-<?php foreach($groups as $group) {?>
-<div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-<div class="product-thumb transition ">
-<h4><?php echo $group['group_name']; ?></h4>  
-<div class="image">
-<a href= "<?php echo $recommended_image.$group['group_id'];?>"><img class="img-responsive" src="<?php echo $group['group_image']; ?>"/> </a>
-</div><br>
+<?php foreach($shared_books as $shared_book) {?>
+ <div class="product-layout col-lg-4 col-md-3 col-sm-6 col-xs-12 " style="float:left" margin-left="16px">
+	<div class="product-thumb transition ">
+		<div class="image">
+			<img class="img-responsive" src="<?php echo $shared_book['image']; ?>">
+		</div>
+<!--<img class="img-responsive" src="<?php echo $book['image']; ?>">-->
+	<div class="caption">
+		<h4><a href=""><?php echo $shared_book['title']; ?></a></h4> 
+		<p>by <a href=""><?php echo $shared_book['author']; ?></a></p>
+  
+	</div>
 
+<br>
 
-<form action = "<?php echo $addmember; ?>"  method ="post">
+<form action = "<?php echo $share_with_me.$shared_book['isbn']; ?>"  method ="post">
             
-<input type="hidden" name="groupid" value="<?php echo $group['group_id']; ?>">
-<input class="myBtn" type="submit"   value="<?php echo $button_join;?>">
-</form>   
-          
-<!--<a href="<?php echo $join; ?>"</a><button type="button" class="join" value="join" onclick="mycommunity.join('<?php echo $mycommunity['group_id']; ?>');">JOIN</button>-->
+<input type="hidden" name="isbn" value="<?php echo $shared_book['isbn']; ?>">
+
+ <!--<button id = "myBtn" type="submit" class="sharewithme" ><?php echo $button_share_with_me;?></button>-->
+<button type="submit" class="sh" ><?php echo $button_share_with_me;?> </button></a>
+
+</form>  
+
 
 </div>
 </div>
 <?php } ?>
+</div>
 </div> 
-</div> 
+
+
+
 
 
 <div class="tab-pane" id="tab_default_2">
 <div class="row">
-<?php foreach($members as $member) {?>
+<?php foreach($books as $book) {?>
 <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-
-<h4><?php echo $member['group_name']; ?></h4>  
-<div class="image">
- <input type = "image" img class="img-responsive" src="<?php echo $member['group_image']; ?>"/>
+ <div class="product-thumb transition ">
+  <div class="image">
+ <input type = "image" img class="img-responsive" src="<?php echo $book['image']; ?>"/>
 </div><br>
+	<h4><a href=""><?php echo $book['title']; ?></a></h4> 
+	<p>by <a href=""><?php echo $book['author']; ?></a></p>
 
-
+  <button type="submit" class="sh" ><?php echo $button_shared;?> </button></a>
+  </div>
 </div>
 <?php } ?>
 </div> 
 </div>
-
-
 
 
 

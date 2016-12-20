@@ -922,8 +922,7 @@ class ControllerMylibraryMylibrary extends Controller {
 
 		$min_bid_price = $this->request->post['min_bid_price'];
 		$max_bid_price = $this->request->post['max_bid_price'];
-		
-		
+
 		$this->load->model('mylibrary/mylibrary');
 
 		$customer_id = (int)$this->customer->getId();
@@ -931,6 +930,12 @@ class ControllerMylibraryMylibrary extends Controller {
 		$data['books'] = array();
 
 		$book = $this->model_mylibrary_mylibrary->getBook($isbn);
+
+		if(isset($this->request->post['share_price'])){
+			
+			$this->model_mylibrary_mylibrary->shared_books($isbn);
+					
+		}
 
 		$existing_book = $this->model_mylibrary_mylibrary->addToMylibrary($isbn);
 		
@@ -956,6 +961,8 @@ class ControllerMylibraryMylibrary extends Controller {
 
 			return;
 		}
+
+		
 
 		$this->model_mylibrary_mylibrary->addToProduct($book);
 
