@@ -5,6 +5,8 @@ class ControllerMylibraryMylibrary extends Controller {
 	public function index()
 	{
 
+		$test= 0;
+
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('mylibrary/mylibrary', '', true);
 
