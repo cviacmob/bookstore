@@ -6,6 +6,7 @@ class Mail {
 	protected $reply_to;
 	protected $subject;
 	protected $text;
+	protected $link;
 	protected $html;
 	protected $attachments = array();
 	public $protocol = 'mail';
@@ -46,6 +47,9 @@ class Mail {
 	public function setText($text) {
 		$this->text = $text;
 	}
+	public function setLink($link) {
+		$this->link = $link;
+	}
 
 	public function setHtml($html) {
 		$this->html = $html;
@@ -75,6 +79,7 @@ class Mail {
 		if ((!$this->text) && (!$this->html)) {
 			throw new \Exception('Error: E-Mail message required!');
 		}
+		
 
 		if (is_array($this->to)) {
 			$to = implode(',', $this->to);

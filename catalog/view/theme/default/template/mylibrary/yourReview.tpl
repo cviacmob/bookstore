@@ -43,7 +43,22 @@
         <div class="col-sm-12">
             <label ><?php echo $entry_review; ?></label>
              <textarea name="text" rows="5" id="input-review" class="form-control"><?php echo $yourReview['text']; ?></textarea>
-                    <!-- <div class="help-block"><?php echo $text_note; ?></div> -->
+         
+          <label >Your Rating:</label>         
+          <?php if ($review_status) { ?>
+          <div class="rating">
+            
+              <?php for ($i = 1; $i <= 5; $i++) { ?>
+              <?php if ($yourReview['rating'] < $i) { ?>
+              <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+              <?php } else { ?>
+              <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+              <?php } ?>
+              <?php } ?>
+              
+          </div>
+          <?php } ?>
+                   
         </div>
   </div>
 </form>

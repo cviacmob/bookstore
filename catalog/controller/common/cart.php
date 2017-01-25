@@ -54,7 +54,14 @@ class ControllerCommonCart extends Controller {
 		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
 		$data['text_loading'] = $this->language->get('text_loading');
 
+		 $data['text_mylibrary'] = $this->language->get('text_mylibrary');
+
+		 $data['text_mycommunity'] = $this->language->get('text_mycommunity');
+
 		$data['button_remove'] = $this->language->get('button_remove');
+
+		 $data['mylibrary'] = $this->url->link('mylibrary/mylibrary', '', true);
+		$data['mycommunity'] = $this->url->link('mycommunity/mycommunity','',true);
 
 		$this->load->model('tool/image');
 		$this->load->model('tool/upload');

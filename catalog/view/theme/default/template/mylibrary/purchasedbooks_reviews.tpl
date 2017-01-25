@@ -27,7 +27,7 @@
                     <div class="caption-full">
                         <h3 class="pull-right"></h3>
                         <h2><?php echo $product_info['name'];?></h2>
-                        
+                       
                         
 
                 <!--   <h3><span>by </span><?php echo $bookresult['author'];?></h3>    -->
@@ -38,7 +38,33 @@
 
  
 </div>
- <form class="form-horizontal" id="form-review" action ="<?php echo $write_review.$product_info['product_id']; ?>" method="post">
+<?php if($review_status==1) { ?>
+<form class="form-horizontal" id="form-review">
+   <div class="form-group required">
+        <div class="col-sm-12">
+            <label ><?php echo $entry_review; ?></label>
+             <textarea name="text" rows="5" id="input-review" class="form-control"><?php echo $review['text']; ?></textarea>
+         
+          <label >Your Rating:</label>         
+          <?php if ($review_status) { ?>
+          <div class="rating">
+            
+              <?php for ($i = 1; $i <= 5; $i++) { ?>
+              <?php if ($review['rating'] < $i) { ?>
+              <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+              <?php } else { ?>
+              <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+              <?php } ?>
+              <?php } ?>
+              
+          </div>
+          <?php } ?>
+                   
+        </div>
+  </div>
+</form>
+ <?php } else { ?>
+      <form class="form-horizontal" id="form-review" action ="<?php echo $write_review.$product_info['product_id']; ?>" method="post">
                 <div id="review"></div>
                 <!--<h2><?php echo $text_write; ?></h2>-->
                
@@ -71,7 +97,10 @@
                   </div>
                 </div>
                  
-              </form>
+      </form>
+<?php } ?>
+
+ 
 
 </div>
 </div>

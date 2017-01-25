@@ -13,7 +13,7 @@ class ModelMylibraryMylibrary extends Model {
 
 	else
 	{
-		$this->db->query("INSERT INTO mylibrary SET customer_id = '" . (int)$this->customer->getId() . "', isbn = '" . $isbn. "',date_added = NOW()");
+		$this->db->query("INSERT INTO mylibrary SET customer_id = '" . (int)$this->customer->getId() . "', isbn = '" . $isbn. "',sell_price='".$this->request->post['sell_price']."',share_price='".$this->request->post['share_price']."',date_added = NOW()");
 	} 
     
 	 
@@ -46,10 +46,27 @@ class ModelMylibraryMylibrary extends Model {
 
   // return true;		
 	 }
-
-	 
-    
+  
       
+ }
+
+ public function deleteFromProduct($book)
+ {
+     $query=$this->db->query("SELECT*FROM oc_product WHERE model ='" . $book['isbn']. "' ");
+
+	 if($query->num_rows)
+	 {
+		 $this->db->query("UPDATE oc_product SET quantity = quantity - 1 WHERE model='". $book['isbn']. "'");
+	 }
+
+	 else
+	 {
+		
+       return false;	
+
+	 }
+
+    
  }
 
  public function getBook($isbn)
@@ -137,6 +154,36 @@ class ModelMylibraryMylibrary extends Model {
 	  return $book_data;
  }
 
+ public function checkReview($product_id)
+ {
+	 $query = $this->db->query("SELECT status FROM oc_review WHERE product_id = '".$product_id."' AND customer_id='".$this->customer->getId()."'");
+
+	 if($query->num_rows)
+	 { 
+		 return $query->row['status'];
+	 }
+	 else{
+		 return false;
+	 }
+ }
+
+ public function productReview($product_id)
+ {
+	 $query = $this->db->query("SELECT*FROM oc_review WHERE product_id = '".$product_id."' AND customer_id='".$this->customer->getId()."'");
+
+	 if($query->num_rows)
+	 {
+		 return array(
+
+			 'text' => $query->row['text'],
+			 'rating' => $query->row['rating']
+		 );
+	 }
+	 else{
+		 return false;
+	 }
+ }
+
  public function getYourReview($product_id)
  {
 
@@ -155,10 +202,32 @@ class ModelMylibraryMylibrary extends Model {
 		     }
  }
 
- public function getBookFromMaster($isbn) 
+ public function getBookFromMaster($isbn)
+ {
+    $query = $this->db->query("SELECT*FROM master_books WHERE isbn = '" . $isbn. "'");
+
+    if ($query->num_rows) {
+			return array(
+				'isbn'              => $query->row['isbn'],
+				'title'             => $query->row['title'],
+				'author'            => $query->row['author'],
+				'cover_type'        => $query->row['cover_type'],
+				'no_of_pages'       => $query->row['no_of_pages'],
+				'publisher'         => $query->row['publisher'],
+			    'image'             => "image/".$query->row['image'] 
+				 
+			);
+		}
+		else {
+			return false;
+		     }
+     
+ }
+
+ public function editBook($isbn) 
  {
  
-		$query = $this->db->query("SELECT * FROM   master_books WHERE isbn = '". $isbn . "'" );
+		$query = $this->db->query("SELECT mb.isbn,mb.title,mb.author,mb.cover_type,mb.no_of_pages,mb.publisher,mb.image,my.sell_price, my.share_price, my.lend_price, my.min_bid_price, my.max_bid_price FROM mylibrary my INNER JOIN master_books mb ON mb.isbn = my.isbn WHERE my.isbn = '". $isbn . "' AND customer_id = '".$this->customer->getId()."'" );
 		
 		if ($query->num_rows) {
 			return array(
@@ -168,7 +237,13 @@ class ModelMylibraryMylibrary extends Model {
 				'cover_type'        => $query->row['cover_type'],
 				'no_of_pages'       => $query->row['no_of_pages'],
 				'publisher'         => $query->row['publisher'],
-			    'image'             => "image/".$query->row['image']
+			    'image'             => "image/".$query->row['image'],
+				'sell_price'        => $query->row['sell_price'],
+				'share_price'       => $query->row['share_price'],
+				'lend_price'        => $query->row['lend_price'],
+				'min_bid_price'     => $query->row['min_bid_price'],
+				'max_bid_price'     => $query->row['max_bid_price']
+
 				 
 			);
 		}
@@ -178,21 +253,34 @@ class ModelMylibraryMylibrary extends Model {
  
  }
 
+ public function updateBook($isbn)
+ {
+	 $query = $this->db->query("UPDATE mylibrary SET sell_price = '". $this->request->post['sell_price']."' , share_price = '". $this->request->post['share_price']."' WHERE isbn = '".$isbn."' AND customer_id = '".$this->customer->getId()."'" );
+ }
+
+ public function deleteBook($isbn)
+ {
+	 $query = $this->db->query("DELETE FROM mylibrary WHERE isbn = '".$isbn."' AND customer_id = '".$this->customer->getId()."'");
+ }
+
  public function addToFavorite($product_id)
  {
-	 $this->db->query("DELETE FROM " . DB_PREFIX . "customer_favorite WHERE customer_id = '" . (int)$this->customer->getId() . "' AND product_id = '" . (int)$product_id . "'");
+	 $this->db->query("DELETE FROM customer_favorite 
+	 
+	 
+	 WHERE customer_id = '" . (int)$this->customer->getId() . "' AND product_id = '" . (int)$product_id . "'");
 
-	 $this->db->query("INSERT INTO " . DB_PREFIX . "customer_favorite SET customer_id = '" . (int)$this->customer->getId() . "', product_id = '" . (int)$product_id . "', date_added = NOW()");
+	 $this->db->query("INSERT INTO customer_favorite SET customer_id = '" . (int)$this->customer->getId() . "', product_id = '" . (int)$product_id . "', date_added = NOW()");
  }
 
  public function deleteFavorite($product_id) 
  {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_favorite WHERE customer_id = '" . (int)$this->customer->getId() . "' AND product_id = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM customer_favorite WHERE customer_id = '" . (int)$this->customer->getId() . "' AND product_id = '" . (int)$product_id . "'");
  }
 
 public function getFavorite() 
 {
-        $query = $this->db->query("SELECT product_id FROM " . DB_PREFIX . "customer_favorite WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+        $query = $this->db->query("SELECT product_id FROM customer_favorite WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 
 		$book_data = array();
 		foreach($query->rows as $result)
@@ -206,6 +294,32 @@ public function getFavorite()
 public function shared_books($isbn)
 {
 	 $query = $this->db->query("INSERT INTO shared_books SET customer_id = '" . (int)$this->customer->getId() . "', isbn = '" . $isbn. "',date_added = NOW()");
+}
+
+public function bestSeller($isbn)
+{
+	$query = $this->db->query("SELECT customer_id FROM mylibrary WHERE isbn = '".$isbn."'");
+	foreach($query->rows as $result)
+	 	{
+		 	$book_data[$result['customer_id']] = $this->bestPrice($result['customer_id']);
+	 	}
+
+	return $book_data;
+}
+
+public function bestPrice($customer_id)
+{
+	$query = $this->db->query("SELECT sell_price FROM mylibrary WHERE customer_id = '".$customer_id."'");
+
+	if($query->num_rows){
+
+		return array(
+
+			'best_price' => $query->row['sell_price']
+		);
+	}
+	else
+	return false;
 }
 
 

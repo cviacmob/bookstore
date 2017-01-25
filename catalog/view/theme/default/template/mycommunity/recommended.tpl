@@ -9,13 +9,18 @@
 <div class="row">
 
 <aside id="column_left"class="col-sm-3 hidden-xs">
-<h2>Community</h2>   
+<h2><?php echo $text_community;?></h2>   
 <div class="tabbable-panel-left">
 <div class="tabbable-line">
 <img src="<?php echo $group_info['group_image'];?>" height="203" width ="240" />
 <!--<h3>Tamil Readers</h3>-->
 <h3><?php echo $group_info['group_name']; ?></h3>
-<input type="submit" id="driver" class="btn btn-default btn-lg" value="JOIN "  />
+<!--<input type="submit" id="driver" class="btn btn-default btn-lg" value="JOIN "  />-->
+
+
+<!--<input type="button" id="driver" class="btn btn-default btn-lg" value="<?php echo $button_join;?> "  />-->
+
+<button id ="join" class="btn btn-default btn-lg" ><?php echo $button_join;?> </button>
 
 </div>
 </div>
@@ -54,11 +59,16 @@
 <br>
 <br>
 
-<i class="fa fa-thumbs-up" style="font-size: 2.00em;"  aria-hidden="true"><i class="fa fa-share-alt" style="margin-left: 373px; font-size: 1em;" aria-hidden="true"></i></i>
+<form action="<?php echo $add_to_my_post.$post['group_id'].$post['post_id'];?>" method="post" >
+
+<button type="submit"> <?php echo $post['total_votes'];?> LIKES  </button>
+
+</form>
+<!--<i class="fa fa-thumbs-up" style="font-size: 2.00em;"  aria-hidden="true"><!--<i class="fa fa-share-alt" style="margin-left: 373px; font-size: 1em;" aria-hidden="true"></i>--></i>
 <!--<i class="fa fa-share-alt" style="margin-left: 397px; font-size: 2.00em;" aria-hidden="true"></i>-->
 <br>
 <br>
-
+</form>
 
 <?php } ?>
 
@@ -104,7 +114,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $button_cancel;?></button>
      <!--      <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>-->
-         <button id = "done" type="submit" class="btn btn-default" ><?php echo $button_done;?></button>
+         <button id = "done" type="submit" class="btn btn-primary" ><?php echo $button_done;?></button>
         </div>
      </form>
       </div>
@@ -120,7 +130,7 @@
 </div>
 
 
-<script>
+<script type="text/javascript">
 $().ready = function() {
     $('#text').hide();
     
@@ -129,14 +139,33 @@ $().ready = function() {
     });
 
 }();
+</script>
 
+<!--<script type="text/javascript">
 $("#myBtn").on('click',function(){
     var self=$(this);
     if(self.val()=="JOIN GROUP")     {
-   self.val("MEMBER");  
+   self.val("உறுப்பினர்");  
     }
    
 });
 
 </script>
+
+<script type="text/javascript">
+
+$(document).ready(function(e){
+  $('#driver').click(function(){
+  $(this).text("உறுப்பினர்");
+  });
+});
+
+</script>-->
+
+<script type="text/javascript">
+        $("#join").click(function () {
+            $(this).text("உறுப்பினர்");
+        });
+    </script>
+
 <?php echo $footer; ?>

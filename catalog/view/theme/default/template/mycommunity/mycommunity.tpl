@@ -9,7 +9,7 @@
 <div class="row">
 
 <aside id="column_left"class="col-sm-3 hidden-xs">
-<h3>My Community</h3>
+<h3><?php echo $text_mycommunity; ?></h3>
 <div class="list-group">
 <a href = "<?php echo $sharedbooks; ?>" button type="button" class = "list-group-item"> <?php echo $button_sharedbooks;?> </a></button>
 <a href = "<?php echo $readingclub; ?> " button type="button" class = "list-group-item"><?php echo $button_reading_club;?></a></button>
@@ -20,7 +20,7 @@
 </aside>
 
 <div id="content" class="col-sm-9">
-<h3>Shared Books</h3>
+<h3><?php echo $text_shared_books; ?></h3>
 <div class="row">
 <div class="tabbable-panel">
 <div class="tabbable-line">
@@ -46,7 +46,7 @@
 	<div class="caption">
 		<h4><a href=""><?php echo $shared_book['title']; ?></a></h4> 
 		<p>by <a href=""><?php echo $shared_book['author']; ?></a></p>
-  
+      <!--  <h4><a href=""><?php echo $shared_book['product_id']; ?></a></h4>--> 
 	</div>
 
 <br>
@@ -54,9 +54,7 @@
 <form action = "<?php echo $share_with_me.$shared_book['isbn']; ?>"  method ="post">
             
 <input type="hidden" name="isbn" value="<?php echo $shared_book['isbn']; ?>">
-
- <!--<button id = "myBtn" type="submit" class="sharewithme" ><?php echo $button_share_with_me;?></button>-->
-<button type="submit" class="sh" ><?php echo $button_share_with_me;?> </button></a>
+<button type="button" class="sh"  onclick="cart.add('<?php echo $shared_book['product_id']; ?>');"><?php echo $button_share_with_me;?> </button>
 
 </form>  
 
@@ -66,9 +64,6 @@
 <?php } ?>
 </div>
 </div> 
-
-
-
 
 
 <div class="tab-pane" id="tab_default_2">
@@ -82,7 +77,7 @@
 	<h4><a href=""><?php echo $book['title']; ?></a></h4> 
 	<p>by <a href=""><?php echo $book['author']; ?></a></p>
 
-  <button type="submit" class="sh" ><?php echo $button_shared;?> </button></a>
+  <button type="submit" class="sh" >RETURN </button></a>
   </div>
 </div>
 <?php } ?>
@@ -94,7 +89,10 @@
 
 
 </div>
-</div>
+</div> 
+
+
+
 </div>
 </div>
 

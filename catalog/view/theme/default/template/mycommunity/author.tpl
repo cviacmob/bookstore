@@ -23,14 +23,14 @@
 <div id="content" class="col-sm-9">
 <h3>Search by Author</h3>
 
-<form action="<?php echo $searchauthor; ?>" method="post" >
+<form action="<?php echo $searchauthor; ?>" name="myForm" onsubmit="return validateForm()" method="post" >
  <div class="input-group col-xs-3">
-        <input type="text" class="form-control" placeholder="<?php echo $text_type_author_name;?>" name="text_author_mastersearch" id="text_search">
+        <input type="text" class="form-control" placeholder="<?php echo $text_type_author_name;?>" name="fname" required id="text_search">
         <div class="input-group-btn">
             <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
         </div>
    </div>
- </form> 
+ </form>  
 
 
 
@@ -41,7 +41,15 @@
 </div>
 </div>
 
-
+<script type="text/javascript">
+function validateForm() {
+    var x = document.forms["myForm"]["fname"].value;
+    if (x == "") {
+        alert("Name must be filled out");
+        return false;
+    }
+}
+</script>
 
 
 

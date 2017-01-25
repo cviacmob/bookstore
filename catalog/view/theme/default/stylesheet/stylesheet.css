@@ -3,7 +3,7 @@ body {
 	font-weight: 400;
 	color: #666;
 	font-size: 12px;
-	line-height: 20px;
+    line-height: 20px;
 	width: 100%;
 }
 h1, h2, h3, h4, h5, h6 {
@@ -756,6 +756,14 @@ h2.price {
 	text-align: center;
 
 }
+.addbooks{
+    width: 263px;
+    height: 350px;
+	font-size: 25px;
+	margin-left: 16px;
+	text-align: center;
+
+}
 .tabbable-panel {
   border:1px solid #eee;
   padding: 10px;
@@ -827,11 +835,7 @@ h2.price {
 .img-circle {
     border-radius: 50%;
 }
-.head h4{
-	margin-top: -33px;
-	margin-left: 73px;
 
-}
 .share{
 	font-size: 2.73em;
 	cursor: pointer;
@@ -854,12 +858,7 @@ h2.price {
     padding: 10px;
 	width:440px;
 }
-.border {
-	background-color: #eee;
-    width: 1142px;
-    border: 3px solid #2198c5;
-    
-}
+
 .para {
 	line-height: 2;
 }
@@ -873,3 +872,170 @@ h2.price {
 	width: 100%;
 	height: 40px;
 }
+.outline {
+   border-style: solid;
+    border-color: grey;
+    width: 246px;
+   
+    
+}
+.alert{
+    display: none;
+}
+.se{
+   height: 46px;
+   width: 513px;
+   padding: 10px 16px;
+   border: 1px solid #ccc;
+   line-height: 1.3333333;
+   border-radius: 6px;
+}
+.sea{
+	height: 46px;
+	width: 53px;
+    padding: 10px 16px;
+    border: 1px solid #ccc;
+    line-height: 1.3333333;
+    border-radius: 6px;
+}
+.sharealt{
+	float: right;
+    background: none;
+    border: 0px solid #ccc;
+    border-radius: 6px; 
+}
+.join{
+	 background: none;
+    border: 0px solid #ccc;
+    border-radius: 6px; 
+}
+.mylib{
+    border: 1px solid grey;
+    color: black;
+    background-color: #e1e1e1;
+	margin-top: 10px;
+    margin-bottom: 10px;
+	padding-left: 10px;
+    padding-right: 23px;
+	height: 30px;
+}
+.mycom{
+	border: 1px solid grey;
+    color: black;
+    background-color: #e1e1e1;
+	padding-left: 15px;
+    padding-right: 15px;
+	height: 30px;
+}
+.bestsellers{
+	border: 1px solid #ccc;
+    border-radius: 4px;
+	height: 34px;
+	text-align: center;
+	font-size: 30px;
+}
+.bestseller-display{
+	border: 1px solid #ccc;
+    border-radius: 4px;
+	height: 200px;
+	text-align: left;
+	font-size: 30px;
+}
+/*multi email input*/
+.multipleInput-container {
+     border:1px #ccc solid;
+     padding:1px;
+     padding-bottom:0;
+     cursor:text;
+     font-size:13px;
+     width:100%;
+     height: 50px;
+     overflow: auto;
+     background-color: white;
+     border-radius:3px;
+}
+
+ 
+.multipleInput-container input {
+     font-size:13px;
+     /*clear:both;*/
+     width:150px;
+     height:24px;
+     border:0;
+     margin-bottom:1px;
+     outline: none
+}
+ 
+.multipleInput-container ul {
+     list-style-type:none;
+     padding-left: 0px !important;
+}
+ 
+li.multipleInput-email {
+     float:left;
+     margin-right:2px;
+     margin-bottom:1px;
+     border:1px #BBD8FB solid;
+     padding:2px;
+     background:#F3F7FD;
+}
+ 
+.multipleInput-close {
+     width:16px;
+     height:16px;
+     background:url(close.png);
+     display:block;
+     float:right;
+     margin:0 3px;
+}
+.email_search{
+  width: 100% !important;
+}
+.footer-button{
+
+  margin-left: 490px;
+}
+.view-books{
+	    margin-right: -1px;
+}
+.view-books-pub{
+	    margin-right: -1px;
+}
+.rect {
+    width: 380px;
+padding: 10px;
+border: 5px solid grey;
+border: 1px solid #ddd;
+background-color: #f5f5f5;
+margin-left: 264px;
+margin-top: -33px;
+height: 100px;
+
+}
+
+.upload-images {
+width: 644px;
+padding: 10px;
+border: 5px solid grey;
+border: 1px solid #ddd;
+background-color: #f5f5f5;
+
+margin-top: 50px;
+height: 300px;
+
+}
+.back-image{
+margin-left: 400px;
+margin-top: -275px;
+}
+
+#text_upload_image{
+    margin-left: 85px;
+}
+
+
+.hover-demo{margin-top: 220px;}
+.hover-demo{text-align: center;}
+.on-hover-content{position: absolute;bottom: 40px;background-color: white;padding: 10px;border-radius: 10px;}
+.on-hover-content img{width:360px;}
+

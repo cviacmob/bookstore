@@ -39,11 +39,15 @@
 <!--<img class ="img-responsive" src="<?php echo $authorresult['author_image'];?>"style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"><br>-->
 <h4><?php echo $authorresult['author_name'];?></h4>
 
-<form action="<?php echo $add_to_liked_author;?>" method="post" >
 
-<input type="hidden" name="author_id" value="<?php echo $authorresult['author_id']; ?>">
+<form action="<?php echo $add_to_liked_author.$authorresult['author_id'];?>" method="post" >
 
-<button type = "submit "id = "myBtn"> LIKE </button>
+<!--<input type="hidden" name="author_id" value="<?php echo $authorresult['author_id']; ?>"> -->
+<!--<h4><?php echo $authorresult['total_votes'];?></h4>-->
+<!--<input class = "join" id="btn" type="submit" value="LIKE"> -->
+<button type="submit"> <?php echo $authorresult['total_votes'];?> LIKES  </button>
+<!-- <button type = "submit"  onclick="insert_like();" id="like_button"> LIKE </button>
+<div id="totalvotes"></div> -->
 
 </form>
 
@@ -52,7 +56,7 @@
 </div>
 </div>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
 var like = 0;
 $("#myBtn").click(function(){
      like++;
@@ -61,10 +65,25 @@ $("#myBtn").click(function(){
 
 </script>
 
+<!--<script type="text/javascript">
+  function insert_like()
+    {
+	  $.ajax({
+	    type: 'post',
+	    url: 'index.php?route=mycommunity/mycommunity/addToLikedauthor&author_id=<?php echo $author_id; ?>',
+	    data: {
+	      post_like:"like"
+	    },
+	    success: function (response) {
+ 	      $('#totalvotes').slideDown()
+	      {			
+	        $('#totalvotes').html(response);
+	      }
+	    }
+	    });
+    }
 
-
-
-
+</script> -->
 
 </div>
 

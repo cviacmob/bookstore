@@ -14,3 +14,4 @@ $_['text_firstname']      = 'First Name:';
 $_['text_lastname']       = 'Last Name:';
 $_['text_email']          = 'E-Mail:';
 $_['text_telephone']      = 'Telephone:';
+/* CUSTOM */$_['text_email_verification'] = 'Your account has now been created, but you must verify your e-mail address in our system. Please click the link below to activate your account. If the link does not open a verification page in your Internet Browser, try copying the link manually to your clipboard (select the link and hit Ctrl+C), paste the link (Ctrl+V) in your browser\'s address field and hit Enter.';

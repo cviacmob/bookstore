@@ -1,54 +1,69 @@
 <?php
 // Heading
-$_['heading_title'] = 'My Community';
+$_['heading_title'] = 'என் சமூகம்';
 
 
-// Text
-$_['text_mycommunity']             = 'My Community';
-$_['text_recommended']             = 'Recommended';
-$_['text_members']                 = 'Members';
-$_['text_yours']                   = 'Yours';
-$_['text_name_this_club']          = 'Name this Club';
-$_['text_decription']              = 'Description';
-$_['text_sharesomething']          = 'Share something...';
-$_['text_type_author_name']        = 'type author name';
-$_['text_author_mastersearch']     = 'type author name';
-$_['text_author_info_page']        = 'About the Author';
-$_['text_type_publisher_name']     = 'type publisher name';
-$_['text_publisher_mastersearch']  = 'type publisher name';
-$_['text_publisher_info_page']     = 'About the Publisher';
-$_['text_available_books']         = 'Available Books';
-$_['text_requested_books']         = 'Requested Books';
-$_['text_shared_books']            = 'Shared Books';
-$_['text_reading_club']            = 'Reading Club';
-$_['text_publishers']              = 'Publishers';
+// Text		என் சமூகம்
+$_['text_mycommunity']             = 'என் சமூகம்';		
+$_['text_recommended']             = 'பரிந்துரைக்கப்படுகிறது';			
+$_['text_members']                 = 'உறுப்பினர்கள்';		
+$_['text_yours']                   = 'உங்களுடைய';			
+$_['text_name_this_club']          = 'இந்த கிளப பெயரிட';			
+$_['text_description']             = 'விளக்கம்';			
+$_['text_sharesomething']          = 'எதயாச்சும் பகிரு...';			
+$_['text_type_author_name']        = 'எழுத்தாளர் பெயரை டைப் பண்ணு';			
+$_['text_author_mastersearch']     = 'எழுத்தாளர் பெயரை டைப் பண்ணு';		
+$_['text_author_info_page']        = 'எழுத்தாளரைப் பற்றி';			
+$_['text_type_publisher_name']     = 'பதிப்பகத்தார் பெயரை டைப் பண்ணு';			
+$_['text_publisher_mastersearch']  = 'பதிப்பகத்தார் பெயரை டைப் பண்ணு';			
+$_['text_publisher_info_page']     = 'பதிப்பகத்தாரைப் பற்றி';			 
+$_['text_available_books']         = 'கிடைக்கும் புத்தகங்கள்';			
+$_['text_requested_books']         = 'கோரிய புத்தகங்கள்';			
+$_['text_shared_books']            = 'பகிர்வு புத்தகங்கள்';			
+$_['text_reading_club']            = 'புத்தக வாசிப்பு சங்கம்';			
+$_['text_publishers']              = 'பதிப்பகத்தார்கள்';		
+$_['text_club']                    = 'சங்கம்';			
+$_['text_thanks']                  = 'நன்றி';		
+$_['text_subject']                 = '%s - You ve been invited to join Olaichuvadi book reading club';			
+$_['text_welcome']                 = 'http://www.olaichuvadi.cviac.com/index.php?route=account/register';			
+$_['type_text_search']             = 'தேடல்';			
+$_['text_location']                = 'இடம்';			
+$_['text_search_byauthor']         = 'எழுத்தாளரைத்தேடு ';			
+$_['text_search_bypublisher']      = 'பதிப்பகத்தாரைத்தேடு';	
+$_['text_invite_people']           = 'அழைப்புதல் ';	
+$_['text_enter_name']              = 'பெயரை உள்ளிடவும்';		
+$_['text_enter_mailid']            = 'மின்னஞ்சலை  உள்ளிடவும்';		
+$_['text_community']               = 'சமூகம்';	
+$_['text_author']                  = 'எழுத்தாளர் ';	
+$_['text_born']                    = 'பிறப்பு';
+$_['text_occupation']              = 'வாழ்க்கைத் தொழில்';
+$_['text_nationality']             = 'தேசீய இனம்';
+$_['text_early_life']              = 'ஆரம்ப வாழ்க்கை மற்றும் கல்விப்பயிற்சி';
+$_['text_awards']                  = 'விருதுகள்';
+$_['text_references']              = 'குறிப்பு';
+$_['text_links']                   = 'வெளி இணைப்புகள்';
+$_['text_address']                 = 'முகவரி';
+$_['text_create_reading_club']     = 'புத்தகம் வாசிப்பு கிளப் உருவுக்காக';
+			
+//Button			
+$_['button_reading_club']      = 'புத்தக வாசிப்பு சங்கம்';			
+$_['button_sharedbooks']       = 'பகிர்வு புத்தகங்கள்';			
+$_['button_authors']           = 'எழுத்தாளர்கள்';			 
+$_['button_publishers']        = 'பதிப்பகத்தார்கள் ';			
+$_['button_create_club']       = 'சங்கம் உருவாக்கு';			 
+$_['button_cancel']            = 'ரத்து';			
+$_['button_done']              = 'சரி';			
+$_['button_join']              = 'சேறு';			
+$_['button_share_with_me']     = 'என்னுடன் பகிர்ந்துகொள்';			
+$_['button_shared']            = 'பகிர்ந்துள்ளார்';			
+$_['button_post']              = 'பகிரு';			 
+$_['button_member']            = 'உறுப்பினர்';			
+$_['button_like_page']         = 'லைக் போடு ';			
+$_['button_view_books']        = 'புத்தகத்தை பாரு';		
+$_['button_send']              = 'அனுப்பு';		
+			
+//Errors			
+$_['error_recipient_text']     = 'Last Name must be between 1 and 32 characters!';			
+$_['error_recipient_email']    = 'E-Mail Address does not appear to be valid!';			
 
-//Button
-$_['button_reading_club']      = 'Reading Club';
-$_['button_sharedbooks']       = 'Shared Books';
-$_['button_authors']           = 'Authors';
-$_['button_publishers']        = 'Publishers';
-$_['button_create_club']       = 'Create a Club';
-$_['button_cancel']            = 'Cancel';
-$_['button_done']              = 'Done';
-$_['button_join']              = 'JOIN';
-$_['button_share_with_me']     = 'SHARE WITH ME';
-$_['button_shared']            = 'SHARED';
 
-
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';
-$_['text_authors']           = 'Authors';

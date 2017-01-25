@@ -21,11 +21,11 @@
 
 
 <div id="content" class="col-sm-9">
-<h3>Search by Publisher</h3>
+<h3><?php echo $text_search_bypublisher;?></h3>
 
 <form action="<?php echo $searchpublisher; ?>" method="post" >
  <div class="input-group col-xs-3">
-        <input type="text" class="form-control" placeholder="<?php echo $text_type_publisher_name;?>" name="text_publisher_mastersearch" id="text_search">
+        <input type="text" class="form-control" placeholder="<?php echo $text_type_publisher_name;?>" name="text_publisher_mastersearch" required id="text_search">
         <div class="input-group-btn">
             <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
         </div>

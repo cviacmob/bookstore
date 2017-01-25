@@ -23,6 +23,7 @@
 <h3>My Books In Library</h3>
 <div class="row">
 <a href="<?php echo $addbooks; ?>" style="float:left"><button type="button" class="addbooks" value="add books"/>Add Books</button></a>
+
 <?php foreach($books as $book) {?>
  <div class="product-layout col-lg-4 col-md-3 col-sm-6 col-xs-12 " style="float:left" margin-left="16px">
 	<div class="product-thumb transition ">
@@ -37,8 +38,8 @@
 
 
 	<div class="button-group">
-		<button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>', '<?php echo $product['minimum']; ?>');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"> </span></button>
-		<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+		<button type="button"  data-toggle="tooltip" title="edit"onclick="location.href='<?php echo $edit_mylibrary_books.$book['isbn']; ?>'"><i class="fa fa-edit"></i> <span class="hidden-xs hidden-sm hidden-md"> </span></button>
+		<button type="button" data-toggle="tooltip" title="delete" onclick="location.href='<?php echo $delete_mylibrary_books.$book['isbn']; ?>'"><i class="fa fa-trash"></i></button>
 
 	</div>
 

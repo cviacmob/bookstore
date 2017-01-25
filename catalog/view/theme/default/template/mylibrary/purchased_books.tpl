@@ -23,7 +23,7 @@
 <h3>Purchased Books</h3>
 <div class="row">
 <?php foreach($books as $book) {?>
-<div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 " style="float:left">
+<div class="product-layout col-lg-4 col-md-3 col-sm-6 col-xs-12 " style="float:left">
 <div class="product-thumb transition ">
 <div class="image">
 <a href="<?php echo $book['href']; ?>"><img class="img-responsive" src="<?php echo $book['image']; ?>"></a>

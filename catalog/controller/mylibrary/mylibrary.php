@@ -37,6 +37,7 @@ class ControllerMylibraryMylibrary extends Controller {
 		);
 
 		$data['addbooks'] = $this->url->link('mylibrary/mylibrary/booksearch','',true);
+		
   
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -77,10 +78,11 @@ class ControllerMylibraryMylibrary extends Controller {
 		$data['reviewed_books'] = $this->url->link('mylibrary/mylibrary/getReviewedBooks','',true);
 		$data['favorite_books'] = $this->url->link('mylibrary/mylibrary/getFavorite','',true);
 
-		
+		$data['edit_mylibrary_books'] = $this->url->link('mylibrary/mylibrary/editMylibraryBooks&isbn=','',true);
+		$data['delete_mylibrary_books'] = $this->url->link('mylibrary/mylibrary/deleteMylibraryBooks&isbn=','',true);
 
-        $this->response->setOutput($this->load->view('mylibrary/books_in_mylibrary', $data));
-	 
+		$this->response->setOutput($this->load->view('mylibrary/books_in_mylibrary', $data));
+		
 	}
 
 	public function getPurchased() 
@@ -165,100 +167,6 @@ class ControllerMylibraryMylibrary extends Controller {
 
  	}
 
-	public function review()
-	{
-
-		 
-		$this->load->language('mylibrary/mylibrary');
-
-		$this->load->language('account/wishlist');
-
-		$data['text_write'] = "Write a Review";
-		
-		$data['entry_name']      = "Your Name";
-		$data['entry_review']    = "Your Review";
-		$data['entry_rating']    = "Rating";
-		$data['entry_good']      = "Good";
-		$data['entry_bad']       = "Bad";
-		$data['entry_rating']    = "Rating";
-		$data['button_continue'] = "Submit";
-		$data['review_guest']    = $this->language->get('text_login');
-		$data['text_loading']    = $this->language->get('text_login');
-
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('mylibrary/mylibrary');
-
-		$url = '';
- 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => "My Library",
-			'href' => $this->url->link('mylibrary/mylibrary')
-		); 
-
-		$data['breadcrumbs'][] = array(
-			'text' => "Purchased Books",
-			'href' => $this->url->link('mylibrary/mylibrary')
-		); 
-
-		$data['breadcrumbs'][] = array(
-			'text' => "Write a Review",
-			'href' => $this->url->link('mylibrary/mylibrary')
-		);  
-
-
-         if ($this->customer->isLogged()) {
-				$data['customer_name'] = $this->customer->getFirstName() . '&nbsp;' . $this->customer->getLastName();
-			} else {
-				$data['customer_name'] = '';
-			}
- 
-		$data['heading_title'] = $this->language->get('heading_title');
- 
- 		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$data['button_wishlist'] = $this->language->get('button_wishlist');
-
-		$data['wishlist'] = $this->url->link('account/wishlist', '', true);
-
-		$product_id = $this->request->get['product_id'];
-		$product  = $this->model_catalog_product->getProduct($product_id);
-
-		$data['product_info']=array(
-
-			'product_id' 	=> $product['product_id'],
-			'name' 			=> $product['name'],
-			'model' 		=> $product['model'],
-			'image' 		=> "image/".$product['image']
-
-		); 		
-
-		$productlink =  "mylibrary/mylibrary/write&product_id=";
-		$data['write_review'] = $this->url->link($productlink, '' , true);
-
-		$data['books_in_library'] = $this->url->link('mylibrary/mylibrary','',true);
-		$data['purchased_books'] = $this->url->link('mylibrary/mylibrary/getPurchased','',true);
-		$data['reviewed_books'] = $this->url->link('mylibrary/mylibrary/getReviewedBooks','',true);
-		$data['favorite_books'] = $this->url->link('mylibrary/mylibrary/getFavorite','',true);
-			
-		//$data['continue'] = $this->url->link('mylibrary/mylibrary/write', '', true);	 
-		 
-        $this->response->setOutput($this->load->view('mylibrary/purchasedbooks_reviews', $data));
-
-
-
-	} 
-
 	public function addToFavorite()
 	{
 		$this->load->language('mylibrary/mylibrary');
@@ -318,11 +226,17 @@ class ControllerMylibraryMylibrary extends Controller {
 		
 		foreach($bookresults as $bookresult)
 		{
+			if (is_file(DIR_IMAGE . $bookresult['image'])) {
+				$image = $this->model_tool_image->resize($bookresult['image'], 228, 228);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 228, 228);
+			}
+
 			$data['books'][]=array(
 
 				'name' 		 =>$bookresult['name'],
 				'product_id' 		 =>$bookresult['product_id'],
-				'image'		 =>"image/".$bookresult['image'],
+				'image'		 =>$image,
 				'href'       =>$this->url->link('product/product', 'path=' . '60_61' . '&product_id=' . $bookresult['product_id'] . $url)
 				//'model'		 =>$bookresult['model']
 				 
@@ -633,7 +547,11 @@ class ControllerMylibraryMylibrary extends Controller {
 
 		$this->load->model('mylibrary/mylibrary');
 
+		$data['review_status'] = $this->config->get('config_review_status');
+
+			
 		$your_review = $this->model_mylibrary_mylibrary->getYourReview($product_id);
+		
 
 		$data['yourReview'] = $your_review;
 
@@ -649,12 +567,114 @@ class ControllerMylibraryMylibrary extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');	 
 
-			$data['books_in_library'] = $this->url->link('mylibrary/mylibrary','',true);
+		$data['books_in_library'] = $this->url->link('mylibrary/mylibrary','',true);
 		$data['purchased_books'] = $this->url->link('mylibrary/mylibrary/getPurchased','',true);
 		$data['reviewed_books'] = $this->url->link('mylibrary/mylibrary/getReviewedBooks','',true);
 		$data['favorite_books'] = $this->url->link('mylibrary/mylibrary/getFavorite','',true);
 		 
         $this->response->setOutput($this->load->view('mylibrary/yourReview', $data));
+	}
+
+	public function review()
+	{
+
+		 
+		$this->load->language('mylibrary/mylibrary');
+
+		$this->load->language('account/wishlist');
+
+		$data['text_write'] = "Write a Review";
+		
+		$data['entry_name']      = "Your Name";
+		$data['entry_review']    = "Your Review";
+		$data['entry_rating']    = "Rating";
+		$data['entry_good']      = "Good";
+		$data['entry_bad']       = "Bad";
+		$data['entry_rating']    = "Rating";
+		$data['button_continue'] = "Submit";
+		$data['review_guest']    = $this->language->get('text_login');
+		$data['text_loading']    = $this->language->get('text_login');
+
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('mylibrary/mylibrary');
+
+		$url = '';
+ 
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => "My Library",
+			'href' => $this->url->link('mylibrary/mylibrary')
+		); 
+
+		$data['breadcrumbs'][] = array(
+			'text' => "Purchased Books",
+			'href' => $this->url->link('mylibrary/mylibrary')
+		); 
+
+		$data['breadcrumbs'][] = array(
+			'text' => "Write a Review",
+			'href' => $this->url->link('mylibrary/mylibrary')
+		);  
+
+
+         if ($this->customer->isLogged()) {
+				$data['customer_name'] = $this->customer->getFirstName() . '&nbsp;' . $this->customer->getLastName();
+			} else {
+				$data['customer_name'] = '';
+			}
+ 
+		$data['heading_title'] = $this->language->get('heading_title');
+ 
+ 		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$data['button_wishlist'] = $this->language->get('button_wishlist');
+
+		$data['wishlist'] = $this->url->link('account/wishlist', '', true);
+
+		$product_id = $this->request->get['product_id'];
+		$product  = $this->model_catalog_product->getProduct($product_id);
+
+		$data['product_info']=array(
+
+			'product_id' 	=> $product['product_id'],
+			'name' 			=> $product['name'],
+			'model' 		=> $product['model'],
+			'image' 		=> "image/".$product['image']
+
+		); 		
+
+		//$data['review_status'] = $this->config->get('config_review_status');
+
+
+		$data['review_status'] = $this->model_mylibrary_mylibrary->checkReview($product_id);
+
+		$data['review'] = $this->model_mylibrary_mylibrary->productReview($product_id);
+
+
+		$productlink =  "mylibrary/mylibrary/write&product_id=";
+		$data['write_review'] = $this->url->link($productlink, '' , true);
+
+		$data['books_in_library'] = $this->url->link('mylibrary/mylibrary','',true);
+		$data['purchased_books'] = $this->url->link('mylibrary/mylibrary/getPurchased','',true);
+		$data['reviewed_books'] = $this->url->link('mylibrary/mylibrary/getReviewedBooks','',true);
+		$data['favorite_books'] = $this->url->link('mylibrary/mylibrary/getFavorite','',true);
+	
+		//$data['continue'] = $this->url->link('mylibrary/mylibrary/write', '', true);	 
+		 
+        $this->response->setOutput($this->load->view('mylibrary/purchasedbooks_reviews', $data));
+
+
+
 	}
 
 	public function write() 
@@ -663,6 +683,19 @@ class ControllerMylibraryMylibrary extends Controller {
 		$this->load->language('mylibrary/mylibrary');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+
+		$data['text_write'] = "Write a Review";
+		
+		$data['entry_name']      = "Your Name";
+		$data['entry_review']    = "Your Review";
+		$data['entry_rating']    = "Rating";
+		$data['entry_good']      = "Good";
+		$data['entry_bad']       = "Bad";
+		$data['entry_rating']    = "Rating";
+		$data['button_continue'] = "Submit";
+		$data['review_guest']    = $this->language->get('text_login');
+		$data['text_loading']    = $this->language->get('text_login');
+
 
 		$this->load->model('mylibrary/mylibrary');
 
@@ -692,11 +725,30 @@ class ControllerMylibraryMylibrary extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
+		$product_id = $this->request->get['product_id'];
+		$product  = $this->model_catalog_product->getProduct($product_id);
+
+		$data['product_info']=array(
+
+			'product_id' 	=> $product['product_id'],
+			'name' 			=> $product['name'],
+			'model' 		=> $product['model'],
+			'image' 		=> "image/".$product['image']
+
+		); 		
+
+		$data['review_status'] = $this->model_mylibrary_mylibrary->checkReview($product_id);
+
+		$data['review'] = $this->model_mylibrary_mylibrary->productReview($product_id);
+
 		$this->load->language('product/product');
 
 		$product_id = $this->request->get['product_id'];
 
+		
 		$text = $this->request->post['text'];
+
+		
 
 		$json = array();
 
@@ -720,7 +772,7 @@ class ControllerMylibraryMylibrary extends Controller {
 				}
 			}
 
-			if (!isset($json['error'])) {
+			if (!isset($json['error'])&& $check_review==false) {
 				$this->load->model('catalog/review');
 
 				$this->model_catalog_review->addReview($this->request->get['product_id'], $this->request->post);
@@ -728,6 +780,8 @@ class ControllerMylibraryMylibrary extends Controller {
 				$json['success'] = $this->language->get('text_success');
 			}
 		}
+
+	
 
 		//$this->response->addHeader('Content-Type: application/json');
 		//$this->response->setOutput(json_encode($json));
@@ -755,7 +809,10 @@ class ControllerMylibraryMylibrary extends Controller {
 		$data['favorite_books'] = $this->url->link('mylibrary/mylibrary/getFavorite','',true);
 
 		$data['your_review'] = $this->url->link('mylibrary/mylibrary/yourReview','',true);
-		$this->response->setOutput($this->load->view('mylibrary/reviewed_books', $data));	
+		$this->response->setOutput($this->load->view('mylibrary/purchasedbooks_reviews', $data));	
+
+		//$this->response->addHeader('Content-Type: application/json');
+		//$this->response->setOutput(json_encode($json));
 	}
 
 	public function booksearch() 
@@ -796,6 +853,7 @@ class ControllerMylibraryMylibrary extends Controller {
 		$data['favorite_books'] = $this->url->link('mylibrary/mylibrary/getFavorite','',true);
 
 		$this->response->setOutput($this->load->view('mylibrary/book_search', $data));
+
 
 	}
 
@@ -918,10 +976,10 @@ class ControllerMylibraryMylibrary extends Controller {
 
 		$sell_price = $this->request->post['sell_price'];
 		$share_price = $this->request->post['share_price'];
-		$lend_price = $this->request->post['lend_price'];
+		//$lend_price = $this->request->post['lend_price'];
 
-		$min_bid_price = $this->request->post['min_bid_price'];
-		$max_bid_price = $this->request->post['max_bid_price'];
+		//$min_bid_price = $this->request->post['min_bid_price'];
+		//$max_bid_price = $this->request->post['max_bid_price'];
 
 		$this->load->model('mylibrary/mylibrary');
 
@@ -988,6 +1046,9 @@ class ControllerMylibraryMylibrary extends Controller {
           
 		$data['addbooks'] = $this->url->link('mylibrary/mylibrary/booksearch','',true);
 
+		$data['edit_mylibrary_books'] = $this->url->link('mylibrary/mylibrary/editMylibraryBooks&isbn=','',true);
+		$data['delete_mylibrary_books'] = $this->url->link('mylibrary/mylibrary/deleteMylibraryBooks&isbn=','',true);
+
 		$data['books_in_library'] = $this->url->link('mylibrary/mylibrary','',true);
 		$data['purchased_books'] = $this->url->link('mylibrary/mylibrary/getPurchased','',true);
 		$data['reviewed_books'] = $this->url->link('mylibrary/mylibrary/getReviewedBooks','',true);
@@ -995,6 +1056,205 @@ class ControllerMylibraryMylibrary extends Controller {
 
         $this->response->setOutput($this->load->view('mylibrary/books_in_mylibrary', $data));
 		 
+	 }
+
+	 public function editMylibraryBooks()
+	 {
+		 
+		 $this->load->language('mylibrary/mylibrary');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('mylibrary/mylibrary');
+ 
+		$url = '';
+		 
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('mylibrary/mylibrary')
+		);
+
+	  	 
+  		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
+		
+ 		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+ 
+		//$this->load->language('mylibrary/mastersearch');
+
+		$this->load->model('mylibrary/mylibrary');
+
+		$data['searchisbn'] = $this->url->link('mylibrary/mylibrary/searchByISBN' , '' , true);
+
+		$data['text_mastersearch'] = $this->language->get('text_mastersearch');
+
+		if (isset($this->request->post['text_mastersearch'])) {
+			$mastersearch = $this->request->post['text_mastersearch'];
+		} else {
+			$mastersearch = '';
+		}
+
+		$isbn = $this->request->get['isbn'];
+ 
+		$books = $this->model_mylibrary_mylibrary->editBook($isbn);
+
+		$data['bookresult'] = $books;
+
+		
+
+		$booklink =  "mylibrary/mylibrary/updateToLibrary&isbn=".$books['isbn'] ;
+ 		 
+		$data['update_to_library'] = $this->url->link($booklink, '' , true);
+
+		$data['books_in_library'] = $this->url->link('mylibrary/mylibrary','',true);
+		$data['purchased_books'] = $this->url->link('mylibrary/mylibrary/getPurchased','',true);
+		$data['reviewed_books'] = $this->url->link('mylibrary/mylibrary/getReviewedBooks','',true);
+		$data['favorite_books'] = $this->url->link('mylibrary/mylibrary/getFavorite','',true);
+
+        $this->response->setOutput($this->load->view('mylibrary/edit_mylibrary_books', $data));
+
+	 }
+
+	 
+
+	 public function updateToLibrary() 
+	 {
+ 
+		$this->load->language('mylibrary/mylibrary');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('mylibrary/mylibrary');
+
+		
+
+		$url = '';
+ 
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('mylibrary/mylibrary')
+		);
+
+		$data['addbooks'] = $this->url->link('mylibrary/mastersearch','',true);
+  
+		$data['heading_title'] = $this->language->get('heading_title');
+ 
+ 		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+ 
+		
+
+	    $this->load->language('mylibrary/mylibrary');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+		
+		$isbn =  $this->request->get['isbn'];
+		$this->load->model('mylibrary/mylibrary');
+
+		$sell_price = $this->request->post['sell_price'];
+
+		$share_price = $this->request->post['share_price'];
+		//$lend_price = $this->request->post['lend_price'];
+
+		//$min_bid_price = $this->request->post['min_bid_price'];
+		//$max_bid_price = $this->request->post['max_bid_price'];
+
+ 		$this->load->model('mylibrary/mylibrary');
+
+		
+
+		$data['books'] = array();
+
+		$book = $this->model_mylibrary_mylibrary->updateBook($isbn);
+
+		$this->index();
+
+				 
+	 }
+
+	 public function deleteMylibraryBooks()
+	 {
+		 
+		 $this->load->language('mylibrary/mylibrary');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('mylibrary/mylibrary');
+ 
+		$url = '';
+		 
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('mylibrary/mylibrary')
+		);
+
+	  	 
+  		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
+		
+ 		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+ 
+		//$this->load->language('mylibrary/mastersearch');
+
+		$this->load->model('mylibrary/mylibrary');
+
+		$data['searchisbn'] = $this->url->link('mylibrary/mylibrary/searchByISBN' , '' , true);
+
+		$data['text_mastersearch'] = $this->language->get('text_mastersearch');
+
+		if (isset($this->request->post['text_mastersearch'])) {
+			$mastersearch = $this->request->post['text_mastersearch'];
+		} else {
+			$mastersearch = '';
+		}
+
+		$isbn = $this->request->get['isbn'];
+ 
+		$books = $this->model_mylibrary_mylibrary->deleteBook($isbn);
+
+		$data['bookresult'] = $books;
+
+		$book = $this->model_mylibrary_mylibrary->getBook($isbn);
+		$this->model_mylibrary_mylibrary->deleteFromProduct($book);
+
+		
+
+		 
+		$data['books_in_library'] = $this->url->link('mylibrary/mylibrary','',true);
+		$data['purchased_books'] = $this->url->link('mylibrary/mylibrary/getPurchased','',true);
+		$data['reviewed_books'] = $this->url->link('mylibrary/mylibrary/getReviewedBooks','',true);
+		$data['favorite_books'] = $this->url->link('mylibrary/mylibrary/getFavorite','',true);
+
+        $this->index();
+
 	 }
  
 	 }

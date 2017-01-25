@@ -64,7 +64,7 @@ Price: <input type="textbox"  name="sell_price" id="txtPassportNumber" value="" 
 Price: <input type="textbox"  name="share_price" id="txtPassportNumber" value="" >
 </div>
 
-<input type="checkbox" id="lend" onclick="ShowHideDiv(this)" name="vehicle" value="Bike">Lend<br>
+<!-- <input type="checkbox" id="lend" onclick="ShowHideDiv(this)" name="vehicle" value="Bike">Lend<br>
 <div id="dvLend" style="display: none">
 Price: <input type="textbox"  name="lend_price" id="txtPassportNumber" value="" >
 </div>
@@ -73,7 +73,7 @@ Price: <input type="textbox"  name="lend_price" id="txtPassportNumber" value="" 
 <div id="dvBid" style="display: none">
 Min.Price: <input type="textbox"  name="min_bid_price" id="bidprice" value="" ><br><br>
 Max.Price: <input type="textbox"  name="max_bid_price" id="bidprice" value="" >
-</div>
+</div> -->
 
 <input type="submit" value="Add to Library">
 </div>
@@ -87,7 +87,8 @@ Max.Price: <input type="textbox"  name="max_bid_price" id="bidprice" value="" >
                    
                     </div>
 
-                    
+
+
 </div>
  
 </div>

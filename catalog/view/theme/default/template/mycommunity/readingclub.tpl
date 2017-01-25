@@ -10,7 +10,7 @@
 
 
 <aside id="column_left"class="col-sm-3 hidden-xs">
-<h3>My Community</h3>
+<h3><?php echo $text_mycommunity;?></h3>
 <div class="list-group">
 <a href = "<?php echo $sharedbooks; ?>" button type="button" class = "list-group-item"> <?php echo $button_sharedbooks;?>  </a></button>
 <a href = "<?php echo $readingclub; ?> " button type="button" class = "list-group-item"><?php echo $button_reading_club;?> </a></button>
@@ -21,7 +21,7 @@
 </aside>
 
 <div id="content" class="col-sm-9">
-<h3>Reading Club</h3>
+<h3><?php echo $text_reading_club;?></h3>
 <div class="row">
 <div class="tabbable-panel">
 <div class="tabbable-line">
@@ -48,7 +48,7 @@
 <form action = "<?php echo $addmember; ?>"  method ="post">
             
 <input type="hidden" name="groupid" value="<?php echo $group['group_id']; ?>">
-<input class="myBtn" type="submit"   value="<?php echo $button_join;?>">
+<input class = "join" id="btn" type="submit" value="<?php echo $button_join;?>">
 </form>   
           
 <!--<a href="<?php echo $join; ?>"</a><button type="button" class="join" value="join" onclick="mycommunity.join('<?php echo $mycommunity['group_id']; ?>');">JOIN</button>-->
@@ -63,13 +63,15 @@
 <div class="row">
 <?php foreach($members as $member) {?>
 <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-
+<div class="product-thumb transition ">
 <h4><?php echo $member['group_name']; ?></h4>  
 <div class="image">
- <input type = "image" img class="img-responsive" src="<?php echo $member['group_image']; ?>"/>
+ <!--<input type = "image" img class="img-responsive" src="<?php echo $member['group_image']; ?>"/>-->
+ <a href= "<?php echo $member_image.$member['group_id'];?>"><img class="img-responsive" src="<?php echo $member['group_image']; ?>"/> </a>
 </div><br>
+<input class = "join" value="<?php echo $button_member;?>">
 
-
+</div>
 </div>
 <?php } ?>
 </div> 
@@ -77,15 +79,18 @@
 
 <div class="tab-pane" id="tab_default_3">
 <div class="row">
-<button type="button" style="float:left" data-toggle="modal" data-target="#myModal" class="add" value="add books"/><?php echo $button_create_club;?> <i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+  <button type="button" style="float:left" onclick="location.href='<?php echo $create_newclub;?>'" class="add" value="add books"/><?php echo $button_create_club;?> <i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+<!--<button type="button" style="float:left" data-toggle="modal" data-target="#myModal" class="add" value="add books"/><?php echo $button_create_club;?> <i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>-->
 <?php foreach($clubs as $club) {?>
 <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
 <div class="product-thumb transition ">
 <h4><?php echo $club['group_name']; ?></h4>
 <div class="image">
-<input type = "image" img class="img-responsive" src="<?php echo $club['group_image']; ?>"/>
+<a href= "<?php echo $club_image.$club['group_id'];?>"><img class="img-responsive" src="<?php echo $club['group_image']; ?>"/> </a>
+
+<!--<input type = "image" img class="img-responsive" src="<?php echo $club['group_image']; ?>"/>-->
 </div>
-<h4><?php echo $club['group_description']; ?></h4>
+<h5><?php echo $club['group_description']; ?></h5>
 </div>
 </div>
 <?php } ?>
@@ -116,7 +121,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $button_cancel;?></button>
      <!--      <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>-->
-     <button id = "done" type="submit" class="btn btn-default" ><?php echo $button_done;?></button>
+     <button id = "done" type="submit" class="btn btn-primary" ><?php echo $button_done;?></button>
      <!--    <input id="done" type="submit" class="btn btn-default"  value= "<?php echo $text_description;?>-->
         </div>
 </form>
@@ -157,6 +162,14 @@ $(".myBtn").on('click',function(){
     else {
    self.val("JOIN");
     }
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(e){
+  $('#btn').click function(){
+    $(this).val("MEMBER");
+  });
 });
 
 </script>

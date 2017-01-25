@@ -97,6 +97,13 @@ class ControllerCommonHeader extends Controller {
 
 		$this->load->model('catalog/product');
 
+	    $customer_id = (int)$this->customer->getId();
+        $firstname = $this->customer->getFirstName();
+        $lastname = $this->customer->getLastName();
+
+		 $data['first_name'] = $firstname;
+        $data['last_name']  = $lastname;
+
 		$data['categories'] = array();
 
 		$categories = $this->model_catalog_category->getCategories(0);

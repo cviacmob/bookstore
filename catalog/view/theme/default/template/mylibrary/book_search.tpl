@@ -23,7 +23,7 @@
 
 <form action="<?php echo $searchisbn; ?>" method="post" >
     <div class="input-group col-xs-3">
-    	<input type="text" class="form-control" placeholder="enter ISBN" name="text_mastersearch" id="text_search">
+    	<input type="text" class="form-control" placeholder="enter ISBN" name="text_mastersearch" required id="text_search">
         <div class="input-group-btn">
             <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
         </div>
@@ -32,7 +32,7 @@
 <br><br>
  <form action="<?php echo $search_author; ?>" method="post"  >
     <div class="input-group col-xs-3">
-        <input type="text" class="form-control" placeholder="search by author" name="search_by_author" 
+        <input type="text" class="form-control" placeholder="search by author" name="search_by_author" required
         id="text_search_by_author">
         <div class="input-group-btn">
             <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>

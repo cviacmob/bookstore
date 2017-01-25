@@ -13,27 +13,31 @@
 <h3><?php echo $publisher_info['publisher_name'];?></h3>
 <img src="<?php echo $publisher_info['publisher_image'];?>" height="203" width ="240" />
 <br>
-<h3>Address </h3>
-<h4><?php echo $publisher_info['publisher_address'];?></h4>
+<br>
+
+<form action="<?php echo $add_to_liked_publisher;?>" method="post" >
+
+<input type="hidden" name="publisher_id" value="<?php echo $publisherresult['publisher_id']; ?>">
+<div class="view-books-pub">
+<button type = "submit" class="btn btn default" id = "myBtn"> <?php echo $button_like_page;?> </button> &nbsp&nbsp&nbsp&nbsp
+<button type = "submit" class="btn btn default" id = "myBtn"> <?php echo $button_view_books;?> </button>
+</div>
+</form>
 
 </aside>
 
+<div id="content" class="col-sm-9">
+<br>
+<h3><?php echo $text_address;?> </h3>
+<h4><?php echo $publisher_info['publisher_address'];?></h4>
 
 
 
-
-
-
-
-
-
-
-  
-</div>
 </div>
 
 
 
-
+</div>
+</div>
 
 <?php echo $footer; ?> 

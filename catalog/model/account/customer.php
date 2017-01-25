@@ -21,17 +21,31 @@ class ModelAccountCustomer extends Model {
 
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
 
+		/* CUSTOM [ */
+            list($usec, $sec) = explode(' ', microtime());
+            srand((float) $sec + ((float) $usec * 100000));
+            $verification_code = md5($customer_id . ':' . rand());
+            $this->db->query("DELETE FROM ".DB_PREFIX."customer_verification WHERE customer_id = '".(int)$customer_id."'");
+            $this->db->query("INSERT INTO ".DB_PREFIX."customer_verification SET customer_id = '".(int)$customer_id."', verification_code = '".$verification_code."'");
+            $verification_link = $this->url->link('account/verification') . '&v=' . $verification_code . '&u=' . (int)$customer_id;
+        /* ] */
+
 		$this->load->language('mail/customer');
 
 		$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
 		$message = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
 
-		if (!$customer_group_info['approval']) {
+		/*if (!$customer_group_info['approval']) {
 			$message .= $this->language->get('text_login') . "\n";
 		} else {
 			$message .= $this->language->get('text_approval') . "\n";
-		}
+		} */
+
+		 /* CUSTOM [ */
+            $message .= $this->language->get('text_email_verification') . "\n\n";
+            $message .= $verification_link . "\n\n";
+        /* ] */
 
 		$message .= $this->url->link('account/login', '', true) . "\n\n";
 		$message .= $this->language->get('text_services') . "\n\n";
@@ -44,7 +58,7 @@ class ModelAccountCustomer extends Model {
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
 		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+		$mail->smtp_port = $this->config->get('config_mail_smtp_port'); 
 		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
 		$mail->setTo($data['email']);
