@@ -12,7 +12,9 @@ class ModelMyCommunityMycommunity extends Model {
                 'group_name'              => $query->row['group_name'],
                 'group_image'             => $query->row['group_image'],
                 'likes'                   => $query->row['likes'],
-                'total_votes'             => $query->row['total_votes']
+                'total_votes'             => $query->row['total_votes'],
+                'status'                  => $query->row['status']
+
                   
             );
         }
@@ -42,6 +44,8 @@ public function getRecommended() {
       $this->db->query("DELETE FROM group_members WHERE customer_id = '" . (int)$this->customer->getId() . "'AND group_id = '" . $group_id. "'");
 
      $this->db->query("INSERT INTO  group_members SET customer_id = '" . (int)$this->customer->getId() . "', group_id = '" . $group_id. "'");
+
+     $this->db->query("UPDATE  readingclub SET status='member' WHERE customer_id = '" . (int)$this->customer->getId() . "' AND group_id = '" . $group_id. "'");
     
   }
 
@@ -56,7 +60,8 @@ public function getRecommended() {
                     'group_name'            => $query->row['group_name'],
 			        'group_image'           => $query->row['group_image'],
                     'likes'                 => $query->row['likes'],
-                    'total_votes'           => $query->row['total_votes']
+                    'total_votes'           => $query->row['total_votes'],
+                    'status'                  => $query->row['status']
 					
 
 						);
@@ -142,7 +147,8 @@ return false;
 					'link'                  => $query->row['link'],
                    	'customer_image'        => $query->row['customer_image'],
                     'likes'                 => $query->row['likes'],
-                    'total_votes'           => $query->row['total_votes']
+                    'total_votes'           => $query->row['total_votes'],
+                    'status'                => $query->row['status']
 
 						);
 			  }
@@ -170,6 +176,8 @@ return false;
   {
 
    $this->db->query("INSERT INTO readingclub_post SET  group_id = '". $groupid ."' , posted_by = 'customer' , image = 'image/books/book.jpg' , customer_id = '" . (int)$this->customer->getId() . "', message = '" . $this->request->post['text_name']. "', date_added = NOW() ");
+
+    $this->db->query("UPDATE  readingclub_post SET status='member' WHERE customer_id = '" . (int)$this->customer->getId() . "' AND group_id = '" . $group_id. "'");
    
   }
 

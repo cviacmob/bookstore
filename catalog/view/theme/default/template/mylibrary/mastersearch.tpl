@@ -9,13 +9,13 @@
 <div class="row">
 
 <aside id="column_left"class="col-sm-3 hidden-xs">
-<h3>My Library</h3>
-<a href="<?php echo $createnewshelf; ?>"class="btn btn-default btn-lg" id="button-newshelf" >Create new Shelf</a> <br><br>
+<h3><?php echo $text_my_library; ?></h3>
+<!-- <a href="<?php echo $createnewshelf; ?>"class="btn btn-default btn-lg" id="button-newshelf" >Create new Shelf</a> <br><br> -->
 <div class="list-group">
-<a href = "<?php echo $books_in_library; ?>" class = "list-group-item"> My Books </a>
-<a href = "<?php echo $purchased_books; ?>" button type = "button" class = "list-group-item"> Purchased </a> </button>
-<a href = "<?php echo $reviewed_books; ?> " class = "list-group-item"> Reviewed </a>
-<a href = "<?php echo $favorite_books; ?>" class = "list-group-item"> Favourites </a>
+<a href = "<?php echo $books_in_library; ?>" class = "list-group-item"> <?php echo $text_my_books; ?> </a>
+<a href = "<?php echo $purchased_books; ?>" class = "list-group-item"> <?php echo $text_purchased; ?> </a>
+<a href = "<?php echo $reviewed_books; ?>" class = "list-group-item"> <?php echo $text_reviewed; ?> </a>
+<a href = "<?php echo $favorite_books; ?> " class = "list-group-item"> <?php echo $text_favourites; ?> </a>
 </div>
 </aside>
 
@@ -44,24 +44,37 @@
                     <img class ="img-responsive" src="<?php echo $bookresult['image'];?>"style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"><br>
                     <div class="caption-full">
                         <h3 class="pull-right"></h3>
-                        <h2><?php echo $bookresult['title'];?></h2>
-                        <h3><span>by </span><?php echo $bookresult['author'];?></h3>
-                        <h3>ISBN:<?php echo $bookresult['isbn'];?></h3>
-                        <h3>Publisher:<?php echo $bookresult['publisher'];?></h3>
-                        <h3><?php echo $bookresult['cover_type'];?>:<?php echo $bookresult['no_of_pages'];?><span>pages</span><h3><br>
-<div class="col-md-offset-5">
+                        <div class="bookresult-title">
+                        <?php echo $bookresult['title'];?>
+                        </div>
+                        <div class="bookresult-author">
+                        <span>by </span><?php echo $bookresult['author'];?>
+                        </div>
+                        <div class="bookresult-isbn">
+                        <?php echo $text_isbn;?>:<?php echo $bookresult['isbn'];?>
+                        </div>
+                        <div class="bookresult-publisher">
+                        <?php echo $text_publisher;?>:<?php echo $bookresult['publisher'];?>
+                        </div>
+                        <div class="bookresult-cover">
+                        <?php echo $bookresult['cover_type'];?>:<?php echo $bookresult['no_of_pages'];?><span>pages</span>
+                        </div>
 
+<!-- <div class="col-md-offset-5">
+ -->
+ <div class="bookresult-options">
 <form action="<?php echo $add_to_library; ?>" method="post" >
-Options :<br>
-
-<input type="checkbox" id="sell" onclick="ShowHideDiv(this)">Sell<br>
-<div id="dvSell" style="display: none">
-Price: <input type="textbox"  name="sell_price" id="txtPassportNumber" value="" vspace="50">
+<?php echo $text_sell_price; ?> :<br>
 </div>
-
-<input type="checkbox" id="share" onclick="ShowHideDiv(this)" >Share<br>
+<div class="bookresult-sell">
+<input type="checkbox" id="sell" onclick="ShowHideDiv(this)">&nbspSell<br>
+<div id="dvSell" style="display: none">
+<?php echo $text_price; ?>: <input type="textbox"  name="sell_price" id="txtPassportNumber" value="" vspace="50">
+</div>
+</div>
+<input type="checkbox" id="share" onclick="ShowHideDiv(this)" >&nbspShare<br>
 <div id="dvShare" style="display: none">
-Price: <input type="textbox"  name="share_price" id="txtPassportNumber" value="" >
+<?php echo $text_price; ?>: <input type="textbox"  name="share_price" id="txtPassportNumber" value="" >
 </div>
 
 <!-- <input type="checkbox" id="lend" onclick="ShowHideDiv(this)" name="vehicle" value="Bike">Lend<br>
@@ -76,7 +89,7 @@ Max.Price: <input type="textbox"  name="max_bid_price" id="bidprice" value="" >
 </div> -->
 
 <input type="submit" value="Add to Library">
-</div>
+<!-- </div> -->
  
 </form><br>
 <!-- <div class="pull-right"><a href="<?php echo $add_to_library; ?>"class="btn btn-default btn-lg"  id="button-cart" >Add to Library</a></div> -->

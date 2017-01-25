@@ -9,13 +9,13 @@
 <div class="row">
 
 <aside id="column_left"class="col-sm-3 hidden-xs">
-<h3>My Library</h3>
-<a href="<?php echo $createnewshelf; ?>"class="btn btn-default btn-lg" id="button-newshelf" >Create new Shelf</a> <br><br>
+<h3><?php echo $heading_title; ?></h3>
+<!-- <a href="<?php echo $createnewshelf; ?>"class="btn btn-default btn-lg" id="button-newshelf" >Create new Shelf</a> <br><br> -->
 <div class="list-group">
-<a href = "<?php echo $books_in_library; ?>" class = "list-group-item"> My Books  </a>
-<a href = "<?php echo $purchased_books; ?>" button type = "button" class = "list-group-item"> Purchased  </a> </button>
-<a href = "<?php echo $reviewed_books; ?> " class = "list-group-item"> Reviewed </a>
-<a href = "<?php echo $favorite_books; ?>" class = "list-group-item"> Favourites </a>
+<a href = "<?php echo $books_in_library; ?>" class = "list-group-item"> <?php echo $text_my_books; ?> </a>
+<a href = "<?php echo $purchased_books; ?>" class = "list-group-item"> <?php echo $text_purchased; ?> </a>
+<a href = "<?php echo $reviewed_books; ?>" class = "list-group-item"> <?php echo $text_reviewed; ?> </a>
+<a href = "<?php echo $favorite_books; ?> " class = "list-group-item"> <?php echo $text_favourites; ?> </a>
 </div>
 </aside>
 
@@ -41,14 +41,14 @@
  
 
  <div class="bookdetails">
-                    <h3>This book is already exist in your library</h3>
+                    <h3><?php echo $text_exist_book;?></h3>
                     <img class ="img-responsive" src="<?php echo $existing_book['image'];?>"style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"><br>
                     <div class="caption-full">
                         <h3 class="pull-right"></h3>
                         <h2><?php echo $existing_book['title'];?></h2>
                         <h3><span>by </span><?php echo $existing_book['author'];?></h3>
-                        <h3>ISBN:<?php echo $existing_book['isbn'];?></h3>
-                        <h3>Publisher:<?php echo $existing_book['publisher'];?></h3>
+                        <h3><?php echo $text_isbn;?>:<?php echo $existing_book['isbn'];?></h3>
+                        <h3><?php echo $text_publisher;?>:<?php echo $existing_book['publisher'];?></h3>
                         <h3><?php echo $existing_book['cover_type'];?>:<?php echo $existing_book['no_of_pages'];?><span>pages</span><h3><br>
 
                         

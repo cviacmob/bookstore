@@ -48,7 +48,12 @@
 <form action = "<?php echo $addmember; ?>"  method ="post">
             
 <input type="hidden" name="groupid" value="<?php echo $group['group_id']; ?>">
+<?php if($group['status'] == 'member'){ ?>
+<input class = "join" id="btn" type="submit" value="<?php echo $button_member;?>">
+<?php }else { ?>
 <input class = "join" id="btn" type="submit" value="<?php echo $button_join;?>">
+<?php } ?>
+
 </form>   
           
 <!--<a href="<?php echo $join; ?>"</a><button type="button" class="join" value="join" onclick="mycommunity.join('<?php echo $mycommunity['group_id']; ?>');">JOIN</button>-->

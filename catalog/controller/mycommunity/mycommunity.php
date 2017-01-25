@@ -124,6 +124,8 @@ class ControllerMyCommunitymycommunity extends Controller {
         $booklink = "mycommunity/mycommunity/requested&isbn=";
         $data['share_with_me']   = $this->url->link($booklink, '', true);
 
+       $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
+
        // $data['share_with_me'] = $this->url->link('mycommunity/mycommunity/share', '', true);
 
        
@@ -136,13 +138,6 @@ class ControllerMyCommunitymycommunity extends Controller {
     }
 
     public function readingclub(){
-  
-  /*  if (!$this->customer->isLogged()) {
-            $this->session->data['redirect'] = $this->url->link('mycommunity/mycommunity', '', true);
-
-            $this->response->redirect($this->url->link('account/login', '', true));
-        }  */
-
             
       $this->load->language('mycommunity/mycommunity');
 
@@ -212,7 +207,8 @@ class ControllerMyCommunitymycommunity extends Controller {
 
                     'group_id' =>$recom['group_id'],
                     'group_name' =>$recom['group_name'],
-                    'group_image' =>$recom['group_image']
+                    'group_image' =>$recom['group_image'],
+                    'status' =>$recom['status']
                     
                  
                     );
@@ -411,7 +407,8 @@ class ControllerMyCommunitymycommunity extends Controller {
 
                     'group_id' =>$recom['group_id'],
                     'group_name' =>$recom['group_name'],
-                    'group_image' =>$recom['group_image']
+                    'group_image' =>$recom['group_image'],
+                    'status' =>$recom['status']
                  
                     );
              
@@ -432,8 +429,8 @@ class ControllerMyCommunitymycommunity extends Controller {
 			 $data['members'][] = array (
 
 				 'group_id' =>$memberresult['group_id'],
-			    'group_name' =>$memberresult['group_name'],
-			   'group_image' =>$memberresult['group_image']
+			     'group_name' =>$memberresult['group_name'],
+			     'group_image' =>$memberresult['group_image']
 					);
 			 
 		 }
@@ -461,6 +458,8 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
 
         $data['create_club'] = $this->url->link('mycommunity/mycommunity/createclub', '', true);
+
+        $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
 
         $this->response->setOutput($this->load->view('mycommunity/readingclub', $data));
 
@@ -627,7 +626,7 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['button_cancel'] = $this->language->get('button_cancel');
         $data['button_done'] = $this->language->get('button_done');
         $data['button_join'] = $this->language->get('button_join');
-
+        $data['button_member'] = $this->language->get('button_member');
 
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');
@@ -664,7 +663,8 @@ class ControllerMyCommunitymycommunity extends Controller {
 			      'image'                 =>$postresult['image'],
                   'link'                  =>$postresult['link'],
                   'likes'                 =>$postresult['likes'],
-                  'total_votes'           =>$postresult['total_votes']
+                  'total_votes'           =>$postresult['total_votes'],
+                  'status'                =>$postresult['status']
 					);
 			 
 		 } 
@@ -679,7 +679,10 @@ class ControllerMyCommunitymycommunity extends Controller {
         
         $sharelink = "mycommunity/mycommunity/likecount&group_id=&post_id=";
         $data['add_to_my_post'] = $this->url->link($sharelink, '', true);
+        
+        $data['add_to_member']   = $this->url->link('mycommunity/mycommunity/join', '', true);
 
+        $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
         
         $this->response->setOutput($this->load->view('mycommunity/recommended', $data));
         

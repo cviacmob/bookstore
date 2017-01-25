@@ -17,16 +17,32 @@
 <h3><?php echo $group_info['group_name']; ?></h3>
 <!--<input type="submit" id="driver" class="btn btn-default btn-lg" value="JOIN "  />-->
 
+<form action = "<?php echo $add_to_member; ?>"  method ="post">
 
-<!--<input type="button" id="driver" class="btn btn-default btn-lg" value="<?php echo $button_join;?> "  />-->
+<input type="hidden" name="groupid" value="<?php echo $group_info['group_id']; ?>">
 
+<?php if($group_info['status'] == 'member'){ ?>
+<button id ="join" class="btn btn-default btn-lg" ><?php echo $button_member;?> </button>
+<?php }else { ?>
 <button id ="join" class="btn btn-default btn-lg" ><?php echo $button_join;?> </button>
+<?php } ?>
+
+</form>   
+
+
+<!--<input type="button" id="driver" class="btn btn-default btn-lg" value="<?php echo $button_join;?> "  />
+
+<button id ="join" class="btn btn-default btn-lg" ><?php echo $button_join;?> </button>-->
 
 </div>
 </div>
 </aside>
 
+
+
+
 <div id="content" class="col-sm-9"><br><br><br>
+
 <div id="text">
 <div class="tabbable-panel">
 <div class="tabbable-line">    
@@ -40,6 +56,9 @@
 </div>
 
 </div>  
+
+
+
 
 &nbsp 
 </div>

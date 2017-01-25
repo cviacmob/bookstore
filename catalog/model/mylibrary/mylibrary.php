@@ -18,8 +18,6 @@ class ModelMylibraryMylibrary extends Model {
     
 	 
   // return true;
-
-   
       
  }
 
@@ -34,7 +32,7 @@ class ModelMylibraryMylibrary extends Model {
 
 	 else
 	 {
-		 $this->db->query("INSERT INTO oc_product SET image = '" . $book['image']. "', author = '" . $book['author']. "', publisher = '" . $book['publisher']. "', cover_type = '" . $book['cover_type']. "', no_of_pages = '" . $book['no_of_pages']. "',sell_price ='" . $this->request->post['sell_price']. "', share_price ='" . $this->request->post['share_price']. "',lend_price ='" .$this->request->post['lend_price']. "', min_bid_price ='" .$this->request->post['min_bid_price']. "',max_bid_price ='" .$this->request->post['max_bid_price']. "', status = '0', quantity = '1',stock_status_id = '6', model = '" . $book['isbn']. "'"); 
+		 $this->db->query("INSERT INTO oc_product SET image = '" . $book['image']. "', author = '" . $book['author']. "', publisher = '" . $book['publisher']. "', cover_type = '" . $book['cover_type']. "', no_of_pages = '" . $book['no_of_pages']. "',sell_price ='" . $this->request->post['sell_price']. "', share_price ='" . $this->request->post['share_price']. "', status = '0', quantity = '1',stock_status_id = '6', model = '" . $book['isbn']. "'"); 
 
 		 $product_id = (int)$this->db->getLastId();
 
@@ -321,6 +319,15 @@ public function bestPrice($customer_id)
 	else
 	return false;
 }
+
+public function uploadImage()
+{
+	$front_image = "catalog/".$_FILES["front_image"]["name"];
+	$back_image = "catalog/".$_FILES["back_image"]["name"];
+	$query = $this->db->query("INSERT INTO uploaded_image SET customer_id = '". (int)$this->customer->getId() . "', front_image = '" .$front_image. "',back_image = '" .$back_image. "'");
+}
+
+
 
 
 }
