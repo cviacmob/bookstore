@@ -363,7 +363,7 @@ class ControllerProductProduct extends Controller {
 			
 
 
-			$data['selected_price'] = $this->url->link('product/product/selectedPrice','',true);
+			$data['selected_price'] = $this->url->link('product/product/selectedPrice&product_id=','',true);
 
 			
 			
@@ -601,6 +601,8 @@ class ControllerProductProduct extends Controller {
 		if(isset($_POST['radio']))
 			{
 				 $selected_price = $_POST['radio'];
+
+				 $product_id = $this->request->get['product_id'];
 
 				 
 

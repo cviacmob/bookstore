@@ -308,7 +308,7 @@
               </div>
 
 
-              <form action="<?php echo $selected_price; ?>" method="post">
+              <form action="<?php echo $selected_price.$product_id; ?>" method="post">
               <div class="bestseller-display">
                <br>
               <?php foreach($seller_prices as $seller_price) { ?>
