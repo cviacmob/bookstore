@@ -62,7 +62,7 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['header'] = $this->load->controller('common/header');
         $data['heading_title'] = $this->language->get('heading_title');
         
-        $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity/sharedbooks', '', true);
+        $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity', '', true);
         $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
         $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
         $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
