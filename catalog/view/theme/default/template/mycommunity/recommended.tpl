@@ -40,12 +40,12 @@
 
 
 
-
 <div id="content" class="col-sm-9"><br><br><br>
 
-<div id="text">
+ <?php if($group_info['status'] == 'member'){ ?> 
+
 <div class="tabbable-panel">
-<div class="tabbable-line">    
+<div class="tabbable-line">
 
 <img class="img-circle"  alt="" width="50" height="50" src="<?php echo $post['customer_image']; ?>" />    
 &nbsp 
@@ -53,15 +53,17 @@
 <i class="fa fa-camera" aria-hidden="true"></i> 
 
 
-</div>
-
-</div>  
-
-
-
 
 &nbsp 
+
+<?php }else { ?>
+
+<?php } ?>
+
+
 </div>
+</div>
+&nbsp
 
 
 <div class="tabbable-panel-right">
