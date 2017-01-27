@@ -1,3 +1,4 @@
+
 <?php
 class ControllerProductProduct extends Controller {
 	private $error = array();
@@ -334,6 +335,43 @@ class ControllerProductProduct extends Controller {
 				);
 			}
 
+
+
+
+
+
+			$isbn = $this->model_catalog_product->getProductBestPrices($this->request->get['product_id']);
+
+			$data['seller_prices'] = array();
+
+			foreach($isbn as $ISBN){
+
+					$customer_prices = $this->model_catalog_product->bestSeller($ISBN);
+					asort($customer_prices);
+
+			}
+			
+			foreach($customer_prices as $customer_price){
+				$data['seller_prices'][] =array(
+					'sell_price'=>$customer_price['sell_price'],
+					//'first_name'=>$customer_price['first_name'],
+					//'last_name'=>$customer_price['last_name']
+				);
+
+			}
+
+			
+
+
+			$data['selected_price'] = $this->url->link('product/product/selectedPrice','',true);
+
+			
+			
+
+
+
+
+
 			$data['options'] = array();
 
 			foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
@@ -406,6 +444,7 @@ class ControllerProductProduct extends Controller {
 			$data['products'] = array();
 
 			$results = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
+			 
 
 			foreach ($results as $result) {
 				if ($result['image']) {
@@ -477,7 +516,8 @@ class ControllerProductProduct extends Controller {
 			$data['header'] = $this->load->controller('common/header');
 
 			$this->response->setOutput($this->load->view('product/product', $data));
-		} else {
+		} else 
+		{
 			$url = '';
 
 			if (isset($this->request->get['path'])) {
@@ -554,6 +594,22 @@ class ControllerProductProduct extends Controller {
 
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
+	}
+
+	public function selectedPrice(){
+
+		if(isset($_POST['radio']))
+			{
+				 $selected_price = $_POST['radio'];
+
+				 
+
+				 
+
+				 
+
+				 
+			}
 	}
 
 	public function review() {
