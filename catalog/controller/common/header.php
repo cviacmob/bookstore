@@ -61,7 +61,7 @@ class ControllerCommonHeader extends Controller {
 
         $data['text_mylibrary'] = $this->language->get('text_mylibrary');
 
-		 $data['text_mycommunity'] = $this->language->get('text_mycommunity');
+		$data['text_mycommunity'] = $this->language->get('text_mycommunity');
 
 		$data['text_account'] = $this->language->get('text_account');
 		$data['text_register'] = $this->language->get('text_register');

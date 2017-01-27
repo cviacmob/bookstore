@@ -16,6 +16,8 @@
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <div class="row">
         <?php if ($column_left || $column_right) { ?>
+
+
         <?php $class = 'col-sm-6'; ?>
         <?php } else { ?>
         <?php $class = 'col-sm-8'; ?>
@@ -33,6 +35,7 @@
             <?php } ?>
           </ul>
           <?php } ?>
+
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
             <?php if ($attribute_groups) { ?>
@@ -58,6 +61,8 @@
                   <tr>
                     <td><?php echo $attribute['name']; ?></td>
                     <td><?php echo $attribute['text']; ?></td>
+
+
                   </tr>
                   <?php } ?>
                 </tbody>
@@ -115,7 +120,7 @@
         <div class="<?php echo $class; ?>">
           <div class="btn-group">
             <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
-            <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
+            <!-- <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button> -->
           </div>
           <h1><?php echo $heading_title; ?></h1>
           <ul class="list-unstyled">
@@ -128,6 +133,12 @@
             <?php } ?>
             <li><?php echo $text_stock; ?> <?php echo $stock; ?></li>
           </ul>
+
+
+          <?php echo "value"; ?>
+
+
+
           <?php if ($price) { ?>
           <ul class="list-unstyled">
             <?php if (!$special) { ?>
@@ -286,6 +297,33 @@
               <label class="control-label" for="input-quantity"><?php echo $entry_qty; ?></label>
               <input type="text" name="quantity" value="<?php echo $minimum; ?>" size="2" id="input-quantity" class="form-control" />
               <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
+             
+
+
+
+              <?php if ($seller_prices) { ?>
+               <br>
+              <div class="bestsellers">
+               <label class="control-label" >Best Sellers</label>
+              </div>
+
+
+              <form action="<?php echo $selected_price; ?>" method="post">
+              <div class="bestseller-display">
+               <br>
+              <?php foreach($seller_prices as $seller_price) { ?>
+                <input type="radio" name="radio" value = "<?php echo $seller_price['sell_price']; ?>" onclick="javascript: submit()" style="font-size: 27px;"
+                 /> &nbsp;<i class="fa fa-inr" style="font-size: 27px;" aria-hidden="true"></i> 
+                   <!-- <?php echo $seller_price['first_name']; ?>&nbsp;<?php echo $seller_price['last_name']; ?> --> 
+                    <?php echo $seller_price['sell_price']; ?><br><br>
+              <?php } ?> 
+
+              </div>
+              </form>
+
+
+              
+              <?php } ?>
               <br />
               <button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary btn-lg btn-block"><?php echo $button_cart; ?></button>
             </div>
@@ -303,7 +341,8 @@
               <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
               <?php } ?>
               <?php } ?>
-              <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?php echo $reviews; ?></a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?php echo $text_write; ?></a></p>
+              <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?php echo $reviews; ?></a> <!-- / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?php echo $text_write; ?></a> -->
+            </p>
             <hr>
             <!-- AddThis Button BEGIN -->
             <div class="addthis_toolbox addthis_default_style" data-url="<?php echo $share; ?>"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
@@ -311,6 +350,9 @@
             <!-- AddThis Button END -->
           </div>
           <?php } ?>
+
+         
+
         </div>
       </div>
       <?php if ($products) { ?>
@@ -329,6 +371,9 @@
           <div class="product-thumb transition">
             <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-responsive" /></a></div>
             <div class="caption">
+
+              
+
               <h4><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h4>
               <p><?php echo $product['description']; ?></p>
               <?php if ($product['rating']) { ?>
@@ -342,10 +387,16 @@
                 <?php } ?>
               </div>
               <?php } ?>
+
+
+
+
+
+
               <?php if ($product['price']) { ?>
               <p class="price">
                 <?php if (!$product['special']) { ?>
-                <?php echo $product['price']; ?>
+                <?php echo +value; ?>
                 <?php } else { ?>
                 <span class="price-new"><?php echo $product['special']; ?></span> <span class="price-old"><?php echo $product['price']; ?></span>
                 <?php } ?>
@@ -354,6 +405,7 @@
                 <?php } ?>
               </p>
               <?php } ?>
+
             </div>
             <div class="button-group">
               <button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>', '<?php echo $product['minimum']; ?>');"><span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span> <i class="fa fa-shopping-cart"></i></button>
@@ -384,6 +436,7 @@
         <?php } ?>
       </p>
       <?php } ?>
+
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
 </div>
@@ -580,4 +633,35 @@ $(document).ready(function() {
 	});
 });
 //--></script>
+
+
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+ 
+
+// Funtion to get checked radio's value.
+$('#radio_value').click(function() {
+$('#result').empty();
+var value = $("form input[type='radio']:checked").val();
+if($("form input[type='radio']").is(':checked')) {
+$('#result').append("Checked Radio Button Value is :<span> "+ value +" </span>");
+}else{
+alert(" Please Select any Option ");
+}
+});
+// Get value Onchange radio function.
+$('input:radio').change(function(){
+var value = $("form input[type='radio']:checked").val();
+ 
+alert("Value of Changed Radio is : " +value);
+});
+// Funtion to reset or clear selection.
+$('#radio_reset').click(function() {
+$('#result').empty();
+$("input:radio").attr("checked", false);
+});
+ 
+});
+</script> -->
+
 <?php echo $footer; ?>
