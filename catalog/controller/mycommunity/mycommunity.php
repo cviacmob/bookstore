@@ -1803,7 +1803,9 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['text_requested_books'] = $this->language->get('text_requested_books');
         $data['text_name_this_club'] = $this->language->get('text_name_this_club');
         $data['text_description'] = $this->language->get('text_description');
-        $data['text_sharesomething'] = $this->language->get('text_sharesomething');     
+        $data['text_sharesomething'] = $this->language->get('text_sharesomething');    
+        $data['text_mycommunity'] = $this->language->get('text_mycommunity');   
+        $data['text_reading_club'] = $this->language->get('text_reading_club');  
         $data['button_create_club'] = $this->language->get('button_create_club');
         $data['button_cancel'] = $this->language->get('button_cancel');
         $data['button_done'] = $this->language->get('button_done');
