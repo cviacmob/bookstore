@@ -44,8 +44,10 @@
 
  <?php if($group_info['status'] == 'member'){ ?> 
 
-<div class="tabbable-panel">
-<div class="tabbable-line">
+
+<div class="tabbable-panel-right">
+
+<div class="tabbable-line"> 
 
 <img class="img-circle"  alt="" width="50" height="50" src="<?php echo $post['customer_image']; ?>" />    
 &nbsp 
@@ -56,15 +58,20 @@
 
 &nbsp 
 
+
+
+
+</div>
+</div> 
+
 <?php }else { ?>
 
 <?php } ?>
 
-
-</div>
-</div>
 &nbsp
 
+
+ <?php if($group_info['status'] == 'member'){ ?> 
 
 <div class="tabbable-panel-right">
 <div class="tabbable-line">
@@ -90,6 +97,12 @@
 <br>
 <br>
 </form>
+
+<?php } ?>
+
+
+
+<?php }else { ?>
 
 <?php } ?>
 

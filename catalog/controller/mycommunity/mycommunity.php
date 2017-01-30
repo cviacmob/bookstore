@@ -731,7 +731,7 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['button_cancel'] = $this->language->get('button_cancel');
         $data['button_done'] = $this->language->get('button_done');
         $data['button_join'] = $this->language->get('button_join');
-
+        $data['button_member'] = $this->language->get('button_member');
 
         $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity', '', true);
         $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
