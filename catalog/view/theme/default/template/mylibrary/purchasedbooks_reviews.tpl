@@ -50,7 +50,7 @@
 <form class="form-horizontal" id="form-review">
    <div class="form-group required">
         <div class="col-sm-12">
-            <label ><?php echo $entry_review; ?></label>
+            <label ><?php echo $text_your_review; ?></label>
              <textarea name="text" rows="5" id="input-review" class="form-control"><?php echo $review['text']; ?></textarea>
          
           <label ><?php echo $text_your_rating; ?>:</label>         
