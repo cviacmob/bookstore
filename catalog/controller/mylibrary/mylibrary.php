@@ -5,7 +5,7 @@ class ControllerMylibraryMylibrary extends Controller {
 	public function index()
 	{
 
-		$test= 0;
+		 
 
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('mylibrary/mylibrary', '', true);
@@ -893,6 +893,13 @@ class ControllerMylibraryMylibrary extends Controller {
 
 		$productlink =  "mylibrary/mylibrary/yourReview&product_id=";
 		$data['your_review'] = $this->url->link($productlink, '' , true);
+
+		$data['text_my_books'] = $this->language->get('text_my_books');
+		$data['text_purchased'] = $this->language->get('text_purchased');
+		$data['text_reviewed'] = $this->language->get('text_reviewed');
+		$data['text_favourites'] = $this->language->get('text_favourites');
+
+		$data['text_reviewed_books'] = $this->language->get('text_reviewed_books');
 		
 		$this->response->setOutput($this->load->view('mylibrary/reviewed_books', $data));	
 
@@ -927,6 +934,11 @@ class ControllerMylibraryMylibrary extends Controller {
 		$data['purchased_books'] = $this->url->link('mylibrary/mylibrary/getPurchased','',true);
 		$data['reviewed_books'] = $this->url->link('mylibrary/mylibrary/getReviewedBooks','',true);
 		$data['favorite_books'] = $this->url->link('mylibrary/mylibrary/getFavorite','',true);
+
+		$data['text_my_books'] = $this->language->get('text_my_books');
+		$data['text_purchased'] = $this->language->get('text_purchased');
+		$data['text_reviewed'] = $this->language->get('text_reviewed');
+		$data['text_favourites'] = $this->language->get('text_favourites');
 	
 		//$data['continue'] = $this->url->link('mylibrary/mylibrary/write', '', true);	 
 		 
