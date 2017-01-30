@@ -52,8 +52,14 @@
 <img class="img-circle"  alt="" width="50" height="50" src="<?php echo $post['customer_image']; ?>" />    
 &nbsp 
  <input type="text" class="text_share" data-toggle="modal" placeholder="<?php echo $text_sharesomething;?>"data-target="#myPost">
-<i class="fa fa-camera" aria-hidden="true"></i> 
-
+ <!--<input type='file' name="front_image" onchange="readURL(this);" />
+    <img id="blah" src="#" alt="" /> -->
+<!--<button type ="file" onchange="readURL(this);" ><i class="fa fa-camera" aria-hidden="true"></i> </button>-->
+ <div class="container">
+  <span class="select-wrapper">
+    <input type="file" name="image_src" id="image_src" />
+  </span>
+</div>
 
 
 &nbsp 
@@ -201,5 +207,22 @@ $(document).ready(function(e){
             $(this).text("உறுப்பினர்");
         });
     </script>
+
+<script type="text/javascript">
+function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script>    
 
 <?php echo $footer; ?>

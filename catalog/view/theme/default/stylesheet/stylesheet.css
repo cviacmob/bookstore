@@ -1032,7 +1032,13 @@ margin-top: -275px;
 #text_upload_image{
     margin-left: 85px;
 }
-
+#image_src {
+    width: 26px;
+    height: 26px;
+    margin-right: 100px;
+    opacity: 0;
+    filter: alpha(opacity=0); /* IE 5-7 */
+}
 
 .hover-demo{margin-top: 220px;}
 .hover-demo{text-align: center;}
