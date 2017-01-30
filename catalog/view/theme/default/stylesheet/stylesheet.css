@@ -1032,10 +1032,31 @@ margin-top: -275px;
 #text_upload_image{
     margin-left: 85px;
 }
+.review-button
+{
+	width:130.5px;
+}
+.wishlist-button
+{
+	width:126px;
+}
+.viewreview-button{
+	width:260px;
+}
+.edit{
+    width:129px;
 
+}
+.mylibdelete-button{
+	width:126px;
+}
 
 .hover-demo{margin-top: 220px;}
 .hover-demo{text-align: center;}
 .on-hover-content{position: absolute;bottom: 40px;background-color: white;padding: 10px;border-radius: 10px;}
 .on-hover-content img{width:360px;}
+
+.button-group{
+	width: 100%;
+}
 

@@ -38,8 +38,8 @@
 
 
 <div class="btn-group btn-width">
-  <button type="button" class="btn btn-default btn-like" onclick="location.href='<?php echo $review.$book['product_id']; ?>'"><i class="fa fa-star"></i></button>
-  <button type="button" class="btn btn-default btn-like" onclick="location.href='<?php echo $add_to_favorite.$book['product_id']; ?>'"><i class="fa fa-heart"></i></button>
+  <button type="button" class="review-button" onclick="location.href='<?php echo $review.$book['product_id']; ?>'"><i class="fa fa-star"></i></button>
+  <button type="button" class="wishlist-button" onclick="location.href='<?php echo $add_to_favorite.$book['product_id']; ?>'"><i class="fa fa-heart"></i></button>
   <!--<button type="button" class="btn btn-default btn-like" onclick="wishlist.add('<?php echo $book['product_id']; ?>');"><i class="fa fa-heart"></i></button> -->
 </div>
 

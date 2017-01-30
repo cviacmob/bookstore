@@ -44,9 +44,9 @@
 	</div>
 
 
-	<div class="button-group">
-		<button type="button"  data-toggle="tooltip" title="edit"onclick="location.href='<?php echo $edit_mylibrary_books.$book['isbn']; ?>'"><i class="fa fa-edit"></i> <span class="hidden-xs hidden-sm hidden-md"> </span></button>
-		<button type="button" data-toggle="tooltip" title="delete" onclick="location.href='<?php echo $delete_mylibrary_books.$book['isbn']; ?>'"><i class="fa fa-trash"></i></button>
+	<div class="">
+		<button class="edit" data-toggle="tooltip" title="edit"onclick="location.href='<?php echo $edit_mylibrary_books.$book['isbn']; ?>'"><i class="fa fa-edit"></i><!--  <span class="hidden-xs hidden-sm hidden-md"> </span> --></button>
+		<button class="mylibdelete-button" data-toggle="tooltip" title="delete" onclick="location.href='<?php echo $delete_mylibrary_books.$book['isbn']; ?>'"><i class="fa fa-trash"></i></button>
 
 	</div>
 

@@ -38,7 +38,7 @@
 
 
 <div class="btn-group btn-width">
-  <button type="button" class="btn btn-default btn-width" onclick="location.href='<?php echo $your_review.$book['product_id']; ?>'"><i class="fa fa-eye"></i></button>
+  <button type="button" class="viewreview-button" onclick="location.href='<?php echo $your_review.$book['product_id']; ?>'"><i class="fa fa-eye"></i></button>
   <!-- <button type="button" class="btn btn-default btn-like" onclick="wishlist.add('<?php echo $book['product_id']; ?>');"><i class="fa fa-heart"></i></button> -->
 </div>
 
