@@ -482,7 +482,7 @@
             </div>
           </div>
         </fieldset>
-        <fieldset>
+  <!--      <fieldset>
           <legend><?php echo $text_newsletter; ?></legend>
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_newsletter; ?></label>
@@ -504,7 +504,7 @@
               <?php } ?>
             </div>
           </div>
-        </fieldset>
+        </fieldset> -->
         <?php echo $captcha; ?>
         <?php if ($text_agree) { ?>
         <div class="buttons">
