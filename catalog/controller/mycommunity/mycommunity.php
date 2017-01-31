@@ -264,6 +264,7 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['create_newclub'] = $this->url->link('mycommunity/mycommunity/create_newclub', '', true);
 
         $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
+            $data['active_tab'] = 'tab_default_1';
 
         $this->response->setOutput($this->load->view('mycommunity/readingclub', $data));
 
@@ -287,6 +288,7 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['text_description'] = $this->language->get('text_description');
         $data['text_location'] = $this->language->get('text_location');
         $data['text_mycommunity'] = $this->language->get('text_mycommunity');
+        $data['text_reading_club'] = $this->language->get('text_reading_club');
         $data['text_sharesomething'] = $this->language->get('text_sharesomething'); 
         $data['text_create_reading_club'] = $this->language->get('text_create_reading_club');     
         $data['text_reading_club'] = $this->language->get('text_reading_club');     
@@ -461,6 +463,8 @@ class ControllerMyCommunitymycommunity extends Controller {
 
         $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
 
+        $data['active_tab'] = 'tab_default_2';
+        
         $this->response->setOutput($this->load->view('mycommunity/readingclub', $data));
 
 }
@@ -499,6 +503,8 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['text_recommended'] = $this->language->get('text_recommended');
         $data['text_members'] = $this->language->get('text_members');
         $data['text_yours'] = $this->language->get('text_yours');
+          $data['text_mycommunity'] = $this->language->get('text_mycommunity');
+        $data['text_reading_club'] = $this->language->get('text_reading_club');
         $data['text_name_this_club'] = $this->language->get('text_name_this_club');
         $data['text_description'] = $this->language->get('text_description');
         $data['text_sharesomething'] = $this->language->get('text_sharesomething');    
@@ -570,6 +576,8 @@ class ControllerMyCommunitymycommunity extends Controller {
 			 
 		 } 
            $data['create_newclub'] = $this->url->link('mycommunity/mycommunity/create_newclub', '', true);
+
+             $data['active_tab'] = 'tab_default_3';
 
           $this->response->setOutput($this->load->view('mycommunity/readingclub', $data));
         }

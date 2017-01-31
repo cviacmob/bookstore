@@ -1032,14 +1032,7 @@ margin-top: -275px;
 #text_upload_image{
     margin-left: 85px;
 }
-<<<<<<< HEAD
-#image_src {
-    width: 26px;
-    height: 26px;
-    margin-right: 100px;
-    opacity: 0;
-    filter: alpha(opacity=0); /* IE 5-7 */
-=======
+
 .review-button
 {
 	width:130.5px;
@@ -1057,7 +1050,7 @@ margin-top: -275px;
 }
 .mylibdelete-button{
 	width:126px;
->>>>>>> 6225f0a62cdb133bf3df559414b9750eab679754
+
 }
 
 .hover-demo{margin-top: 220px;}

@@ -71,7 +71,6 @@ class ControllerAccountRegister extends Controller {
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_agree'] = $this->language->get('text_agree');
 
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
@@ -453,7 +452,7 @@ class ControllerAccountRegister extends Controller {
 		$json = array();
 
 		$this->load->model('account/custom_field');
-	
+
 		// Customer Group
 		if (isset($this->request->get['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->get['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $this->request->get['customer_group_id'];

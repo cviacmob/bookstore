@@ -26,15 +26,19 @@
 <div class="tabbable-panel">
 <div class="tabbable-line">
 <ul class="nav nav-tabs ">
-<li class="active"><a href="#tab_default_1" data-toggle="tab"> <?php echo $text_recommended;?> </a></li>
-<li><a href="#tab_default_2" data-toggle="tab"> <?php echo $text_members;?></a></li>
-<li><a href="#tab_default_3" data-toggle="tab"> <?php echo $text_yours;?></a></li>
+ 
+<li class="<?php if($active_tab == 'tab_default_1' ) echo 'active'  ?>"> <a href="#tab_default_1" data-toggle="tab"> <?php echo $text_recommended;?> </a></li>
+<li class="<?php if($active_tab == 'tab_default_2' ) echo 'active'  ?>"> <a href="#tab_default_2" data-toggle="tab"> <?php echo $text_members;?></a></li>
+<li class="<?php if($active_tab == 'tab_default_3' ) echo 'active'  ?>" ><a href="#tab_default_3" data-toggle="tab"> <?php echo $text_yours;?></a></li>
+
 
 
 </ul>
 
+
+
 <div class="tab-content">
-<div class="tab-pane active" id="tab_default_1">
+<div class="<?php if($active_tab == 'tab_default_1' ) echo 'tab-pane active'; else echo 'tab-pane'  ?>" id="tab_default_1">
 <div class="row">
 <?php foreach($groups as $group) {?>
 <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -64,7 +68,7 @@
 </div> 
 </div>    
 
-<div class="tab-pane" id="tab_default_2">
+<div class="<?php if($active_tab == 'tab_default_2' ) echo 'tab-pane active'; else echo 'tab-pane' ?> " id="tab_default_2">
 <div class="row">
 <?php foreach($members as $member) {?>
 <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -82,7 +86,8 @@
 </div> 
 </div>
 
-<div class="tab-pane" id="tab_default_3">
+
+<div class="<?php if($active_tab == 'tab_default_3' ) echo 'tab-pane active'; else echo 'tab-pane' ?>" id="tab_default_3">
 <div class="row">
   <button type="button" style="float:left" onclick="location.href='<?php echo $create_newclub;?>'" class="add" value="add books"/><?php echo $button_create_club;?> <i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
 <!--<button type="button" style="float:left" data-toggle="modal" data-target="#myModal" class="add" value="add books"/><?php echo $button_create_club;?> <i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>-->

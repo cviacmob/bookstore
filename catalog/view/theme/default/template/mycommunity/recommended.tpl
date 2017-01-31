@@ -55,11 +55,13 @@
  <!--<input type='file' name="front_image" onchange="readURL(this);" />
     <img id="blah" src="#" alt="" /> -->
 <!--<button type ="file" onchange="readURL(this);" ><i class="fa fa-camera" aria-hidden="true"></i> </button>-->
- <div class="container">
-  <span class="select-wrapper">
-    <input type="file" name="image_src" id="image_src" />
-  </span>
-</div>
+ 
+ <form action="upload.php" method="post" enctype="multipart/form-data">
+    <i class="fa fa-camera" aria-hidden="true"></i>
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+</form>
+
 
 
 &nbsp 

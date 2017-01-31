@@ -1,13 +1,11 @@
 <div id="cart" class="btn-group btn-block">
-  <button type="button" data-toggle="dropdown" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fa fa-shopping-cart"></i> <span id="cart-total"><?php echo $text_items; ?></span></button> 
-</div>
-<div class="">
+  <button type="button" data-toggle="dropdown" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fa fa-shopping-cart"></i> <span id="cart-total"><?php echo $text_items; ?></span></button>
+  <div class="">
   <button type="button" onclick="location.href='<?php echo $mylibrary; ?>'" class="mylib" /> <?php echo $text_mylibrary; ?> <i class="fa fa-book" aria-hidden="true"></i></button></a>&nbsp    
   <button type="button" onclick="location.href='<?php echo $mycommunity; ?>'" class="mycom" /> <?php echo $text_mycommunity; ?> <i class="fa fa-group" aria-hidden="true"></i></button></a>
 
 </div>
-
-   <ul class="dropdown-menu pull-right">
+  <ul class="dropdown-menu pull-right">
     <?php if ($products || $vouchers) { ?>
     <li>
       <table class="table table-striped">
@@ -20,7 +18,7 @@
             <?php if ($product['option']) { ?>
             <?php foreach ($product['option'] as $option) { ?>
             <br />
-             <small><?php echo $option['name']; ?> <?php echo $option['value']; ?></small>
+            - <small><?php echo $option['name']; ?> <?php echo $option['value']; ?></small>
             <?php } ?>
             <?php } ?>
             <?php if ($product['recurring']) { ?>
