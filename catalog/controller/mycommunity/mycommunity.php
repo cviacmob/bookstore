@@ -203,11 +203,19 @@ class ControllerMyCommunitymycommunity extends Controller {
         
         foreach($recommended as $recom)
         {
+           
+             if (is_file(DIR_IMAGE.$recom['group_image'])) {
+				$image = $this->model_tool_image->resize($recom['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+
             $data['groups'][] = array (
 
                     'group_id' =>$recom['group_id'],
                     'group_name' =>$recom['group_name'],
-                    'group_image' =>$recom['group_image'],
+                    'group_image' =>$image,
                     'status' =>$recom['status']
                     
                  
@@ -220,11 +228,18 @@ class ControllerMyCommunitymycommunity extends Controller {
          $memberresults = $this->model_mycommunity_mycommunity->getMembers($customer_id);
          foreach($memberresults as $memberresult)
 		 {
+            
+            if (is_file(DIR_IMAGE.$memberresult['group_image'])) {
+				$image = $this->model_tool_image->resize($memberresult['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+              
 			 $data['members'][] = array (
 
 				 'group_id'    =>$memberresult['group_id'],
 			     'group_name'  =>$memberresult['group_name'],
-			     'group_image' =>$memberresult['group_image']
+			     'group_image' =>$image
 
 					);
 			 
@@ -244,11 +259,18 @@ class ControllerMyCommunitymycommunity extends Controller {
 		 $clubresults = $this->model_mycommunity_mycommunity->getclubs($customer_id);
 		 foreach($clubresults as $clubresult)
 		 {
+             
+            if (is_file(DIR_IMAGE.$clubresult['group_image'])) {
+				$image = $this->model_tool_image->resize($clubresult['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
 			 $data['clubs'][] = array (
 
-                 'group_id'        =>$clubresult['group_id'],
+                 'group_id'          =>$clubresult['group_id'],
 				 'group_name'        =>$clubresult['group_name'],
-				 'group_image'       =>$clubresult['group_image'],
+				 'group_image'       =>$image,
 			     'group_description' =>$clubresult['group_description']
 					);
 			 
@@ -338,8 +360,170 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
 
         $data['create_club'] = $this->url->link('mycommunity/mycommunity/createclub', '', true);
+
+        $data['cancel'] = $this->url->link('mycommunity/mycommunity/cancel', '', true);        
+
+         $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+     
        
-       $this->response->setOutput($this->load->view('mycommunity/create_newclub', $data));
+        $this->response->setOutput($this->load->view('mycommunity/create_newclub', $data));
+
+    }
+
+        public function cancel(){
+
+
+        $this->load->model('mycommunity/mycommunity'); 
+
+        $this->load->language('mycommunity/mycommunity');
+
+        $data['button_sharedbooks'] = $this->language->get('button_sharedbooks');
+        $data['button_reading_club'] = $this->language->get('button_reading_club');
+        $data['button_authors'] = $this->language->get('button_authors');
+        $data['button_publishers'] = $this->language->get('button_publishers');
+        $data['text_recommended'] = $this->language->get('text_recommended');
+        $data['text_members'] = $this->language->get('text_members');
+        $data['text_yours'] = $this->language->get('text_yours');
+        $data['text_name_this_club'] = $this->language->get('text_name_this_club');
+        $data['text_description'] = $this->language->get('text_description');
+        $data['text_location'] = $this->language->get('text_location');
+        $data['text_mycommunity'] = $this->language->get('text_mycommunity');
+        $data['text_reading_club'] = $this->language->get('text_reading_club');
+        $data['text_sharesomething'] = $this->language->get('text_sharesomething'); 
+        $data['text_create_reading_club'] = $this->language->get('text_create_reading_club');     
+        $data['text_reading_club'] = $this->language->get('text_reading_club');     
+        $data['button_create_club'] = $this->language->get('button_create_club');
+        $data['button_cancel'] = $this->language->get('button_cancel');
+        $data['button_member'] = $this->language->get('button_member');
+        $data['button_done'] = $this->language->get('button_done');
+        $data['button_join'] = $this->language->get('button_join');
+
+
+       $this->document->setTitle($this->language->get('heading_title'));
+
+
+       $url='';
+
+        $data['breadcrumbs'] = array();
+
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/home')
+        );
+
+        
+
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_mycommunity'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+        $data['breadcrumbs'][] = array(
+            'text' =>  $this->language->get('text_reading_club'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+        $data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
+        $data['heading_title'] = $this->language->get('heading_title');
+
+        $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity', '', true);
+        $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
+        $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
+        $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
+
+        $recommended = $this->model_mycommunity_mycommunity->getRecommended();
+        $data['groups'] = array();
+        
+        foreach($recommended as $recom)
+        {
+           
+             if (is_file(DIR_IMAGE.$recom['group_image'])) {
+				$image = $this->model_tool_image->resize($recom['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+
+            $data['groups'][] = array (
+
+                    'group_id' =>$recom['group_id'],
+                    'group_name' =>$recom['group_name'],
+                    'group_image' =>$image,
+                    'status' =>$recom['status']
+                    
+                 
+                    );
+             
+        }  
+
+         $customer_id = (int)$this->customer->getId();
+          $data['members'] = array();
+         $memberresults = $this->model_mycommunity_mycommunity->getMembers($customer_id);
+         foreach($memberresults as $memberresult)
+		 {
+            
+            if (is_file(DIR_IMAGE.$memberresult['group_image'])) {
+				$image = $this->model_tool_image->resize($memberresult['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+              
+			 $data['members'][] = array (
+
+				 'group_id'    =>$memberresult['group_id'],
+			     'group_name'  =>$memberresult['group_name'],
+			     'group_image' =>$image
+
+					);
+			 
+		 }
+
+   
+      $data['create_club'] = $this->url->link('mycommunity/mycommunity/createclub', '', true);
+      $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
+
+      $data['member_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
+
+      $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+     
+ 
+         $customer_id = (int)$this->customer->getId();
+		 $data['clubs'] = array();
+		 $clubresults = $this->model_mycommunity_mycommunity->getclubs($customer_id);
+		 foreach($clubresults as $clubresult)
+		 {
+             
+            if (is_file(DIR_IMAGE.$clubresult['group_image'])) {
+				$image = $this->model_tool_image->resize($clubresult['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+			 $data['clubs'][] = array (
+
+                 'group_id'          =>$clubresult['group_id'],
+				 'group_name'        =>$clubresult['group_name'],
+				 'group_image'       =>$image,
+			     'group_description' =>$clubresult['group_description']
+					);
+			 
+		 } 
+
+        $data['addmember']   = $this->url->link('mycommunity/mycommunity/join', '', true);
+
+        $data['create_newclub'] = $this->url->link('mycommunity/mycommunity/create_newclub', '', true);
+
+        $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
+
+         $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+     
+
+
+        $data['active_tab'] = 'tab_default_3';
+
+        $this->response->setOutput($this->load->view('mycommunity/readingclub', $data));
+
 
     }
     
@@ -405,11 +589,18 @@ class ControllerMyCommunitymycommunity extends Controller {
         
         foreach($recommended as $recom)
         {
+            
+            if (is_file(DIR_IMAGE.$recom['group_image'])) {
+				$image = $this->model_tool_image->resize($recom['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+            
             $data['groups'][] = array (
 
                     'group_id' =>$recom['group_id'],
                     'group_name' =>$recom['group_name'],
-                    'group_image' =>$recom['group_image'],
+                    'group_image' =>$image,
                     'status' =>$recom['status']
                  
                     );
@@ -428,11 +619,18 @@ class ControllerMyCommunitymycommunity extends Controller {
 
 		 foreach($memberresults as $memberresult)
 		 {
+
+             if (is_file(DIR_IMAGE.$memberresult['group_image'])) {
+				$image = $this->model_tool_image->resize($memberresult['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
 			 $data['members'][] = array (
 
 				 'group_id' =>$memberresult['group_id'],
 			     'group_name' =>$memberresult['group_name'],
-			     'group_image' =>$memberresult['group_image']
+			     'group_image' =>$image
 					);
 			 
 		 }
@@ -443,11 +641,18 @@ class ControllerMyCommunitymycommunity extends Controller {
 		 $clubresults = $this->model_mycommunity_mycommunity->getclubs($customer_id);
 		 foreach($clubresults as $clubresult)
 		 {
-			 $data['clubs'][] = array (
+
+             if (is_file(DIR_IMAGE.$clubresult['group_image'])) {
+				$image = $this->model_tool_image->resize($clubresult['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+		   	 $data['clubs'][] = array (
 
                  'group_id'        =>$clubresult['group_id'],
 				 'group_name'        =>$clubresult['group_name'],
-				 'group_image'       =>$clubresult['group_image'],
+				 'group_image'       =>$image,
 			     'group_description' =>$clubresult['group_description']
 					);
 			 
@@ -463,11 +668,151 @@ class ControllerMyCommunitymycommunity extends Controller {
 
         $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
 
+         $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+     
+
         $data['active_tab'] = 'tab_default_2';
         
         $this->response->setOutput($this->load->view('mycommunity/readingclub', $data));
 
 }
+
+
+       public function join_communtiy() {
+  
+        
+       $group_id = $this->request->get['group_id'];    
+       $this->load->language('mycommunity/mycommunity');
+
+       $this->document->setTitle($this->language->get('heading_title'));
+
+       $this->load->model('mycommunity/mycommunity');
+
+       $this->model_mycommunity_mycommunity->addtomember($group_id);
+
+        $url='';
+
+        $data['breadcrumbs'] = array();
+
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/home')
+        );
+
+         $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_mycommunity'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+        
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_reading_club'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+       
+        $data['breadcrumbs'][] = array(
+            'text' =>  $this->language->get('text_recommended'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+          $this->load->language('mycommunity/mycommunity');
+
+        $data['button_sharedbooks'] = $this->language->get('button_sharedbooks');
+        $data['button_reading_club'] = $this->language->get('button_reading_club');
+        $data['button_authors'] = $this->language->get('button_authors');
+        $data['button_publishers'] = $this->language->get('button_publishers');
+        $data['text_recommended'] = $this->language->get('text_recommended');
+        $data['text_members'] = $this->language->get('text_members');
+        $data['text_yours'] = $this->language->get('text_yours');
+        $data['text_name_this_club'] = $this->language->get('text_name_this_club');
+        $data['text_description'] = $this->language->get('text_description');
+        $data['text_sharesomething'] = $this->language->get('text_sharesomething');  
+        $data['text_community'] = $this->language->get('text_community');  
+        $data['button_create_club'] = $this->language->get('button_create_club');
+        $data['button_cancel'] = $this->language->get('button_cancel');
+        $data['button_done'] = $this->language->get('button_done');
+        $data['button_join'] = $this->language->get('button_join');
+        $data['button_member'] = $this->language->get('button_member');
+
+        $data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
+        $data['heading_title'] = $this->language->get('heading_title');
+
+        $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity', '', true);
+        $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
+        $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
+        $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
+
+        
+        $this->load->model('mycommunity/mycommunity');
+        $rec = $this->model_mycommunity_mycommunity->getMember($group_id);
+        
+        if (is_file(DIR_IMAGE.$rec['group_image'])) {
+				$image = $this->model_tool_image->resize($rec['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+        $data['group_info'] = array(
+             
+             
+
+                    'group_id'              => $rec['group_id'],
+                    'group_name'            => $rec['group_name'],
+			        'group_image'           => $image,
+                    'likes'                 => $rec['likes'],
+                    'total_votes'           => $rec['total_votes'],
+                    'status'                => $rec['status']
+        );
+        
+        $this->load->model('mycommunity/mycommunity');
+        $customer_id = (int)$this->customer->getId();
+        $firstname = $this->customer->getFirstName();
+        $lastname = $this->customer->getLastName();
+
+   /*     $post = $this->model_mycommunity_mycommunity->getpost($customer_id);
+        $data['post_info'] = $post; */
+
+         $customer_id = (int)$this->customer->getId();
+		 $data['post_info'] = array();
+		 $postresults = $this->model_mycommunity_mycommunity->getposts($group_id);
+		 foreach($postresults as $postresult)
+		 {
+ 
+             if (is_file(DIR_IMAGE.$postresult['image'])) {
+				$image = $this->model_tool_image->resize($postresult['image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+			 $data['post_info'][] = array (
+
+                  'group_id'              =>$postresult['group_id'], 
+                  'post_id'               =>$postresult['post_id'],
+				  'customer_image'        =>$postresult['customer_image'],
+				  'message'               =>$postresult['message'],
+			      'image'                 =>$image,
+                  'link'                  =>$postresult['link'],
+                  'likes'                 =>$postresult['likes'],
+                  'total_votes'           =>$postresult['total_votes'],
+                  'status'                =>$postresult['status']
+					);
+			 
+		 } 
+
+
+
+        $data['first_name'] = $firstname;
+        $data['last_name']  = $lastname;
+
+         $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+     
+
+        $this->response->setOutput($this->load->view('mycommunity/recommended', $data));
+
+}
+
 
          public function createclub(){
            
@@ -482,6 +827,14 @@ class ControllerMyCommunitymycommunity extends Controller {
 		 $clubresults = $this->model_mycommunity_mycommunity->getclubs($customer_id);
 		 foreach($clubresults as $clubresult)
 		 {
+ 
+        /*     if (is_file(DIR_IMAGE.$clubresult['group_image'])) {
+				$image = $this->model_tool_image->resize($clubresult['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			} */
+
+
 			 $data['clubs'][] = array (
                  
 
@@ -503,7 +856,7 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['text_recommended'] = $this->language->get('text_recommended');
         $data['text_members'] = $this->language->get('text_members');
         $data['text_yours'] = $this->language->get('text_yours');
-          $data['text_mycommunity'] = $this->language->get('text_mycommunity');
+        $data['text_mycommunity'] = $this->language->get('text_mycommunity');
         $data['text_reading_club'] = $this->language->get('text_reading_club');
         $data['text_name_this_club'] = $this->language->get('text_name_this_club');
         $data['text_description'] = $this->language->get('text_description');
@@ -552,11 +905,18 @@ class ControllerMyCommunitymycommunity extends Controller {
         
         foreach($recommended as $recom)
         {
+
+            if (is_file(DIR_IMAGE.$recom['group_image'])) {
+				$image = $this->model_tool_image->resize($recom['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
             $data['groups'][] = array (
 
                     'group_id' =>$recom['group_id'],
                     'group_name' =>$recom['group_name'],
-                    'group_image' =>$recom['group_image']
+                    'group_image' =>$image
                  
                     );
              
@@ -567,15 +927,25 @@ class ControllerMyCommunitymycommunity extends Controller {
 
 		 foreach($memberresults as $memberresult)
 		 {
+
+              if (is_file(DIR_IMAGE.$memberresult['group_image'])) {
+				$image = $this->model_tool_image->resize($memberresult['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
 			 $data['members'][] = array (
 
 			   'group_id'    =>$memberresult['group_id'],
 		       'group_name'  =>$memberresult['group_name'],
-			   'group_image' =>$memberresult['group_image']
+			   'group_image' =>$image
 					);
 			 
 		 } 
            $data['create_newclub'] = $this->url->link('mycommunity/mycommunity/create_newclub', '', true);
+
+            $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+     
 
              $data['active_tab'] = 'tab_default_3';
 
@@ -585,20 +955,15 @@ class ControllerMyCommunitymycommunity extends Controller {
 
         public function recommended(){
 
-    /*   if (!$this->customer->isLogged()) {
-       $this->session->data['redirect'] = $this->url->link('mycommunity/mycommunity', '', true);
 
-       $this->response->redirect($this->url->link('account/login', '', true));
-        }  */
+        $group_id = $this->request->get['group_id'];    
+        $this->load->language('mycommunity/mycommunity');
 
-      $group_id = $this->request->get['group_id'];    
-      $this->load->language('mycommunity/mycommunity');
+        $this->document->setTitle($this->language->get('heading_title'));
 
-      $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('mycommunity/mycommunity');
 
-      $this->load->model('mycommunity/mycommunity');
-
-       $url='';
+        $url='';
 
         $data['breadcrumbs'] = array();
 
@@ -612,12 +977,17 @@ class ControllerMyCommunitymycommunity extends Controller {
             'href' => $this->url->link('mycommunity/mycommunity')
         );
 
+         $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_reading_club'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
         $data['breadcrumbs'][] = array(
             'text' =>  $this->language->get('text_recommended'),
             'href' => $this->url->link('mycommunity/mycommunity')
         );
 
-          $this->load->language('mycommunity/mycommunity');
+        $this->load->language('mycommunity/mycommunity');
 
         $data['button_sharedbooks'] = $this->language->get('button_sharedbooks');
         $data['button_reading_club'] = $this->language->get('button_reading_club');
@@ -647,7 +1017,24 @@ class ControllerMyCommunitymycommunity extends Controller {
 
         $this->load->model('mycommunity/mycommunity');
         $rec = $this->model_mycommunity_mycommunity->getMember($group_id);
-        $data['group_info'] = $rec;
+
+        if (is_file(DIR_IMAGE.$rec['group_image'])) {
+				$image = $this->model_tool_image->resize($rec['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+        $data['group_info'] = array(
+             
+             
+
+                    'group_id'              => $rec['group_id'],
+                    'group_name'            => $rec['group_name'],
+			        'group_image'           => $image,
+                    'likes'                 => $rec['likes'],
+                    'total_votes'           => $rec['total_votes'],
+                    'status'                => $rec['status']
+        );
         
         $this->load->model('mycommunity/mycommunity');
         $customer_id = (int)$this->customer->getId();
@@ -662,13 +1049,20 @@ class ControllerMyCommunitymycommunity extends Controller {
 		 $postresults = $this->model_mycommunity_mycommunity->getposts($group_id);
 		 foreach($postresults as $postresult)
 		 {
-			 $data['post_info'][] = array (
+
+              if (is_file(DIR_IMAGE.$postresult['image'])) {
+				$image = $this->model_tool_image->resize($postresult['image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+		$data['post_info'][] = array (
 
                   'group_id'              =>$postresult['group_id'], 
                   'post_id'               =>$postresult['post_id'],
 				  'customer_image'        =>$postresult['customer_image'],
 				  'message'               =>$postresult['message'],
-			      'image'                 =>$postresult['image'],
+			      'image'                 =>$image,
                   'link'                  =>$postresult['link'],
                   'likes'                 =>$postresult['likes'],
                   'total_votes'           =>$postresult['total_votes'],
@@ -690,7 +1084,12 @@ class ControllerMyCommunitymycommunity extends Controller {
         
         $data['add_to_member']   = $this->url->link('mycommunity/mycommunity/join', '', true);
 
+        $data['join_community']   = $this->url->link('mycommunity/mycommunity/join_communtiy&group_id=', '', true);
+
         $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
+
+         $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+     
         
         $this->response->setOutput($this->load->view('mycommunity/recommended', $data));
         
@@ -774,8 +1173,24 @@ class ControllerMyCommunitymycommunity extends Controller {
 
         $this->load->model('mycommunity/mycommunity');
         $rec = $this->model_mycommunity_mycommunity->getMember($group_id);
-        $data['group_info'] = $rec;
-        
+
+        if (is_file(DIR_IMAGE.$rec['group_image'])) {
+				$image = $this->model_tool_image->resize($rec['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+        $data['group_info'] = array(
+             
+             
+
+                    'group_id'              => $rec['group_id'],
+                    'group_name'            => $rec['group_name'],
+			        'group_image'           => $image,
+                    'likes'                 => $rec['likes'],
+                    'total_votes'           => $rec['total_votes'],
+                    'status'                => $rec['status']
+        );
         $this->load->model('mycommunity/mycommunity');
         $customer_id = (int)$this->customer->getId();
         $firstname = $this->customer->getFirstName();
@@ -793,12 +1208,19 @@ class ControllerMyCommunitymycommunity extends Controller {
 		 $postresults = $this->model_mycommunity_mycommunity->getposts($group_id);
 		 foreach($postresults as $postresult)
 		 {
+
+              if (is_file(DIR_IMAGE.$postresult['image'])) {
+				$image = $this->model_tool_image->resize($postresult['image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
 			 $data['post_info'][] = array (
 
                   'post_id'               =>$postresult['post_id'],
 				  'customer_image'        =>$postresult['customer_image'],
 				  'message'               =>$postresult['message'],
-			      'image'                 =>$postresult['image'],
+			      'image'                 =>$image,
                   'link'                  =>$postresult['link'],
                   'likes'                 =>$postresult['likes'],
                   'total_votes'           =>$postresult['total_votes']
@@ -883,7 +1305,24 @@ class ControllerMyCommunitymycommunity extends Controller {
         
         $this->load->model('mycommunity/mycommunity');
         $rec = $this->model_mycommunity_mycommunity->getMember($group_id);
-        $data['group_info'] = $rec;
+
+         if (is_file(DIR_IMAGE.$rec['group_image'])) {
+				$image = $this->model_tool_image->resize($rec['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+        $data['group_info'] = array(
+             
+             
+
+                    'group_id'              => $rec['group_id'],
+                    'group_name'            => $rec['group_name'],
+			        'group_image'           => $image,
+                    'likes'                 => $rec['likes'],
+                    'total_votes'           => $rec['total_votes'],
+                    'status'                => $rec['status']
+        );
         
         $this->load->model('mycommunity/mycommunity');
         $customer_id = (int)$this->customer->getId();
@@ -905,13 +1344,20 @@ class ControllerMyCommunitymycommunity extends Controller {
 		 $postresults = $this->model_mycommunity_mycommunity->getClubposts($group_id);
 		 foreach($postresults as $postresult)
 		 {	
+
+              if (is_file(DIR_IMAGE.$postresult['image'])) {
+				$image = $this->model_tool_image->resize($postresult['image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
 			
 			 $data['post_info'][] = array (
 
                   'post_id'              =>$postresult['post_id'],
                   'customer_image'      =>$postresult['customer_image'],
 				  'message'             =>$postresult['message'],
-			      'image'               =>$postresult['image'],
+			      'image'               =>$image,
                   'link'                =>$postresult['link']
 					);
 			 
@@ -924,6 +1370,9 @@ class ControllerMyCommunitymycommunity extends Controller {
          $data['club_share'] = $this->url->link($grouplink, '', true); 
      
          $data['search_mail'] = $this->url->link('mycommunity/mycommunity/mailsearch&group_id=' , '' , true);
+
+          $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+     
         
         $this->response->setOutput($this->load->view('mycommunity/club_info', $data));
 
@@ -1057,7 +1506,24 @@ class ControllerMyCommunitymycommunity extends Controller {
 
          $this->load->model('mycommunity/mycommunity');
         $rec = $this->model_mycommunity_mycommunity->getMember($group_id);
-        $data['group_info'] = $rec;
+        
+         if (is_file(DIR_IMAGE.$rec['group_image'])) {
+				$image = $this->model_tool_image->resize($rec['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+        $data['group_info'] = array(
+             
+             
+
+                    'group_id'              => $rec['group_id'],
+                    'group_name'            => $rec['group_name'],
+			        'group_image'           => $image,
+                    'likes'                 => $rec['likes'],
+                    'total_votes'           => $rec['total_votes'],
+                    'status'                => $rec['status']
+        );
         
         $this->load->model('mycommunity/mycommunity');
         $customer_id = (int)$this->customer->getId();
@@ -1078,11 +1544,19 @@ class ControllerMyCommunitymycommunity extends Controller {
 		 $postresults = $this->model_mycommunity_mycommunity->getposts($group_id);
 		 foreach($postresults as $postresult)
 		 {
+
+              if (is_file(DIR_IMAGE.$postresult['image'])) {
+				$image = $this->model_tool_image->resize($postresult['image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+             
 			 $data['post_info'][] = array (
 
 				 'customer_image'       =>$postresult['customer_image'],
 				  'message'             =>$postresult['message'],
-			      'image'               =>$postresult['image'],
+			      'image'               =>$image,
                   'link'               =>$postresult['link']
 					);
 			 
@@ -1166,11 +1640,18 @@ class ControllerMyCommunitymycommunity extends Controller {
          $authorresults = $this->model_mycommunity_mycommunity->getAuthors($customer_id);
          foreach($authorresults as $authorresult)
 		 {
+
+             if (is_file(DIR_IMAGE.$authorresult['author_image'])) {
+				$image = $this->model_tool_image->resize($authorresult['author_image'], 228, 228);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 228, 228);
+			}
+
 			 $data['authors'][] = array (
 
 				 'author_id'                       =>$authorresult['author_id'],
 			     'author_name'                     =>$authorresult['author_name'],
-			     'author_image'                    =>$authorresult['author_image']
+			     'author_image'                    => $image
                
 					);
 			 
@@ -1252,7 +1733,28 @@ class ControllerMyCommunitymycommunity extends Controller {
 
         $this->load->model('mycommunity/mycommunity');
         $rect = $this->model_mycommunity_mycommunity->getAuthor($author_id);
-        $data['author_info'] = $rect;
+
+         if (is_file(DIR_IMAGE.$rect['author_image'])) {
+				$image = $this->model_tool_image->resize($rect['author_image'], 250, 250);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 250, 250);
+			}
+
+         $data['author_info'] = array(
+             
+                'author_id'                => $rect['author_id'],
+				'author_name'              => $rect['author_name'],
+				'author_image'             => $image,
+				'author_dob'               => $rect['author_dob'],
+                'author_occupation'        => $rect['author_occupation'],  
+                'author_nationality'       => $rect['author_nationality'],  
+                'author_education'         => $rect['author_education'],
+                'author_awards'            => $rect['author_awards'],
+                'author_references'        => $rect['author_references'],
+                'author_external_links'    => $rect['author_external_links'], 
+				'total_votes'              => $rect['total_votes'],
+                'likes'                    => $rect['likes']
+        );
 
 
         
@@ -1426,11 +1928,18 @@ class ControllerMyCommunitymycommunity extends Controller {
          $authorresults = $this->model_mycommunity_mycommunity->getAuthors($customer_id);
          foreach($authorresults as $authorresult)
 		 {
+
+             if (is_file(DIR_IMAGE.$authorresult['author_image'])) {
+				$image = $this->model_tool_image->resize($authorresult['author_image'], 228, 228);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 228, 228);
+			}
+
 			 $data['authors'][] = array (
 
 				 'author_id'                       =>$authorresult['author_id'],
 			     'author_name'                     =>$authorresult['author_name'],
-			     'author_image'                    =>$authorresult['author_image'],
+			     'author_image'                    =>$image,
                  'author_dob'                      =>$authorresult['author_dob'],
                  'author_occupation'               =>$authorresult['author_occupation'],
                  'author_nationality'              =>$authorresult['author_nationality'],
@@ -1518,11 +2027,18 @@ class ControllerMyCommunitymycommunity extends Controller {
          $publisherresults = $this->model_mycommunity_mycommunity->getPublishers($customer_id);
          foreach($publisherresults as $publisherresult)
 		 {
+            
+             if (is_file(DIR_IMAGE.$publisherresult['publisher_image'])) {
+				$image = $this->model_tool_image->resize($publisherresult['publisher_image'], 228, 228);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 228, 228);
+			}
+
 			 $data['publishers'][] = array (
 
 				 'publisher_id'           =>$publisherresult['publisher_id'],
 			     'publisher_name'         =>$publisherresult['publisher_name'],
-			     'publisher_image'        =>$publisherresult['publisher_image']
+			     'publisher_image'        =>$image
                  
 					);
 			 
@@ -1596,7 +2112,26 @@ class ControllerMyCommunitymycommunity extends Controller {
 
         $this->load->model('mycommunity/mycommunity');
         $recta = $this->model_mycommunity_mycommunity->getPublisher($publisher_id);
-        $data['publisher_info'] = $recta;
+     
+        if (is_file(DIR_IMAGE.$recta['publisher_image'])) {
+				$image = $this->model_tool_image->resize($recta['publisher_image'], 250, 250);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 250, 250);
+			}
+
+            $data['publisher_info'] = array(
+             
+                    'publisher_id'              => $recta['publisher_id'],
+                    'publisher_name'            => $recta['publisher_name'],
+			        'publisher_image'           => $image,
+                    'publisher_description'     => $recta['publisher_description'],
+					'publisher_address'         => $recta['publisher_address'],
+                    'total_votes'               => $recta['total_votes'],
+                    'likes'                     => $recta['likes']
+
+        );
+
+
         
         $this->response->setOutput($this->load->view('mycommunity/publisher_info', $data));
         
@@ -1768,11 +2303,19 @@ class ControllerMyCommunitymycommunity extends Controller {
          $publisherresults = $this->model_mycommunity_mycommunity->getPublishers($customer_id);
          foreach($publisherresults as $publisherresult)
 		 {
+            
+              if (is_file(DIR_IMAGE.$publisherresult['publisher_image'])) {
+				$image = $this->model_tool_image->resize($publisherresult['publisher_image'], 228, 228);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 228, 228);
+			}
+
+
 			 $data['publishers'][] = array (
 
 				'publisher_id'           =>$publisherresult['publisher_id'],
 			     'publisher_name'         =>$publisherresult['publisher_name'],
-			     'publisher_image'        =>$publisherresult['publisher_image'],
+			     'publisher_image'        =>$image,
                  'publisher_address'      =>$publisherresult['publisher_address'],
                  'publisher_description'  =>$publisherresult['publisher_description'],
                  'total_votes'            =>$publisherresult['total_votes'],

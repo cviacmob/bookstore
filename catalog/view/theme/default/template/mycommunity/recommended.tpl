@@ -17,9 +17,7 @@
 <h3><?php echo $group_info['group_name']; ?></h3>
 <!--<input type="submit" id="driver" class="btn btn-default btn-lg" value="JOIN "  />-->
 
-<form action = "<?php echo $add_to_member; ?>"  method ="post">
-
-<input type="hidden" name="groupid" value="<?php echo $group_info['group_id']; ?>">
+<form action = "<?php echo $join_community.$group_info['group_id'];?>"  method ="post">
 
 <?php if($group_info['status'] == 'member'){ ?>
 <button id ="join" class="btn btn-default btn-lg" ><?php echo $button_member;?> </button>
@@ -52,15 +50,9 @@
 <img class="img-circle"  alt="" width="50" height="50" src="<?php echo $post['customer_image']; ?>" />    
 &nbsp 
  <input type="text" class="text_share" data-toggle="modal" placeholder="<?php echo $text_sharesomething;?>"data-target="#myPost">
- <!--<input type='file' name="front_image" onchange="readURL(this);" />
-    <img id="blah" src="#" alt="" /> -->
-<!--<button type ="file" onchange="readURL(this);" ><i class="fa fa-camera" aria-hidden="true"></i> </button>-->
+ <i class="fa fa-camera" aria-hidden="true"></i> 
  
- <form action="upload.php" method="post" enctype="multipart/form-data">
-    <i class="fa fa-camera" aria-hidden="true"></i>
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <input type="submit" value="Upload Image" name="submit">
-</form>
+
 
 
 
@@ -210,21 +202,6 @@ $(document).ready(function(e){
         });
     </script>
 
-<script type="text/javascript">
-function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#blah')
-                        .attr('src', e.target.result)
-                        .width(150)
-                        .height(200);
-                };
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-</script>    
+  
 
 <?php echo $footer; ?>

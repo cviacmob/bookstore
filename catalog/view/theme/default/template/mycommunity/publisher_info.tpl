@@ -15,14 +15,12 @@
 <br>
 <br>
 
-<form action="<?php echo $add_to_liked_publisher;?>" method="post" >
 
-<input type="hidden" name="publisher_id" value="<?php echo $publisherresult['publisher_id']; ?>">
 <div class="view-books-pub">
 <button type = "submit" class="btn btn default" id = "myBtn"> <?php echo $button_like_page;?> </button> &nbsp&nbsp&nbsp&nbsp
 <button type = "submit" class="btn btn default" id = "myBtn"> <?php echo $button_view_books;?> </button>
 </div>
-</form>
+
 
 </aside>
 

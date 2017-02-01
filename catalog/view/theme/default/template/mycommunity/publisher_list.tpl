@@ -40,7 +40,7 @@
 <a href= "<?php echo $publisher_image.$publisher['publisher_id'];?>"><img class="img-responsive" src="<?php echo $publisher['publisher_image']; ?>"style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"> </a>
 </div>
 <div class="caption">
-<h4><a href="<?php echo $publisher['publisher_name']; ?>"></a></h4>
+<h4><?php echo $publisher['publisher_name']; ?></h4>
 
 
 </div>

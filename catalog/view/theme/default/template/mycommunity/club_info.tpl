@@ -15,7 +15,7 @@
 <div class="outline">
 <img src="<?php echo $club_info['group_image'];?>" height="203" width ="240" />
 
-<h3><?php echo $club_info['group_name']; ?>  <button type="button" class="sharealt"> <i class="fa fa-share-alt" data-toggle="modal"data-target="#myModal" style="font-size: 1.00em;"  aria-hidden="true"></i> </button></h3>
+<h3><?php echo $club_info['group_name']; ?>  <button type="button" class="sharealt"> <i class="fa fa-share-alt"  title="Invite People" data-toggle="modal"data-target="#myModal" style="font-size: 1.00em;"  aria-hidden="true"></i> </button></h3>
 
 
 </div>
@@ -36,7 +36,7 @@
             Success! Mail has been sent.
         </div>-->
 
-   <form action = "<?php echo $search_mail.$club_info['group_id'];; ?>" method ="post" onSubmit="return verifyForm(this);">
+   <form action = "<?php echo $search_mail.$club_info['group_id']; ?>" method ="post" onSubmit="return verifyForm(this);">
   
  <!--  <input type="text"  placeholder="search"  id="search-box"  name="text_search" class="se" ><button type="submit" id="btnShow-search" class="sea"><i class="fa fa-search" aria-hidden="true"></i></button><br><br>--> 
   <!-- <input type="text" name="text_id" id="text" placeholder="search" class="se"><button type="submit" id="btnShow-search" class="sea"><i class="fa fa-search" aria-hidden="true"></i></button><br><br>  

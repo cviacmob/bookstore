@@ -23,17 +23,22 @@
 <h3><?php echo $text_create_reading_club; ?></h3><br>
 
 <form action = "<?php echo $create_club; ?>"  method ="post">
+
           <label for="fname"><?php echo $text_name_this_club;?></label>
-          <input type="text" name="club_name" value="" placeholder="enter club name" class="form-control input-lg" /> <br> 
+          <input type="text" name="club_name" required value="" placeholder="" class="form-control input-lg" /> <br> 
           <label for="fname"><?php echo $text_description;?></label>
-          <input type="text" name="club_description" value="" placeholder="enter club description" class="form-control input-lg" /> <br>
+          <input type="text" name="club_description" required value="" placeholder="" class="form-control input-lg" /> <br>
           <label for="fname"><?php echo $text_location;?></label>
-          <input type="text" name="location" value="" placeholder="enter location" class="form-control input-lg" /> <br>
-          <button type="button" class="btn btn-default" ><?php echo $button_cancel;?></button>
-          <button id = "done" type="submit" class="btn btn-primary" ><?php echo $button_done;?></button>
+          <input type="text" name="location" value="" required placeholder="" class="form-control input-lg" /> <br>
+          
 
-</form>
 
+ 
+ <button id = "done" type="submit" class="btn btn-primary" ><?php echo $button_done;?></button>
+          
+ </form>
+
+<button type="button" class="btn btn-default" onclick="location.href='<?php echo $cancel; ?>'" ><?php echo $button_cancel;?></button>
 
 </div>
 

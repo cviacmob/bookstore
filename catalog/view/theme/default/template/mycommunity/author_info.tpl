@@ -11,19 +11,16 @@
 <aside id="column_left"class="col-sm-3 hidden-xs">
 
 <br>
-<img src="<?php echo $author_info['author_image'];?>" height="250" width ="250" />
+<img src="<?php echo $author_info['author_image'];?>" height="203" width ="240" />
 
 <br>
 <br>
 
-<form action="<?php echo $add_to_liked_author;?>" method="post" >
-
-<input type="hidden" name="author_id" value="<?php echo $authorresult['author_id']; ?>">
 <div class="view-books">
 <button type = "submit" class="btn btn default" id = "myBtn"> <?php echo $button_like_page;?>  </button> &nbsp&nbsp&nbsp&nbsp
 <button type = "submit" class="btn btn default" id = "myBtn"> <?php echo $button_view_books;?> </button>
 </div>
-</form>
+
 
 </aside>
 
@@ -57,14 +54,7 @@
 </div>
 
 
-<script type="text/javascript">
-var like = 0;
-$("#myBtn").click(function(){
-     like++;
-    $(this).text(""+like+" liked this page");
-});
 
-</script>
 
 
 
