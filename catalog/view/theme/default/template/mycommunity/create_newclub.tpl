@@ -33,12 +33,14 @@
           
 
 
- 
- <button id = "done" type="submit" class="btn btn-primary" ><?php echo $button_done;?></button>
-          
+ <div class="done">
+ <button id = "done" type="submit" class="btn btn-default" ><?php echo $button_done;?></button>
+ </div>       
  </form>
 
+<div class="cancel">
 <button type="button" class="btn btn-default" onclick="location.href='<?php echo $cancel; ?>'" ><?php echo $button_cancel;?></button>
+</div>
 
 </div>
 

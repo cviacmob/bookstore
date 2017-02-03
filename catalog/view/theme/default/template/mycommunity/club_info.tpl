@@ -115,8 +115,8 @@
 <br>
 <br>
 
-<i class="fa fa-thumbs-up" style="font-size: 2.00em;"  aria-hidden="true"><i class="fa fa-share-alt" style="margin-left: 373px; font-size: 1em;" aria-hidden="true"></i></i>
-<!--<i class="fa fa-share-alt" style="margin-left: 397px; font-size: 2.00em;" aria-hidden="true"></i>-->
+<!--i class="fa fa-thumbs-up" style="font-size: 2.00em;"  aria-hidden="true"><i class="fa fa-share-alt" style="margin-left: 373px; font-size: 1em;" aria-hidden="true"></i></i>
+<i class="fa fa-share-alt" style="margin-left: 397px; font-size: 2.00em;" aria-hidden="true"></i>-->
 <br>
 <br>
 </div>

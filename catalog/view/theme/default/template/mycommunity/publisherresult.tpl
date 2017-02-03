@@ -35,6 +35,7 @@
 <div class="image">
 <a href= "<?php echo $publisher.$publisherresult['publisher_id'];?>"><img class="img-responsive" src="<?php echo $publisherresult['publisher_image'];?>" style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"> </a>
 </div>
+
 <br>
 
 <h4><?php echo $publisherresult['publisher_name'];?></h4>

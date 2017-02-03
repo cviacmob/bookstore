@@ -53,7 +53,7 @@
             
 <input type="hidden" name="groupid" value="<?php echo $group['group_id']; ?>">
 <?php if($group['status'] == 'member'){ ?>
-<input class = "join" id="btn" type="submit" value="<?php echo $button_member;?>">
+<input class = "join" onclick="this.disabled = true" id="btn" type="submit" value="<?php echo $button_member;?>">
 <?php }else { ?>
 <input class = "join" id="btn" type="submit" value="<?php echo $button_join;?>">
 <?php } ?>

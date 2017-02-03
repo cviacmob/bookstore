@@ -20,17 +20,13 @@
 <form action = "<?php echo $join_community.$group_info['group_id'];?>"  method ="post">
 
 <?php if($group_info['status'] == 'member'){ ?>
-<button id ="join" class="btn btn-default btn-lg" ><?php echo $button_member;?> </button>
+<button id ="join" onclick="this.disabled = true" class="btn btn-default btn-lg" ><?php echo $button_member;?> </button>
 <?php }else { ?>
 <button id ="join" class="btn btn-default btn-lg" ><?php echo $button_join;?> </button>
 <?php } ?>
 
 </form>   
 
-
-<!--<input type="button" id="driver" class="btn btn-default btn-lg" value="<?php echo $button_join;?> "  />
-
-<button id ="join" class="btn btn-default btn-lg" ><?php echo $button_join;?> </button>-->
 
 </div>
 </div>
@@ -50,16 +46,10 @@
 <img class="img-circle"  alt="" width="50" height="50" src="<?php echo $post['customer_image']; ?>" />    
 &nbsp 
  <input type="text" class="text_share" data-toggle="modal" placeholder="<?php echo $text_sharesomething;?>"data-target="#myPost">
- <i class="fa fa-camera" aria-hidden="true"></i> 
+<i class="fa fa-camera" aria-hidden="true"></i> 
  
 
-
-
-
 &nbsp 
-
-
-
 
 </div>
 </div> 
@@ -70,8 +60,7 @@
 
 &nbsp
 
-
- <?php if($group_info['status'] == 'member'){ ?> 
+<?php if($group_info['status'] == 'member'){ ?> 
 
 <div class="tabbable-panel-right">
 <div class="tabbable-line">
@@ -87,12 +76,12 @@
 <br>
 <br>
 
-<form action="<?php echo $add_to_my_post.$post['group_id'].$post['post_id'];?>" method="post" >
+<!--<form action="<?php echo $add_to_my_post.$post['group_id'].$post['post_id'];?>" method="post" >
 
 <button type="submit"> <?php echo $post['total_votes'];?> LIKES  </button>
 
 </form>
-<!--<i class="fa fa-thumbs-up" style="font-size: 2.00em;"  aria-hidden="true"><!--<i class="fa fa-share-alt" style="margin-left: 373px; font-size: 1em;" aria-hidden="true"></i>--></i>
+<i class="fa fa-thumbs-up" style="font-size: 2.00em;"  aria-hidden="true"><!--<i class="fa fa-share-alt" style="margin-left: 373px; font-size: 1em;" aria-hidden="true"></i>--></i>
 <!--<i class="fa fa-share-alt" style="margin-left: 397px; font-size: 2.00em;" aria-hidden="true"></i>-->
 <br>
 <br>

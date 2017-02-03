@@ -28,52 +28,135 @@ public function getRecommended() {
 
       $group_data = array();
 
-       $query = $this->db->query("SELECT group_id FROM readingclub where recommended= 'true'");
+       $query = $this->db->query("SELECT * FROM readingclub where recommended= 'true' AND status= 'active'");
 
-       foreach($query->rows as $result)
-      {
-         $group_data[$result['group_id']] = $this->getRecommend($result['group_id']);
-      }
+       
 
-      return $group_data;
+      return $query ->rows;
+       
  
 }
+
+public function memberstatus($group_id){
+
+    $query = $this->db->query("SELECT * FROM group_members where group_id = '".(int)$group_id."' AND customer_id = '" . (int)$this->customer->getId() . "'");
+
+    if($query->rows )
+    {
+        $query = $this->db->query("SELECT * FROM readingclub where group_id= '".$group_id."'");
+        if($query->rows){
+
+            return array(
+
+                'group_id'                => $query->row['group_id'],
+                'group_name'              => $query->row['group_name'],
+                'group_image'             => $query->row['group_image'],
+                'status'                  => "member"
+
+            );
+        } 
+    }
+    else{
+
+        $query = $this->db->query("SELECT * FROM readingclub where group_id= '".$group_id."'");
+        if($query->rows){
+
+            return array(
+
+                'group_id'                => $query->row['group_id'],
+                'group_name'              => $query->row['group_name'],
+                'group_image'             => $query->row['group_image'],
+                'status'                  => "join"
+                
+            );
+        } 
+
+    }
+}
+
+public function groupmember(){
+
+    $query = $this->db->query("SELECT group_id FROM group_members where customer_id = '" . (int)$this->customer->getId() . "'");
+
+    $group_id = array();
+    
+    foreach($query->rows as $result)
+    {
+ 
+        $group_id[$result['group_id']]= $this->groupdetails($result['group_id']);
+  
+    }
+
+    return $group_id;
+     
+}
+
+public function groupdetails($group_id){
+
+    $query = $this->db->query("SELECT * FROM readingclub where group_id= '".$group_id."'");
+    
+    if($query->rows)
+        {
+            return array(
+                'group_id'                => $query->row['group_id'],
+                'group_name'              => $query->row['group_name'],
+                'group_image'             => $query->row['group_image'],
+                'status'                  => "member"
+            );   
+
+         }else{
+             return false;
+         } 
+} 
 
  public function addtomember($group_id)
   {
       $this->db->query("DELETE FROM group_members WHERE customer_id = '" . (int)$this->customer->getId() . "'AND group_id = '" . $group_id. "'");
 
-     $this->db->query("INSERT INTO  group_members SET customer_id = '" . (int)$this->customer->getId() . "', group_id = '" . $group_id. "'");
+     $this->db->query("INSERT INTO  group_members SET customer_id = '" . (int)$this->customer->getId() . "', group_id = '" . $group_id. "' ,date_added = NOW()");
 
-     $this->db->query("UPDATE  readingclub SET status='member' WHERE customer_id = '" . (int)$this->customer->getId() . "' AND group_id = '" . $group_id. "'");
     
   }
 
   public function getMember($group_id) {
 
-       $query = $this->db->query("SELECT * FROM  readingclub WHERE group_id = '".$group_id."'");
+        $query = $this->db->query("SELECT * FROM group_members where group_id = '".(int)$group_id."' AND customer_id = '" . (int)$this->customer->getId() . "'");
 
-          if($query->num_rows) {
-		   	  return array(
+    if($query->rows )
+    {
+        $query = $this->db->query("SELECT * FROM readingclub where group_id= '".$group_id."'");
+        if($query->rows){
 
-                    'group_id'              => $query->row['group_id'],
-                    'group_name'            => $query->row['group_name'],
-			        'group_image'           => $query->row['group_image'],
-                    'likes'                 => $query->row['likes'],
-                    'total_votes'           => $query->row['total_votes'],
-                    'status'                => $query->row['status']
-					
+            return array(
 
-						);
-			  }
-		  
-	else {
-return false;
-	}
-  
+                'group_id'                => $query->row['group_id'],
+                'group_name'              => $query->row['group_name'],
+                'group_image'             => $query->row['group_image'],
+                'status'                  => "member"
+
+            );
+        } 
+    }
+    else{
+
+        $query = $this->db->query("SELECT * FROM readingclub where group_id= '".$group_id."'");
+        if($query->rows){
+
+            return array(
+
+                'group_id'                => $query->row['group_id'],
+                'group_name'              => $query->row['group_name'],
+                'group_image'             => $query->row['group_image'],
+                'status'                  => "join"
+                
+            );
+        } 
+
+ 
 }
+  }
 
-public function getMembers($customer_id)
+/*public function getMembers($customer_id)
  {
 
      $member_data = array();
@@ -85,17 +168,14 @@ public function getMembers($customer_id)
      }
 
      return $member_data;
- }
+ }  */
 
  public function addtomyclub($club_name)
   {
-      $this->db->query("DELETE FROM readingclub WHERE customer_id = '" . (int)$this->customer->getId() . "'AND group_name = '" . $club_name. "'");
+     $this->db->query("DELETE FROM readingclub WHERE group_name = '" . $club_name. "'");
 
-     $this->db->query("INSERT INTO readingclub SET created_by = 'customer' , group_image = 'image/books/book.jpg' , customer_id = '" . (int)$this->customer->getId() . "', group_name = '" . $club_name. "',group_description = '" . $this->request->post['club_description']. "', date_added = NOW()");
+     $this->db->query("INSERT INTO readingclub SET created_by = 'customer' , group_image = 'catalog/book.jpg', group_name = '" . $club_name. "',group_description = '" . $this->request->post['club_description']. "', date_added = NOW()");
     
-     //$group_id=(int)$this->db->getLastId();
-
-     //$this->db->query("INSERT INTO group_members SET customer_id = '" . (int)$this->customer->getId() . "', group_id = '" . $group_id. "'");
   }
 
   public function getclub($group_id)
@@ -121,10 +201,10 @@ return false;
 	}
   }
 
- public function getclubs($customer_id)
+ public function getclubs()
   {
       $group_id = array();
-      $query = $this->db->query("SELECT group_id FROM readingclub WHERE created_by = 'customer' AND customer_id = '". (int)$this->customer->getId() ."'");
+      $query = $this->db->query("SELECT group_id FROM readingclub WHERE created_by = 'customer' ");
 
       foreach($query->rows as $result)
       {
@@ -175,9 +255,9 @@ return false;
    public function addtomypost($groupid)
   {
 
-   $this->db->query("INSERT INTO readingclub_post SET  group_id = '". $groupid ."' , posted_by = 'customer' , image = 'image/books/book.jpg' , customer_id = '" . (int)$this->customer->getId() . "', message = '" . $this->request->post['text_name']. "', date_added = NOW() ");
+   $this->db->query("INSERT INTO readingclub_post SET  group_id = '". $groupid ."' , posted_by = 'customer' , image = 'catalog/book.jpg' , customer_id = '" . (int)$this->customer->getId() . "', message = '" . $this->request->post['text_name']. "', date_added = NOW() ");
 
-    $this->db->query("UPDATE  readingclub_post SET status='member' WHERE customer_id = '" . (int)$this->customer->getId() . "' AND group_id = '" . $groupid. "'");
+   $this->db->query("UPDATE  readingclub_post SET status='member' WHERE customer_id = '" . (int)$this->customer->getId() . "' AND group_id = '" . $groupid. "'");
    
   }
 
