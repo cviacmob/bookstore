@@ -120,7 +120,7 @@ public function groupdetails($group_id){
 
   public function getMember($group_id) {
 
-        $query = $this->db->query("SELECT * FROM group_members where group_id = '".(int)$group_id."' AND customer_id = '" . (int)$this->customer->getId() . "'");
+    $query = $this->db->query("SELECT * FROM group_members where group_id = '".(int)$group_id."' AND customer_id = '" . (int)$this->customer->getId() . "'");
 
     if($query->rows )
     {
@@ -174,7 +174,7 @@ public function groupdetails($group_id){
   {
      $this->db->query("DELETE FROM readingclub WHERE group_name = '" . $club_name. "'");
 
-     $this->db->query("INSERT INTO readingclub SET created_by = 'customer' , group_image = 'catalog/book.jpg', group_name = '" . $club_name. "',group_description = '" . $this->request->post['club_description']. "', date_added = NOW()");
+     $this->db->query("INSERT INTO readingclub SET created_by = '" . (int)$this->customer->getId() . "' , group_image = 'catalog/book.jpg', group_name = '" . $club_name. "',group_description = '" . $this->request->post['club_description']. "', date_added = NOW()");
     
   }
 
@@ -204,7 +204,7 @@ return false;
  public function getclubs()
   {
       $group_id = array();
-      $query = $this->db->query("SELECT group_id FROM readingclub WHERE created_by = 'customer' ");
+      $query = $this->db->query("SELECT group_id FROM readingclub WHERE created_by = '" . (int)$this->customer->getId() . "' ");
 
       foreach($query->rows as $result)
       {
@@ -255,7 +255,7 @@ return false;
    public function addtomypost($groupid)
   {
 
-   $this->db->query("INSERT INTO readingclub_post SET  group_id = '". $groupid ."' , posted_by = 'customer' , image = 'catalog/book.jpg' , customer_id = '" . (int)$this->customer->getId() . "', message = '" . $this->request->post['text_name']. "', date_added = NOW() ");
+   $this->db->query("INSERT INTO readingclub_post SET  group_id = '". $groupid ."' , posted_by = 'customer' , customer_id = '" . (int)$this->customer->getId() . "', message = '" . $this->request->post['text_name']. "', date_added = NOW() ");
 
    $this->db->query("UPDATE  readingclub_post SET status='member' WHERE customer_id = '" . (int)$this->customer->getId() . "' AND group_id = '" . $groupid. "'");
    
@@ -484,8 +484,8 @@ return false;
 			        'publisher_image'           => $query->row['publisher_image'],
                     'publisher_description'     => $query->row['publisher_description'],
 					'publisher_address'         => $query->row['publisher_address'],
-                    'total_votes'              => $query->row['total_votes'],
-                    'likes'                    => $query->row['likes']
+                    'total_votes'               => $query->row['total_votes'],
+                    'likes'                     => $query->row['likes']
 
 						);
 			  }
@@ -538,18 +538,51 @@ public function getPublishers($customer_id)
 
  public function getSharedbooks()
  { 
-     $this->load->model('mylibrary/mylibrary');
+     /*$this->load->model('mylibrary/mylibrary');
 
      $query = $this->db->query("SELECT isbn FROM shared_books");
 
-      $book_data = array();
+     $book_data = array();
 		foreach($query->rows as $result)
 	 	{
 		 	$book_data[$result['isbn']] = $this->model_mylibrary_mylibrary->getBook($result['isbn']);
 	 	}
      
-	  	return $book_data;
- }  
+	  	return $book_data;*/
+
+          $query = $this->db->query("SELECT product_id, model, author, publisher, image, share_price FROM oc_product where share_price > 0"); 
+
+          foreach($query->rows as $result) {
+            
+             $isbn = $result['model'];
+             $shared_prices[$result['model']] = $this->getBestPrice($isbn);
+
+             $x=1;
+          }
+
+         return $query->rows;
+
+ } 
+
+ public function getBestPrice($isbn)
+ {
+
+      $share_prices = $this->db->query("SELECT share_price FROM mylibrary where isbn = '".$isbn."'" );    
+
+      if($share_prices->num_rows)
+		{
+			return array(
+
+				 $share_prices->row['share_price']
+			);
+		}
+		else {
+			return false;
+		}
+      
+ }
+
+  
 
  public function requestedbooks($isbn){
 
@@ -562,9 +595,9 @@ public function getPublishers($customer_id)
 
  public function getrequestedbooks(){
 
-     $book_data = array();
+     /*$book_data = array();
 
-      $this->load->model('mylibrary/mylibrary');
+     $this->load->model('mylibrary/mylibrary');
 
      $query = $this->db->query("SELECT isbn FROM requested_books WHERE customer_id = '" . (int)$this->customer->getId() . "'" );
 
@@ -572,7 +605,33 @@ public function getPublishers($customer_id)
 
          $book_data[$result['isbn']]=$this->model_mylibrary_mylibrary->getBook($result['isbn']);
      }
-     return $book_data;
+     return $book_data;*/
+
+    $order_ids = $this->db->query("SELECT order_id FROM oc_order WHERE customer_id = '" . (int)$this->customer->getId() . "'" );
+
+    foreach($order_ids as $order_id)
+    {
+        $order_status_ids = $this->db->query("SELECT order_status_id FROM oc_order_history WHERE order_id = '" . $order_id['order_id']  . "'" );
+
+        foreach($order_status_ids as $order_status_id)
+        {
+            $check[$order_status_id] = $this->check($order_status_id);
+        }
+    } 
+
+ }
+
+ public function check($order_status_id){
+
+     $check = $this->db->query("SELECT*FROM oc_order_status WHERE order_status_id = '" . $order_status_id  . "' AND name = 'processed'" );
+
+            if($check->rows){
+
+                return true;
+            }else{
+                return false;
+            }
+
  }
 
  public function getProductId($isbn){

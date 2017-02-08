@@ -70,9 +70,9 @@ class ControllerMyCommunitymycommunity extends Controller {
         $this->load->model('mycommunity/mycommunity');
         $this->load->model('mylibrary/mylibrary');
 
-        $shared_books = $this->model_mycommunity_mycommunity->getSharedbooks();
+// Shared Books Tab
 
-        $data['shared_books'] = array();
+        $shared_books = $this->model_mycommunity_mycommunity->getSharedbooks();
 
         foreach($shared_books as $shared_book)
         {
@@ -82,23 +82,21 @@ class ControllerMyCommunitymycommunity extends Controller {
 				$image = $this->model_tool_image->resize('no_image.png', 228, 228);
 			}
 
-            $product_id =  $this->model_mycommunity_mycommunity->getProductId($shared_book['isbn']);
+          //  $product_id =  $this->model_mycommunity_mycommunity->getProductId($shared_book['isbn']);
 
             $data['shared_books'][]=array(
 
-                'title' => $shared_book['title'],
-                'author' => $shared_book['author'],
-                'isbn'  => $shared_book['isbn'],
-                'product_id'  => $product_id,
-                //'share_price' => $shared_book['share_price'],
-                'image' => $image
+                'author'      => $shared_book['author'],
+                'product_id'  => $shared_book['product_id'],
+                'share_price' => $shared_book['share_price'],
+                'image'       => $image
             );
-        }
+        } 
 
 
          $bookresults = $this->model_mycommunity_mycommunity->getrequestedbooks();  
 
-        $data['books'] = array();
+   /*     $data['books'] = array();
 
         foreach($bookresults as $bookresult)
         {
@@ -119,18 +117,14 @@ class ControllerMyCommunitymycommunity extends Controller {
                 //'share_price' => $shared_book['share_price'],
                 'image' => $image
             );
-        }
+        } */
 
         $booklink = "mycommunity/mycommunity/requested&isbn=";
         $data['share_with_me']   = $this->url->link($booklink, '', true);
 
-       $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
+        $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
 
-       // $data['share_with_me'] = $this->url->link('mycommunity/mycommunity/share', '', true);
-
-       
-
-//        $data['text_requested_books'] = $this->url->link('mycommunity/mycommunity/getrequestedbooks' , '' , true);
+//      $data['text_requested_books'] = $this->url->link('mycommunity/mycommunity/getrequestedbooks' , '' , true);
 
 
         $this->response->setOutput($this->load->view('mycommunity/mycommunity', $data));
@@ -259,7 +253,7 @@ class ControllerMyCommunitymycommunity extends Controller {
 
   // yours tab      
 
-   $customer_id = (int)$this->customer->getId();
+         $customer_id = (int)$this->customer->getId();
 		 $data['clubs'] = array();
 		 $clubresults = $this->model_mycommunity_mycommunity->getclubs();
 		 foreach($clubresults as $clubresult)
@@ -1335,6 +1329,8 @@ class ControllerMyCommunitymycommunity extends Controller {
 
          $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
      
+
+        $data['upload_image'] = $this->url->link('mycommunity/mycommunity/uploadImage','',true);
         
         $this->response->setOutput($this->load->view('mycommunity/recommended', $data));
         
@@ -1466,8 +1462,6 @@ class ControllerMyCommunitymycommunity extends Controller {
 			      'image'                 =>$image,
                   'link'                  =>$postresult['link']
                  
- 
-
 					);
 			 
 		 } 
@@ -1475,7 +1469,10 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['first_name'] = $firstname;
         $data['last_name']  = $lastname;
 
-       $this->response->setOutput($this->load->view('mycommunity/recommended', $data)); 
+        $grouplink = "mycommunity/mycommunity/sharepost&group_id=";
+        $data['share_post'] = $this->url->link($grouplink, '', true); 
+
+        $this->response->setOutput($this->load->view('mycommunity/recommended', $data)); 
 
        }
 
@@ -1633,14 +1630,6 @@ class ControllerMyCommunitymycommunity extends Controller {
 
        public function mailsearch(){
 
-        if ((utf8_strlen($this->request->post['recipient_text']) < 1) || (utf8_strlen(trim($this->request->post['recipient_text'])) > 32)) {
-			$this->error['recipient_text'] = $this->language->get('error_recipient_text');
-		}
-
-		if ((utf8_strlen($this->request->post['recipient_email']) > 96) || !filter_var($this->request->post['recipient_email'], FILTER_VALIDATE_EMAIL)) {
-			$this->error['recipient_email'] = $this->language->get('error_recipient_email');
-		}
-
        $group_id = $this->request->get['group_id'];    
             
        $this->load->language('mycommunity/mycommunity');
@@ -1695,19 +1684,36 @@ class ControllerMyCommunitymycommunity extends Controller {
 
        public function club_share(){
 
+       $this->load->model('mycommunity/mycommunity');    
+
        $group_id = $this->request->get['group_id'];    
        $textname = $this->request->post['text_name'];
-
-
-        $this->load->model('mycommunity/mycommunity');
 
         $this->model_mycommunity_mycommunity->addtomypost($group_id);
        
         $this->load->language('mycommunity/mycommunity');
 
-        $this->load->model('mycommunity/mycommunity');
+        
         $clubinfo = $this->model_mycommunity_mycommunity->getMember($group_id);
-        $data['club_info'] = $clubinfo;
+      //  $data['club_info'] = $clubinfo;
+
+      //  $clubinfo = $this->model_mycommunity_mycommunity->getMember($group_id);
+
+         if (is_file(DIR_IMAGE.$clubinfo['group_image'])) {
+				$image = $this->model_tool_image->resize($clubinfo['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+        $data['club_info'] = array(
+             
+            
+                    'group_id'              => $clubinfo['group_id'],
+                    'group_name'            => $clubinfo['group_name'],
+			        'group_image'           => $image
+                    
+        );
+
         
         
         $data['button_sharedbooks'] = $this->language->get('button_sharedbooks');
@@ -2011,8 +2017,6 @@ class ControllerMyCommunitymycommunity extends Controller {
         
         $this->load->model('mycommunity/mycommunity');
       
-  //     $data['add_to_liked_author']   = $this->url->link('mycommunity/mycommunity/author_info', '', true);
-
         $this->response->setOutput($this->load->view('mycommunity/author_info', $data));
         
         }
@@ -2070,19 +2074,14 @@ class ControllerMyCommunitymycommunity extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-
         $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity', '', true);
         $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
         $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
         $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
- 
-		//$this->load->language('mylibrary/mastersearch');
 
 		$this->load->model('mycommunity/mycommunity');
 
 		$data['text_author_mastersearch'] = $this->language->get('text_author_mastersearch');
-
-        
 
 		if (isset($this->request->post['fname'])) {
 			$author_mastersearch = $this->request->post['fname'];
@@ -2090,11 +2089,32 @@ class ControllerMyCommunitymycommunity extends Controller {
 			$author_mastersearch = '';
 		}
  
-    
-		$authors = $this->model_mycommunity_mycommunity->getAuthorFromMaster($author_mastersearch);
+       $authors = $this->model_mycommunity_mycommunity->getAuthorFromMaster($author_mastersearch);
+       
+      // $data['authorresult'] = $authors;
 
+        if (is_file(DIR_IMAGE.$authors['author_image'])) {
+				$image = $this->model_tool_image->resize($authors['author_image'], 250, 250);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 250, 250);
+			}
 
-       	$data['authorresult'] = $authors;
+         $data['authorresult'] = array(
+             
+                'author_id'                => $authors['author_id'],
+				'author_name'              => $authors['author_name'],
+				'author_image'             => $image,
+				'author_dob'               => $authors['author_dob'],
+                'author_occupation'        => $authors['author_occupation'],  
+                'author_nationality'       => $authors['author_nationality'],  
+                'author_education'         => $authors['author_education'],
+                'author_awards'            => $authors['author_awards'],
+                'author_references'        => $authors['author_references'],
+                'author_external_links'    => $authors['author_external_links'], 
+				'total_votes'              => $authors['total_votes'],
+                'likes'                    => $authors['likes']
+        );
+
 
         $data['add_to_liked_author'] = $this->url->link('mycommunity/mycommunity/addToLikedauthor&author_id=', '', true);
 
@@ -2462,7 +2482,26 @@ class ControllerMyCommunitymycommunity extends Controller {
 		$publishers = $this->model_mycommunity_mycommunity->getPublisherFromMaster($publisher_mastersearch);
 
 
-       	$data['publisherresult'] = $publishers;
+    //   	$data['publisherresult'] = $publishers;
+
+    
+        if (is_file(DIR_IMAGE.$publishers['publisher_image'])) {
+				$image = $this->model_tool_image->resize($publishers['publisher_image'], 250, 250);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 250, 250);
+			}
+
+         $data['publisherresult'] = array(
+             
+                    'publisher_id'              => $publishers['publisher_id'],
+                    'publisher_name'            => $publishers['publisher_name'],
+			        'publisher_image'           => $image,
+                    'publisher_description'     => $publishers['publisher_description'],
+					'publisher_address'         => $publishers['publisher_address'],
+                    'total_votes'               => $publishers['total_votes'],
+                    'likes'                     => $publishers['likes']
+
+        );
 
        $data['publisher'] = $this->url->link('mycommunity/mycommunity/addToLikedpublisher&publisher_id=', '', true);
 
@@ -2575,6 +2614,7 @@ class ControllerMyCommunitymycommunity extends Controller {
 			 
 		 }
 
+        $data['publisher_image'] = $this->url->link('mycommunity/mycommunity/publisher_info&publisher_id=', '', true);
 		
         $data['searchpublisher'] = $this->url->link('mycommunity/mycommunity/publisherresult' , '' , true); 
 	
@@ -2886,4 +2926,55 @@ class ControllerMyCommunitymycommunity extends Controller {
      }
 
 
+	public function uploadImage()
+	{
+		
+ 		$target_dir = "C:\wamp64\www\bookstore\image\catalog/";
+		$target_file_front = $target_dir . basename($_FILES["image"]["name"]);
+		$uploadOk = 1;
+	
+		$imageFileType = pathinfo($target_file_front,PATHINFO_EXTENSION);
+		// Check if image file is a actual image or fake image
+		if(isset($_POST["submit"]) && $_FILES["image"]["name"] ) {
+  		  $check = getimagesize($_FILES["image"]["tmp_name"]);
+  		  if($check !== false) {
+  	      //echo "File is an image - " . $check["mime"] . ".";
+  	      $uploadOk = 1;
+  		  } else {
+  	 	    $data['upload_success'] = "File is not an image.";
+   	  	   $uploadOk = 0;
+   		  }
+		}
+
+	
+			// Check file size
+			if ($_FILES["image"]["size"] > 500000) {
+   			 $data['upload_success'] = "Sorry, your file is too large.";
+   			 $uploadOk = 0;
+			}
+
+			// Allow certain file formats
+			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+			  && $imageFileType != "gif" ) {
+  			  $data['upload_success'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+  			  $uploadOk = 0;
+			}
+
+			// Check if $uploadOk is set to 0 by an error
+			if ($uploadOk == 0) {
+ 	 		  $data['upload_success'] = "Sorry, your file was not uploaded.";
+			// if everything is ok, try to upload file
+			} else {
+ 	   		if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file_front)) {
+ 	     	 // echo "The file ". basename( $_FILES["image"]["name"]). " has been uploaded.";
+			$data['upload_success'] = "Your Book Images has been uploaded" ;
+
+			 
+ 	  	 	} else {
+        		$data['upload_success'] = "Sorry, there was an error uploading your file.";
+  	 	 	}
+		}
+
+
+}
 }

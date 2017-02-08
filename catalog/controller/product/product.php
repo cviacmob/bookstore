@@ -342,6 +342,8 @@ class ControllerProductProduct extends Controller {
 
 			$isbn = $this->model_catalog_product->getProductBestPrices($this->request->get['product_id']);
 
+			
+
 			$data['seller_prices'] = array();
 
 			foreach($isbn as $ISBN){
@@ -354,6 +356,22 @@ class ControllerProductProduct extends Controller {
 			foreach($customer_prices as $customer_price){
 				$data['seller_prices'][] =array(
 					'sell_price'=>$customer_price['sell_price'],
+					//'first_name'=>$customer_price['first_name'],
+					//'last_name'=>$customer_price['last_name']
+				);
+
+			}
+
+			foreach($isbn as $ISBN){
+
+					$shared_prices = $this->model_catalog_product->sharedCustomers($ISBN);
+					asort($shared_prices);
+
+			}
+			
+			foreach($shared_prices as $shared_price){
+				$data['shared_prices'][] =array(
+					'share_price'=>$shared_price['share_price'],
 					//'first_name'=>$customer_price['first_name'],
 					//'last_name'=>$customer_price['last_name']
 				);

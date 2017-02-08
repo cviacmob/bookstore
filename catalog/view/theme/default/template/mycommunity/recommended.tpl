@@ -47,6 +47,16 @@
 &nbsp 
  <input type="text" class="text_share" data-toggle="modal" placeholder="<?php echo $text_sharesomething;?>"data-target="#myPost">
 <i class="fa fa-camera" aria-hidden="true"></i> 
+
+<form action="<?php echo $upload_image; ?>" method="post" enctype="multipart/form-data">
+
+    
+    <input type='file' name="image" onchange="readURL(this);" />
+    <img id="blah" src="#" alt="" />
+
+    <input type="submit" value="Upload Image" name="submit">
+
+</form>
  
 
 &nbsp 
@@ -191,6 +201,21 @@ $(document).ready(function(e){
         });
     </script>
 
-  
+<script type="text/javascript">
+function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script>
 
 <?php echo $footer; ?>

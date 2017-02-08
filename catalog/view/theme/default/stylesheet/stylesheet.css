@@ -916,7 +916,7 @@ h2.price {
 	margin-top: 10px;
     margin-bottom: 10px;
 	padding-left: 10px;
-    padding-right: 23px;
+   /* padding-right: 23px;*/
 	height: 30px;
 }
 .mycom{
@@ -1069,4 +1069,10 @@ margin-top: -275px;
 	margin-top: -34px;
 	
 	
+}
+#show_div{
+	display: none;
+}
+#show_hide{
+	display: none;
 }

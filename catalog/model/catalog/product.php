@@ -590,4 +590,39 @@ public function bestPrice($customer_id)
 	else
 	return false;
 }
+
+
+
+	public function sharedCustomers($isbn)
+{
+	$query = $this->db->query("SELECT customer_id FROM mylibrary WHERE isbn = '".$isbn."' AND share_price > 0 ");
+
+	$book_data = array();
+	foreach($query->rows as $result)
+	 	{
+		 	$book_data[$result['customer_id']] = $this->sharedPrices($result['customer_id']);
+	 	}
+
+	return $book_data;
 }
+
+public function sharedPrices($customer_id)
+{
+	$query = $this->db->query("SELECT my.share_price, c.firstname, c.lastname FROM mylibrary my INNER JOIN oc_customer c ON c.customer_id = my.customer_id WHERE my.customer_id = '".$customer_id."'");
+
+	if($query->num_rows){
+
+			return array(
+
+				'share_price'=>$query->row['share_price'],
+				//'first_name'=>$query->row['firstname'],
+				//'last_name'=>$query->row['lastname']
+			);
+		
+	}
+	else
+	return false;
+}
+
+}
+
