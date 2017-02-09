@@ -304,7 +304,7 @@
               <?php if ($seller_prices) { ?>
                <br>
               <div class="bestsellers">
-               <label class="control-label" >Best Sellers</label>
+               <label class="control-label" >Best Prices</label>
               </div>
 
 
@@ -316,6 +316,30 @@
                  /> &nbsp;<i class="fa fa-inr" style="font-size: 27px;" aria-hidden="true"></i> 
                    <!-- <?php echo $seller_price['first_name']; ?>&nbsp;<?php echo $seller_price['last_name']; ?> --> 
                     <?php echo $seller_price['sell_price']; ?><br><br>
+              <?php } ?> 
+
+              </div>
+              </form>
+
+
+              
+              <?php } ?>
+
+               <?php if ($shared_prices) { ?>
+               <br>
+              <div class="bestsellers">
+               <label class="control-label" >Shared prices</label>
+              </div>
+
+
+              <form action="<?php echo $selected_price; ?>" method="post">
+              <div class="bestseller-display">
+               <br>
+              <?php foreach($shared_prices as $shared_price) { ?>
+                <input type="radio" name="radio" value = "<?php echo $shared_price['share_price']; ?>" onclick="javascript: submit()" style="font-size: 27px;"
+                 /> &nbsp;<i class="fa fa-inr" style="font-size: 27px;" aria-hidden="true"></i> 
+                   <!-- <?php echo $seller_price['first_name']; ?>&nbsp;<?php echo $seller_price['last_name']; ?> --> 
+                    <?php echo $shared_price['share_price']; ?><br><br>
               <?php } ?> 
 
               </div>

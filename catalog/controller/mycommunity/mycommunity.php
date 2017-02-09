@@ -86,10 +86,12 @@ class ControllerMyCommunitymycommunity extends Controller {
 
             $data['shared_books'][]=array(
 
+                'name'        => $shared_book['name'],
                 'author'      => $shared_book['author'],
                 'product_id'  => $shared_book['product_id'],
                 'share_price' => $shared_book['share_price'],
-                'image'       => $image
+                'image'       => $image,
+                'href'        =>$this->url->link('product/product', 'path=' . '60_61' . '&product_id=' . $shared_book['product_id'] . $url)
             );
         } 
 
