@@ -70,10 +70,6 @@
        
     
    
-
-   
-   
-
     <div class="back-image">
     <?php echo $text_back_image; ?>
     <input type='file' name="back_image" onchange="readURLS(this);" />

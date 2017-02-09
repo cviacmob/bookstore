@@ -255,7 +255,8 @@ return false;
    public function addtomypost($groupid)
   {
 
-   $this->db->query("INSERT INTO readingclub_post SET  group_id = '". $groupid ."' , posted_by = 'customer' , customer_id = '" . (int)$this->customer->getId() . "', message = '" . $this->request->post['text_name']. "', date_added = NOW() ");
+   $image = "catalog/".$_FILES["image"]["name"];
+   $this->db->query("INSERT INTO readingclub_post SET  group_id = '". $groupid ."' , posted_by = 'customer' , customer_id = '" . (int)$this->customer->getId() . "', message = '" . $this->request->post['text_name']. "', image = '" .$image. "', date_added = NOW() ");
 
    $this->db->query("UPDATE  readingclub_post SET status='member' WHERE customer_id = '" . (int)$this->customer->getId() . "' AND group_id = '" . $groupid. "'");
    
