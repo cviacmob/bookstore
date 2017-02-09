@@ -187,8 +187,6 @@ class ControllerMylibraryMylibrary extends Controller {
 		$data['reviewed_books'] = $this->url->link('mylibrary/mylibrary/getReviewedBooks','',true);
 		$data['favorite_books'] = $this->url->link('mylibrary/mylibrary/getFavorite','',true);
 
-		
-		 
         $this->response->setOutput($this->load->view('mylibrary/purchased_books', $data));
 
  	}

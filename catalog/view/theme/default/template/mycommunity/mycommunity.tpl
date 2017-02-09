@@ -40,14 +40,14 @@
  <div class="product-layout col-lg-4 col-md-3 col-sm-6 col-xs-12 " style="float:left" margin-left="16px">
 	<div class="product-thumb transition ">
 		<div class="image">
-			<img class="img-responsive" src="<?php echo $shared_book['image']; ?>">
+		<a href="<?php echo $shared_book['href']; ?>">	<img class="img-responsive" src="<?php echo $shared_book['image']; ?>"> </a>
 		</div>
 <!--<img class="img-responsive" src="<?php echo $book['image']; ?>">-->
 	<div class="caption">
-    	<h4><?php echo $shared_book['share_price']; ?></h4>
+     <h4><a href=""><?php echo $shared_book['name']; ?></a></h4> 
 		<p>by <?php echo $shared_book['author']; ?></p>
 
-      <!--  <h4><a href=""><?php echo $shared_book['product_id']; ?></a></h4>--> 
+      <!--  <h4><a href=""><?php echo $shared_book['product_id']; ?></a></h4> 
 	</div>
 
 <br>

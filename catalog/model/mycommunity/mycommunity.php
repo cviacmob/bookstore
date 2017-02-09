@@ -550,8 +550,8 @@ public function getPublishers($customer_id)
 	 	}
      
 	  	return $book_data;*/
-
-          $query = $this->db->query("SELECT product_id, model, author, publisher, image, share_price FROM oc_product where share_price > 0"); 
+          $query = $this->db->query("SELECT pd.name, p.image,p.model,p.author,p.share_price, p.product_id FROM oc_product_description pd INNER JOIN oc_product p ON pd.product_id = p.product_id WHERE p.share_price > 0");             
+          //$query = $this->db->query("SELECT product_id, model, author, publisher, image, share_price FROM oc_product where share_price > 0"); 
 
           foreach($query->rows as $result) {
             
