@@ -759,11 +759,12 @@ public function getPublishers($customer_id)
 
         public function getClubpost($post_id)   {
 
-        $query = $this->db->query("SELECT*FROM readingclub_post WHERE post_id = '" . $post_id. "'");
+        $query = $this->db->query("SELECT*FROM readingclub_post WHERE post_id = '" . $post_id. "' ORDER BY date_added DESC");
 
        if ($query->num_rows) {
 			return array(
                     
+                    'group_id'              => $query->row['group_id'], 
                     'post_id'               => $query->row['post_id'],
 				    'message'               => $query->row['message'],
 			        'image'                 => $query->row['image'],
@@ -780,15 +781,15 @@ public function getPublishers($customer_id)
 
         public function getClubposts($group_id) {
 
-	    $book_data = array();
-	    $query = $this->db->query("SELECT post_id FROM readingclub_post WHERE customer_id = '". (int)$this->customer->getId() ."' AND group_id = '" . $group_id. "'");
+	    $post_id = array();
+	    $query = $this->db->query("SELECT post_id FROM readingclub_post WHERE customer_id = '". (int)$this->customer->getId() ."' AND group_id = '" . $group_id. "'  ORDER BY date_added DESC");
 
 	    foreach($query->rows as $result)
 	     {
-		 $book_data[$result['post_id']] = $this->getClubpost($result['post_id']);
+		 $post_id[$result['post_id']] = $this->getClubpost($result['post_id']);
 	     }
 
-	     return $book_data;
+	     return $post_id;
          }
 
         }

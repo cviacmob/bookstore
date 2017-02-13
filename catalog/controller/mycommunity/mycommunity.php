@@ -96,7 +96,7 @@ class ControllerMyCommunitymycommunity extends Controller {
         } 
 
 
-         $bookresults = $this->model_mycommunity_mycommunity->getrequestedbooks();  
+      //   $bookresults = $this->model_mycommunity_mycommunity->getrequestedbooks();  
 
    /*     $data['books'] = array();
 
@@ -1294,7 +1294,7 @@ class ControllerMyCommunitymycommunity extends Controller {
               if (is_file(DIR_IMAGE.$postresult['image'])) {
 				$image = $this->model_tool_image->resize($postresult['image'], 417, 417);
 			} else {
-				$image = $this->model_tool_image->resize('no_image.png', 417, 417);
+				$image = '';
 			}
 
 		$data['post_info'][] = array (
@@ -1311,8 +1311,6 @@ class ControllerMyCommunitymycommunity extends Controller {
 					);
 			 
 		 } 
-
-
 
         $data['first_name'] = $firstname;
         $data['last_name']  = $lastname;
@@ -1438,8 +1436,7 @@ class ControllerMyCommunitymycommunity extends Controller {
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-      
-       $url='';
+        $url='';
 
         $data['breadcrumbs'] = array();
 
@@ -1473,18 +1470,12 @@ class ControllerMyCommunitymycommunity extends Controller {
 
         $data['group_info'] = array(
              
-             
-
+        
                     'group_id'              => $rec['group_id'],
                     'group_name'            => $rec['group_name'],
 			        'group_image'           => $image,
                     'status'                => $rec['status']
         );
-        $this->load->model('mycommunity/mycommunity');
-        $customer_id = (int)$this->customer->getId();
-        $firstname = $this->customer->getFirstName();
-        $lastname = $this->customer->getLastName();
-
         
         $this->load->model('mycommunity/mycommunity');
         $customer_id = (int)$this->customer->getId();
@@ -1501,7 +1492,7 @@ class ControllerMyCommunitymycommunity extends Controller {
               if (is_file(DIR_IMAGE.$postresult['image'])) {
 				$image = $this->model_tool_image->resize($postresult['image'], 417, 417);
 			} else {
-				$image = $this->model_tool_image->resize('no_image.png', 417, 417);
+				$image = '';
 			}
 
 			 $data['post_info'][] = array (
@@ -1529,12 +1520,12 @@ class ControllerMyCommunitymycommunity extends Controller {
        public function club_info(){
 
        
-      $group_id = $this->request->get['group_id'];    
-      $this->load->language('mycommunity/mycommunity');
+       $group_id = $this->request->get['group_id'];    
+       $this->load->language('mycommunity/mycommunity');
 
-      $this->document->setTitle($this->language->get('heading_title'));
+       $this->document->setTitle($this->language->get('heading_title'));
 
-      $this->load->model('mycommunity/mycommunity');
+       $this->load->model('mycommunity/mycommunity');
 
        $url='';
 
@@ -1646,9 +1637,9 @@ class ControllerMyCommunitymycommunity extends Controller {
 		 {	
 
               if (is_file(DIR_IMAGE.$postresult['image'])) {
-				$image = $this->model_tool_image->resize($postresult['image'], 189, 95);
+				$image = $this->model_tool_image->resize($postresult['image'], 417, 417);
 			} else {
-				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+				$image = '';
 			}
 
 			
@@ -1663,7 +1654,7 @@ class ControllerMyCommunitymycommunity extends Controller {
 			 
 		 } 
 
-        
+         
          $data['invite_people'] = $this->url->link('mycommunity/mycommunity/invite_people&group_id=', '', true);   
 
          $grouplink = "mycommunity/mycommunity/club_share&group_id=";
@@ -1671,7 +1662,9 @@ class ControllerMyCommunitymycommunity extends Controller {
      
          $data['search_mail'] = $this->url->link('mycommunity/mycommunity/mailsearch&group_id=' , '' , true);
 
-          $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+         $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+
+         $data['upload_image'] = $this->url->link('mycommunity/mycommunity/uploadImage','',true);
      
         
         $this->response->setOutput($this->load->view('mycommunity/club_info', $data));
@@ -1739,18 +1732,64 @@ class ControllerMyCommunitymycommunity extends Controller {
        $group_id = $this->request->get['group_id'];    
        $textname = $this->request->post['text_name'];
 
+        //uploadImage
+		
+ 		$target_dir = "C:\wamp64\www\bookstore\image\catalog/";
+		$target_file_front = $target_dir . basename($_FILES["image"]["name"]);
+		$uploadOk = 1;
+	
+		$imageFileType = pathinfo($target_file_front,PATHINFO_EXTENSION);
+		// Check if image file is a actual image or fake image
+		if(isset($_POST["submit"]) && $_FILES["image"]["name"] ) {
+  		  $check = getimagesize($_FILES["image"]["tmp_name"]);
+  		  if($check !== false) {
+  	      //echo "File is an image - " . $check["mime"] . ".";
+  	      $uploadOk = 1;
+  		  } else {
+  	 	    $data['upload_success'] = "File is not an image.";
+   	  	   $uploadOk = 0;
+   		  }
+		}
+
+	
+			// Check file size
+		/*	if ($_FILES["image"]["size"] > 500000) {
+   			 $data['upload_success'] = "Sorry, your file is too large.";
+   			 $uploadOk = 0;
+			} */
+
+			// Allow certain file formats
+		/*	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+			  && $imageFileType != "gif" ) {
+  			  $data['upload_success'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+  			  $uploadOk = 0;
+			}*/
+
+			// Check if $uploadOk is set to 0 by an error
+			if ($uploadOk == 0) {
+ 	 		  $data['upload_success'] = "Sorry, your file was not uploaded.";
+			// if everything is ok, try to upload file
+			} else {
+ 	   		if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file_front)) {
+ 	     	 // echo "The file ". basename( $_FILES["front_image"]["name"]). " has been uploaded.";
+			$data['upload_success'] = "Your Book Images has been uploaded" ;
+
+			 
+ 	  	 	} else {
+        		$data['upload_success'] = "Sorry, there was an error uploading your file.";
+  	 	 	}
+		}
+
         $this->model_mycommunity_mycommunity->addtomypost($group_id);
        
         $this->load->language('mycommunity/mycommunity');
 
-        
+        $this->load->model('tool/image');
+
         $clubinfo = $this->model_mycommunity_mycommunity->getMember($group_id);
-      //  $data['club_info'] = $clubinfo;
 
-      //  $clubinfo = $this->model_mycommunity_mycommunity->getMember($group_id);
-
-         if (is_file(DIR_IMAGE.$clubinfo['group_image'])) {
-				$image = $this->model_tool_image->resize($clubinfo['group_image'], 189, 95);
+        if (is_file(DIR_IMAGE.$clubinfo['group_image'])) {
+				$image = $this->model_tool_image->resize($clubinfo['group_image'],189,95);
 			} else {
 				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
 			}
@@ -1787,10 +1826,10 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
         $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
 
-      $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->setTitle($this->language->get('heading_title'));
 
       
-       $url='';
+        $url='';
 
         $data['breadcrumbs'] = array();
 
@@ -1813,7 +1852,7 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['header'] = $this->load->controller('common/header');
         $data['heading_title'] = $this->language->get('heading_title');
 
-         $this->load->model('mycommunity/mycommunity');
+        $this->load->model('mycommunity/mycommunity');
         $rec = $this->model_mycommunity_mycommunity->getMember($group_id);
         
          if (is_file(DIR_IMAGE.$rec['group_image'])) {
@@ -1825,7 +1864,6 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['group_info'] = array(
              
              
-
                     'group_id'              => $rec['group_id'],
                     'group_name'            => $rec['group_name'],
 			        'group_image'           => $image
@@ -1855,16 +1893,17 @@ class ControllerMyCommunitymycommunity extends Controller {
               if (is_file(DIR_IMAGE.$postresult['image'])) {
 				$image = $this->model_tool_image->resize($postresult['image'], 417, 417);
 			} else {
-				$image = $this->model_tool_image->resize('no_image.png', 417, 417);
+				$image = '';
 			}
 
              
 			 $data['post_info'][] = array (
 
-				 'customer_image'       =>$postresult['customer_image'],
+                  'post_id'             =>$postresult['post_id'],
+				  'customer_image'      =>$postresult['customer_image'],
 				  'message'             =>$postresult['message'],
 			      'image'               =>$image,
-                  'link'               =>$postresult['link']
+                  'link'                =>$postresult['link']
 					);
 			 
 		 } 
@@ -1873,6 +1912,9 @@ class ControllerMyCommunitymycommunity extends Controller {
 
         $data['first_name'] = $firstname;
         $data['last_name']  = $lastname;
+
+        $grouplink = "mycommunity/mycommunity/club_share&group_id=";
+        $data['club_share'] = $this->url->link($grouplink, '', true); 
 
 
       
