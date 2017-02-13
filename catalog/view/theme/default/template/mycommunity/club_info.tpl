@@ -119,11 +119,6 @@
 <br>
 
 
-
-
-
-
-
         <!-- Post -->
        <div class="modal fade" id="myPost" role="dialog">
        <div class="modal-dialog">
