@@ -325,7 +325,7 @@
               
               <?php } ?>
 
-               <?php if ($shared_prices) { ?>
+               <!-- <?php if ($shared_prices) { ?>
                <br>
               <div class="bestsellers">
                <label class="control-label" >Shared prices</label>
@@ -337,9 +337,9 @@
                <br>
               <?php foreach($shared_prices as $shared_price) { ?>
                 <input type="radio" name="radio" value = "<?php echo $shared_price['share_price']; ?>" onclick="javascript: submit()" style="font-size: 27px;"
-                 /> &nbsp;<i class="fa fa-inr" style="font-size: 27px;" aria-hidden="true"></i> 
+                 /> &nbsp;<i class="fa fa-inr" style="font-size: 27px;" aria-hidden="true"></i>  -->
                    <!-- <?php echo $seller_price['first_name']; ?>&nbsp;<?php echo $seller_price['last_name']; ?> --> 
-                    <?php echo $shared_price['share_price']; ?><br><br>
+                   <!--  <?php echo $shared_price['share_price']; ?><br><br>
               <?php } ?> 
 
               </div>
@@ -347,7 +347,7 @@
 
 
               
-              <?php } ?>
+              <?php } ?> -->
               <br />
               <button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary btn-lg btn-block"><?php echo $button_cart; ?></button>
             </div>

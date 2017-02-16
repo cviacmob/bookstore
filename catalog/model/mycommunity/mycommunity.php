@@ -593,19 +593,7 @@ public function getPublishers($customer_id)
 
  }  
 
- public function getrequestedbooks(){
-
-     /*$book_data = array();
-
-     $this->load->model('mylibrary/mylibrary');
-
-     $query = $this->db->query("SELECT isbn FROM requested_books WHERE customer_id = '" . (int)$this->customer->getId() . "'" );
-
-     foreach($query->rows as $result) {
-
-         $book_data[$result['isbn']]=$this->model_mylibrary_mylibrary->getBook($result['isbn']);
-     }
-     return $book_data;*/
+ /*public function getrequestedbooks(){
 
     $order_ids = $this->db->query("SELECT order_id FROM oc_order WHERE customer_id = '" . (int)$this->customer->getId() . "'" );
 
@@ -632,7 +620,7 @@ public function getPublishers($customer_id)
                 return false;
             }
 
- }
+ }*/
 
  public function getProductId($isbn){
 

@@ -22,20 +22,7 @@
 <div id="content" class="col-sm-9">
 <h3><?php echo $text_shared_books; ?></h3>
 <div class="row">
-<div class="tabbable-panel">
-<div class="tabbable-line">
-<ul class="nav nav-tabs ">
-<li class="active"><a href="#tab_default_1" data-toggle="tab"> <?php echo $text_available_books;?> </a></li>
-<li><a href="#tab_default_2" data-toggle="tab"> <?php echo $text_requested_books;?></a></li>
 
-
-
-</ul>
-
-
-<div class="tab-content">
-<div class="tab-pane active" id="tab_default_1">
-<div class="row">
 <?php foreach($shared_books as $shared_book) {?>
  <div class="product-layout col-lg-4 col-md-3 col-sm-6 col-xs-12 " style="float:left" margin-left="16px">
 	<div class="product-thumb transition ">
@@ -46,7 +33,7 @@
 	<div class="caption">
      <h4><a href=""><?php echo $shared_book['name']; ?></a></h4> 
 		<p>by <?php echo $shared_book['author']; ?></p>
-
+</div>
       <!--  <h4><a href=""><?php echo $shared_book['product_id']; ?></a></h4> 
 	</div>
 
@@ -64,42 +51,15 @@
 </div>
 <?php } ?>
 </div>
-</div> 
-
-
-<div class="tab-pane" id="tab_default_2">
-<div class="row">
-<?php foreach($books as $book) {?>
-<div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
- <div class="product-thumb transition ">
-  <div class="image">
- <input type = "image" img class="img-responsive" src="<?php echo $book['image']; ?>"/>
-</div><br>
-	<h4><a href=""><?php echo $book['title']; ?></a></h4> 
-	<p>by <a href=""><?php echo $book['author']; ?></a></p>
-
-  <button type="submit" class="sh" >RETURN </button></a>
-  </div>
-</div>
-<?php } ?>
-</div> 
-</div>
-
-
-
 
 
 </div>
-</div> 
-
-
 
 </div>
 </div>
 
-</div>
-</div>
-</div>
+
+
 
 
 
