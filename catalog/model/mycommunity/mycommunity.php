@@ -255,7 +255,8 @@ return false;
    public function addtomypost($groupid)
   {
 
-   $this->db->query("INSERT INTO readingclub_post SET  group_id = '". $groupid ."' , posted_by = 'customer' , customer_id = '" . (int)$this->customer->getId() . "', message = '" . $this->request->post['text_name']. "', date_added = NOW() ");
+   $image = "catalog/".$_FILES["image"]["name"];
+   $this->db->query("INSERT INTO readingclub_post SET  group_id = '". $groupid ."' , posted_by = 'customer' , customer_id = '" . (int)$this->customer->getId() . "', message = '" . $this->request->post['text_name']. "', image = '" .$image. "', date_added = NOW() ");
 
    $this->db->query("UPDATE  readingclub_post SET status='member' WHERE customer_id = '" . (int)$this->customer->getId() . "' AND group_id = '" . $groupid. "'");
    
@@ -746,11 +747,12 @@ public function getPublishers($customer_id)
 
         public function getClubpost($post_id)   {
 
-        $query = $this->db->query("SELECT*FROM readingclub_post WHERE post_id = '" . $post_id. "'");
+        $query = $this->db->query("SELECT*FROM readingclub_post WHERE post_id = '" . $post_id. "' ORDER BY date_added DESC");
 
        if ($query->num_rows) {
 			return array(
                     
+                    'group_id'              => $query->row['group_id'], 
                     'post_id'               => $query->row['post_id'],
 				    'message'               => $query->row['message'],
 			        'image'                 => $query->row['image'],
@@ -767,15 +769,15 @@ public function getPublishers($customer_id)
 
         public function getClubposts($group_id) {
 
-	    $book_data = array();
-	    $query = $this->db->query("SELECT post_id FROM readingclub_post WHERE customer_id = '". (int)$this->customer->getId() ."' AND group_id = '" . $group_id. "'");
+	    $post_id = array();
+	    $query = $this->db->query("SELECT post_id FROM readingclub_post WHERE customer_id = '". (int)$this->customer->getId() ."' AND group_id = '" . $group_id. "'  ORDER BY date_added DESC");
 
 	    foreach($query->rows as $result)
 	     {
-		 $book_data[$result['post_id']] = $this->getClubpost($result['post_id']);
+		 $post_id[$result['post_id']] = $this->getClubpost($result['post_id']);
 	     }
 
-	     return $book_data;
+	     return $post_id;
          }
 
         }

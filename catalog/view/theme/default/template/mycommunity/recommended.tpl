@@ -46,18 +46,9 @@
 <img class="img-circle"  alt="" width="50" height="50" src="<?php echo $post['customer_image']; ?>" />    
 &nbsp 
  <input type="text" class="text_share" data-toggle="modal" placeholder="<?php echo $text_sharesomething;?>"data-target="#myPost">
-<i class="fa fa-camera" aria-hidden="true"></i> 
+<!--<i class="fa fa-camera" aria-hidden="true"></i>--> 
 
-<form action="<?php echo $upload_image; ?>" method="post" enctype="multipart/form-data">
 
-    
-    <input type='file' name="image" onchange="readURL(this);" />
-    <img id="blah" src="#" alt="" />
-
-    <input type="submit" value="Upload Image" name="submit">
-
-</form>
- 
 
 &nbsp 
 
@@ -81,8 +72,10 @@
 </div>
 <br>
 <h4><?php echo $post['message']; ?></h4><br>
-
+<?php if($post['image']) { ?>
 <img class="img" src="<?php echo $post['image']; ?>" height = "417" width = "417"/>
+<?php  } ?>
+
 <br>
 <br>
 
@@ -122,7 +115,7 @@
     <div class="modal-dialog">
     
       <!-- Post content-->
-       <form action = "<?php echo $share_post.$group_info['group_id']; ?>"  method ="post">
+       <form action = "<?php echo $share_post.$group_info['group_id']; ?>"  method ="post" enctype="multipart/form-data">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -130,12 +123,22 @@
          <div class = "head">
         <h4><?php echo $first_name; ?>   <?php echo $last_name; ?>    <i class="fa fa-caret-right"  aria-hidden="true"></i>   <?php echo $group_info['group_name']; ?></h4>
         <br>
-       <textarea class = "sharesomething" rows="10" cols="80" name="text_name" placeholder="<?php echo $text_sharesomething;?>" ></textarea>
+       <textarea class = "sharesomething" rows="10" cols="80" name="text_name" placeholder="<?php echo $text_sharesomething;?>" >  </textarea>
+        
+
         <br>
         <br>
         <div class="">
-        <i class="fa fa-camera" aria-hidden="true"></i>  &nbsp
-   &nbsp &nbsp <i class="fa fa-link" aria-hidden="true"></i>
+        <i class="fa fa-camera" aria-hidden="true"></i> 
+
+        
+    
+    <input type='file' class = "upload" name="image" onchange="readURL(this);"  />
+    
+    <img id="blah" src="#" alt="" />
+  
+
+ 
          </div>
 
         </div>
@@ -145,12 +148,15 @@
            
         
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $button_cancel;?></button>
-     <!--      <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>-->
-         <button id = "done" type="submit" class="btn btn-primary" ><?php echo $button_done;?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $button_cancel;?></button>
+     <!--<button type="button" class="btn btn-default" data-dismiss="modal">Done</button>-->
+     <!--<button id = "done" type="submit" class="btn btn-primary" ><?php echo $button_done;?></button>-->
+
+        <input type="submit" class="btn btn-primary" value="<?php echo $button_done;?>" name="submit">
+
         </div>
-     </form>
-      </div>
+        </form>
+        </div>
       
     </div>
   </div>

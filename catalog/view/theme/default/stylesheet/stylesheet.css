@@ -1076,6 +1076,7 @@ margin-top: -275px;
 #show_hide{
 	display: none;
 }
+<<<<<<< HEAD
 .tabbable-panel {
  border:1px solid #eee;
  padding: 10px;
@@ -1132,4 +1133,21 @@ margin-top: -275px;
 }
 .portlet .tabbable-line > .tab-content {
  padding-bottom: 0;
+=======
+.fileUpload {
+	position: relative;
+	overflow: hidden;
+	margin: 10px;
+}
+.fileUpload input.upload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+>>>>>>> 6b134bf6005acff2edaa4c2941499e8d3658effa
 }

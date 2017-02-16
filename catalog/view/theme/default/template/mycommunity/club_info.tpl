@@ -31,34 +31,23 @@
   </div>
   <div class="modal-body">
 
- <!--   <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            Success! Mail has been sent.
-        </div>-->
-
    <form action = "<?php echo $search_mail.$club_info['group_id']; ?>" method ="post" onSubmit="return verifyForm(this);">
-  
- <!--  <input type="text"  placeholder="search"  id="search-box"  name="text_search" class="se" ><button type="submit" id="btnShow-search" class="sea"><i class="fa fa-search" aria-hidden="true"></i></button><br><br>--> 
-  <!-- <input type="text" name="text_id" id="text" placeholder="search" class="se"><button type="submit" id="btnShow-search" class="sea"><i class="fa fa-search" aria-hidden="true"></i></button><br><br>  
-   <input type="hidden" name="text_ids" id="texts">  -->
+
     
    <label for="recipient-name" class="control-label"><?php echo $text_enter_name;?></label><br> 
    <input type="email" name="recipient_text" id="recipient_text" class="se" ><div id="usernameMsg" style="display:none;"><span style="color:red;">Please fill in your username.</span></div>
    <input type="hidden" name="text_ids" id="texts"> <br>
    <div class="footer-button">
-<!--   <button type="button" data-dismiss="modal" class="btn"><?php echo $button_cancel;?></button>-->
+
    <button type="submit" id="searchbyname" name="searchbyname" class="btn btn-primary" ><?php echo $button_send;?></button>
    </div>
    </form>
 
     <form action = "<?php echo $invite_people.$club_info['group_id']; ?>" id = "searchbyemail"  method ="post">
     <label for="recipient-name" class="control-label"><?php echo $text_enter_mailid;?></label><br>
-  <!--  <label for="fname"> Enter mail id </label><br> -->
-  <!--  <input type="text" name="mail_id" value="" placeholder="enter mail id" class="form-control input-lg" /> <br> -->
  
  
- <!-- <input type="text" name="mail_id" id="mail" placeholder="enter mail id" class="form-control input-lg"> 
-  <input type="hidden" name="mail_ids" id="mails">-->
+
 
   <input type="email" name="recipient_email" id="recipient_email" class="form-control input-lg"> 
   <input type="hidden" name="mail_ids" id="mails">
@@ -88,7 +77,7 @@
 <img class="img-circle"  alt="" width="50" height="50" src="<?php echo $post['customer_image']; ?>" />    
 &nbsp 
  <input type="text" class="text_share" data-toggle="modal" placeholder="<?php echo $text_sharesomething;?>"data-target="#myPost">
-<i class="fa fa-camera" aria-hidden="true"></i> 
+<!--<i class="fa fa-camera" aria-hidden="true"></i>--> 
 
 
 </div>
@@ -110,8 +99,9 @@
 </div>
 <br>
 <h5><?php echo $post['message']; ?></h5><br>
-
+<?php if($post['image']) { ?>
 <img class="img" src="<?php echo $post['image']; ?>" height = "417" width = "417"/>
+<?php  } ?>
 <br>
 <br>
 
@@ -129,17 +119,12 @@
 <br>
 
 
-
-
-
-
-
         <!-- Post -->
        <div class="modal fade" id="myPost" role="dialog">
        <div class="modal-dialog">
     
         <!-- Post content-->
-        <form action = "<?php echo $club_share.$group_info['group_id']; ?>"  method ="post">
+        <form action = "<?php echo $club_share.$group_info['group_id']; ?>"  method ="post" enctype="multipart/form-data">
         <div class="modal-content">
         <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -150,18 +135,24 @@
         <br>
         <br>
         <div class="">
-        <i class="fa fa-camera" aria-hidden="true"></i>  &nbsp
-         &nbsp &nbsp <i class="fa fa-link" aria-hidden="true"></i>
+        <i class="fa fa-camera" aria-hidden="true"></i>  
+
+        <input type='file' class = "upload" name="image" onchange="readURL(this);"/>
+    
+        <img id="blah1" src="#" alt="" />
+
          </div>
+
 
         
          <!-- <h4 class="modal-title">Modal Header</h4>-->
          </div>
+         
         
          <div class="modal-footer">
          <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $button_cancel;?></button>
-         <button id = "done" type="submit" name="done" class="btn btn-primary" OnClientClick="CheckValue()" ><?php echo $button_post;?></button>
-        
+    <!--     <button id = "done" type="submit" name="done" class="btn btn-primary" OnClientClick="CheckValue()" ><?php echo $button_post;?></button>-->
+          <input type="submit" class="btn btn-primary" value="<?php echo $button_post;?>" name="submit">
          </div>
          </form>
          </div>
@@ -172,7 +163,7 @@
 </div>
 </div>
 </div>
-
+</div>
 
 
 <script type="text/javascript">
@@ -301,9 +292,25 @@ $('#recipient_text').multipleInput();
 
 </script>
 
-<script type="text/javascript">
 
+<script type="text/javascript">
+function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah1')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 </script>
+
+
 
 
 <!--<script type="text/javascript">
