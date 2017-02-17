@@ -1,63 +1,63 @@
 <?php
 // Heading
-$_['heading_title']      = 'Product Returns';
+$_['heading_title']      = 'பொருளைத் திரும்ப கொடுக்கவும்';
 
 // Text
-$_['text_account']       = 'Account';
-$_['text_return']        = 'Return Information';
-$_['text_return_detail'] = 'Return Details';
-$_['text_description']   = 'Please complete the form below to request an RMA number.';
-$_['text_order']         = 'Order Information';
-$_['text_product']       = 'Product Information';
-$_['text_reason']        = 'Reason for Return';
-$_['text_message']       = '<p>Thank you for submitting your return request. Your request has been sent to the relevant department for processing.</p><p> You will be notified via e-mail as to the status of your request.</p>';
-$_['text_return_id']     = 'Return ID:';
-$_['text_order_id']      = 'Order ID:';
-$_['text_date_ordered']  = 'Order Date:';
-$_['text_status']        = 'Status:';
-$_['text_date_added']    = 'Date Added:';
-$_['text_comment']       = 'Return Comments';
-$_['text_history']       = 'Return History';
-$_['text_empty']         = 'You have not made any previous returns!';
-$_['text_agree']         = 'I have read and agree to the <a href="%s" class="agree"><b>%s</b></a>';
+$_['text_account']       = 'விவரம்';
+$_['text_return']        = 'திரும்பிக்கொடுக்கும் தகவல்';
+$_['text_return_detail'] = 'திரும்பிக்கொடுக்கும் விவரம்';
+$_['text_description']   = 'ஒரு RMA எண் கோர கீழே உள்ள படிவத்தை பூர்த்தி செய்யவும்.';
+$_['text_order']         = 'ஆணை விவரம்';
+$_['text_product']       = 'பொருளின் விவரம்';
+$_['text_reason']        = 'திரும்பி கொடுப்பதற்கான காரணம் ';
+$_['text_message']       = '<p>உங்கள் கோரிக்கையை சமர்பித்ததற்கு நன்றி. உங்கள் கோரிக்கையை செயல்படுத்துவதற்காக, தொடர்புடைய துறைக்கு அனுப்பி வைக்கப்பட்டுள்ளது .</p><p>  மின்னஞ்சல் வழியாக  கோரிக்கையின் நிலைமை அறிவிக்கப்படும்.</p>';
+$_['text_return_id']     = 'திரும்ப கொடுக்கும் ஐடி:';
+$_['text_order_id']      = 'ஆணை ஐடி:';
+$_['text_date_ordered']  = 'ஆணை தேதி:';
+$_['text_status']        = 'நிலைமை:';
+$_['text_date_added']    = 'தேதி சேர்க்கப்பட்டது:';
+$_['text_comment']       = 'கருத்துக்களை திரும்ப பெரு';
+$_['text_history']       = 'திரும்பிகொடுத்த பொருள்களின் வரலாற்றை பாரு';
+$_['text_empty']         = 'நீங்கள் இதற்கு முன்பதாக எந்த பொருள்களையும்  திரும்பிகொடுக்கவில்லை!';
+$_['text_agree']         = 'நான் அதை படித்துவிட்டேன், எனக்கு சம்மதம்<a href="%s" class="ஏற்றுக்கொள்கிறேன்"><b>%s</b></a>';
 
 // Column
-$_['column_return_id']   = 'Return ID';
-$_['column_order_id']    = 'Order ID';
-$_['column_status']      = 'Status';
-$_['column_date_added']  = 'Date Added';
-$_['column_customer']    = 'Customer';
-$_['column_product']     = 'Product Name';
-$_['column_model']       = 'Model';
-$_['column_quantity']    = 'Quantity';
-$_['column_price']       = 'Price';
-$_['column_opened']      = 'Opened';
-$_['column_comment']     = 'Comment';
-$_['column_reason']      = 'Reason';
-$_['column_action']      = 'Action';
+$_['column_return_id']   = 'திரும்பிக்கொடுக்கும் ஐடி';
+$_['column_order_id']    = 'ஆர்டர் ஐடி';
+$_['column_status']      = 'நிலைமை';
+$_['column_date_added']  = 'தேதி சேர்க்கப்பட்டது';
+$_['column_customer']    = 'வாடிக்கையாளர்';
+$_['column_product']     = 'பொருளின் பெயர்';
+$_['column_model']       = 'மாதிரி';
+$_['column_quantity']    = 'அளவு';
+$_['column_price']       = 'விலை';
+$_['column_opened']      = 'திறக்கப்பட்டது';
+$_['column_comment']     = 'கருத்து';
+$_['column_reason']      = 'காரணம்';
+$_['column_action']      = 'செயல்';
 
 // Entry
-$_['entry_order_id']     = 'Order ID';
-$_['entry_date_ordered'] = 'Order Date';
-$_['entry_firstname']    = 'First Name';
-$_['entry_lastname']     = 'Last Name';
-$_['entry_email']        = 'E-Mail';
-$_['entry_telephone']    = 'Telephone';
-$_['entry_product']      = 'Product Name';
-$_['entry_model']        = 'Product Code';
-$_['entry_quantity']     = 'Quantity';
-$_['entry_reason']       = 'Reason for Return';
-$_['entry_opened']       = 'Product is opened';
-$_['entry_fault_detail'] = 'Faulty or other details';
+$_['entry_order_id']     = 'ஆர்டர் ஐடி';
+$_['entry_date_ordered'] = 'ஆர்டர் தேதி';
+$_['entry_firstname']    = 'முதல் பெயர்';
+$_['entry_lastname']     = 'கடைசி பெயர்';
+$_['entry_email']        = 'மின்னஞ்சல்';
+$_['entry_telephone']    = 'தொலைபேசி';
+$_['entry_product']      = 'பொருளின் பெயர்';
+$_['entry_model']        = 'பொருளின் குறியீடு';
+$_['entry_quantity']     = 'அளவு';
+$_['entry_reason']       = 'திரும்பி கொடுப்பதற்கான காரணம்';
+$_['entry_opened']       = 'பொருள் திறந்துள்ளது';
+$_['entry_fault_detail'] = 'தவறான அல்லது மற்ற விவரங்கள்';
 
 // Error
-$_['text_error']         = 'The returns you requested could not be found!';
-$_['error_order_id']     = 'Order ID required!';
-$_['error_firstname']    = 'First Name must be between 1 and 32 characters!';
-$_['error_lastname']     = 'Last Name must be between 1 and 32 characters!';
-$_['error_email']        = 'E-Mail Address does not appear to be valid!';
-$_['error_telephone']    = 'Telephone must be between 3 and 32 characters!';
-$_['error_product']      = 'Product Name must be greater than 3 and less than 255 characters!';
-$_['error_model']        = 'Product Model must be greater than 3 and less than 64 characters!';
-$_['error_reason']       = 'You must select a return product reason!';
-$_['error_agree']        = 'Warning: You must agree to the %s!';
+$_['text_error']         = 'நீங்கள் கோரிய பொருளை கண்டறிய முடியவில்லை!';
+$_['error_order_id']     = 'ஆர்டர் ஐடி தேவை!';
+$_['error_firstname']    = 'முதல் பெயர் 1 மற்றும் 32 எழுத்துகளுக்கு இடையில் இருக்க வேண்டும்!';
+$_['error_lastname']     = 'கடைசி பெயர் 1 மற்றும் 32 எழுத்துகள் இடையே இருக்க வேண்டும்!';
+$_['error_email']        = 'மின்னஞ்சல் முகவரி சரியானதாக தோன்றவில்லை!';
+$_['error_telephone']    = 'தொலைபேசி 3 மற்றும் 32 எழுத்துகளுக்கு இடையில் இருக்க வேண்டும்!';
+$_['error_product']      = 'பொருளின் பெயர் 3 விட மற்றும் 255 எழுத்துக்களுக்கு குறைவாக இருக்க வேண்டும்!';
+$_['error_model']        = 'பொருளின் மாதிரி 3 விட மற்றும் 64 எழுத்துக்களுக்கு குறைவாக இருக்க வேண்டும்!';
+$_['error_reason']       = 'நீங்கள் திரும்ப கொடுப்பதற்கான காரணத்தை தேர்ந்தெடுக்க வேண்டும்!';
+$_['error_agree']        = 'எச்சரிக்கை: நீங்கள் ஏற்றுக்கொள்ள வேண்டும் %s!';

@@ -1,14 +1,14 @@
 <?php
 // Heading
-$_['heading_title']     = 'Account Downloads';
+$_['heading_title']     = 'பதிவிறக்கம்';
 
 // Text
-$_['text_account']      = 'Account';
-$_['text_downloads']    = 'Downloads';
-$_['text_empty']        = 'You have not made any previous downloadable orders!';
+$_['text_account']      = 'விவரம்';
+$_['text_downloads']    = 'பதிவிறக்கம்';
+$_['text_empty']        = 'நீங்கள் இதுவரை பதிவிறக்கம் செய்யவில்லை!';
 
 // Column
-$_['column_order_id']   = 'Order ID';
-$_['column_name']       = 'Name';
-$_['column_size']       = 'Size';
-$_['column_date_added'] = 'Date Added';
+$_['column_order_id']   = 'ஆர்டர் ஐடி';
+$_['column_name']       = 'பெயர்';
+$_['column_size']       = 'அளவு';
+$_['column_date_added'] = 'தேதி சேர்க்கப்பட்டது';

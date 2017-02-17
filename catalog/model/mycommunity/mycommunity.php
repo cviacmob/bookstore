@@ -792,4 +792,59 @@ public function getPublishers($customer_id)
 	     return $post_id;
          }
 
+         public function getAllauthors($data = array()){
+
+          $sql = "SELECT * FROM authors_master " ;
+
+		  if (!empty($data['filter_name'])) {
+			$sql .= " WHERE author_name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+          }
+
+            if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+	    	}
+
+            $query = $this->db->query($sql);
+
+		   return $query->rows;
+
+            
+		     }
+
+
+        public function getAllpublishers($data = array()){
+
+           $sql = "SELECT * FROM publishers_master " ;
+
+		  if (!empty($data['publisher_name'])) {
+			$sql .= " WHERE publisher_name LIKE '" . $this->db->escape($data['publisher_name']) . "%'";
+          }
+
+            if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+	    	}
+
+            $query = $this->db->query($sql);
+
+		   return $query->rows;
+
+            
+		     }     
+
         }

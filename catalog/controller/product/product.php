@@ -335,11 +335,6 @@ class ControllerProductProduct extends Controller {
 				);
 			}
 
-
-
-
-
-
 			$isbn = $this->model_catalog_product->getProductBestPrices($this->request->get['product_id']);
 
 			

@@ -1397,7 +1397,8 @@ class ControllerMyCommunitymycommunity extends Controller {
  	 		  $data['upload_success'] = "Sorry, your file was not uploaded.";
 			// if everything is ok, try to upload file
 			} else {
- 	   		if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file_front)) {
+ 	   		if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file_front)) 
+                {
  	     	 // echo "The file ". basename( $_FILES["front_image"]["name"]). " has been uploaded.";
 			$data['upload_success'] = "Your Book Images has been uploaded" ;
 
@@ -1815,6 +1816,10 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['text_name_this_club'] = $this->language->get('text_name_this_club');
         $data['text_description'] = $this->language->get('text_description');
         $data['text_sharesomething'] = $this->language->get('text_sharesomething');
+        $data['text_enter_mailid'] = $this->language->get('text_enter_mailid');
+        $data['text_invite_people'] = $this->language->get('text_invite_people');
+        $data['text_enter_name'] = $this->language->get('text_enter_name');
+        $data['button_send'] = $this->language->get('button_send');
         $data['button_create_club'] = $this->language->get('button_create_club');
         $data['button_cancel'] = $this->language->get('button_cancel');
         $data['button_done'] = $this->language->get('button_done');
@@ -2161,6 +2166,8 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['text_author_mastersearch'] = $this->language->get('text_author_mastersearch');
         $data['text_type_author_name'] = $this->language->get('text_type_author_name');
         $data['text_search_byauthor'] = $this->language->get('text_search_byauthor');  
+        $data['text_mycommunity'] = $this->language->get('text_mycommunity'); 
+        $data['text_search_by_author'] = $this->language->get('text_search_by_author'); 
 		
  		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -2175,8 +2182,8 @@ class ControllerMyCommunitymycommunity extends Controller {
 
 		$data['text_author_mastersearch'] = $this->language->get('text_author_mastersearch');
 
-		if (isset($this->request->post['fname'])) {
-			$author_mastersearch = $this->request->post['fname'];
+		if (isset($this->request->post['filter_name'])) {
+			$author_mastersearch = $this->request->post['filter_name'];
 		} else {
 			$author_mastersearch = '';
 		}
@@ -2209,6 +2216,10 @@ class ControllerMyCommunitymycommunity extends Controller {
 
 
         $data['add_to_liked_author'] = $this->url->link('mycommunity/mycommunity/addToLikedauthor&author_id=', '', true);
+
+        $data['searchauthor'] = $this->url->link('mycommunity/mycommunity/authorresult' , '' , true); 
+
+        $data['author_image'] = $this->url->link('mycommunity/mycommunity/author_info&author_id=', '', true);
 
    //    $data['add_to_liked_author']   = $this->url->link('mycommunity/mycommunity/addToLikedauthor', '', true);
 
@@ -2564,18 +2575,14 @@ class ControllerMyCommunitymycommunity extends Controller {
 		$data['text_publisher_mastersearch'] = $this->language->get('text_publisher_mastersearch');
 
         
-		if (isset($this->request->post['text_publisher_mastersearch'])) {
-			$publisher_mastersearch = $this->request->post['text_publisher_mastersearch'];
+		if (isset($this->request->post['publisher_name'])) {
+			$publisher_mastersearch = $this->request->post['publisher_name'];
 		} else {
 			$publisher_mastersearch = '';
 		}
  
     
 		$publishers = $this->model_mycommunity_mycommunity->getPublisherFromMaster($publisher_mastersearch);
-
-
-    //   	$data['publisherresult'] = $publishers;
-
     
         if (is_file(DIR_IMAGE.$publishers['publisher_image'])) {
 				$image = $this->model_tool_image->resize($publishers['publisher_image'], 250, 250);
@@ -2595,11 +2602,12 @@ class ControllerMyCommunitymycommunity extends Controller {
 
         );
 
-       $data['publisher'] = $this->url->link('mycommunity/mycommunity/addToLikedpublisher&publisher_id=', '', true);
+        $data['publisher'] = $this->url->link('mycommunity/mycommunity/addToLikedpublisher&publisher_id=', '', true);
 
-       $data['add_to_liked_publisher']   = $this->url->link('mycommunity/mycommunity/addToLikedpublisher', '', true);
+        $data['add_to_liked_publisher']   = $this->url->link('mycommunity/mycommunity/addToLikedpublisher', '', true);
 
-
+        $data['searchpublisher'] = $this->url->link('mycommunity/mycommunity/publisherresult' , '' , true); 
+	
 	    $this->response->setOutput($this->load->view('mycommunity/publisherresult', $data));
 
         
@@ -2714,314 +2722,98 @@ class ControllerMyCommunitymycommunity extends Controller {
 		 
 	}
 
-
-     public function sharedbooks(){
-  
-    /*if (!$this->customer->isLogged()) {
-            $this->session->data['redirect'] = $this->url->link('mycommunity/mycommunity', '', true);
-
-            $this->response->redirect($this->url->link('account/login', '', true));
-        }  */
-
-            
-      $this->load->language('mycommunity/mycommunity');
-
-        $data['button_sharedbooks'] = $this->language->get('button_sharedbooks');
-        $data['button_reading_club'] = $this->language->get('button_reading_club');
-        $data['button_authors'] = $this->language->get('button_authors');
-        $data['button_publishers'] = $this->language->get('button_publishers');
-        $data['text_recommended'] = $this->language->get('text_recommended');
-        $data['text_members'] = $this->language->get('text_members');
-        $data['text_yours'] = $this->language->get('text_yours');
-        $data['text_available_books'] = $this->language->get('text_available_books');
-        $data['text_requested_books'] = $this->language->get('text_requested_books');
-        $data['text_name_this_club'] = $this->language->get('text_name_this_club');
-        $data['text_description'] = $this->language->get('text_description');
-        $data['text_sharesomething'] = $this->language->get('text_sharesomething');    
-        $data['text_mycommunity'] = $this->language->get('text_mycommunity');   
-        $data['text_reading_club'] = $this->language->get('text_reading_club');  
-        $data['button_create_club'] = $this->language->get('button_create_club');
-        $data['button_cancel'] = $this->language->get('button_cancel');
-        $data['button_done'] = $this->language->get('button_done');
-        $data['button_join'] = $this->language->get('button_join');
-        $data['button_share_with_me'] = $this->language->get('button_share_with_me');
-
-      $this->document->setTitle($this->language->get('heading_title'));
-
-      $this->load->model('mycommunity/mycommunity');
-
-    //  $data['addmember']=$this->url->link('mycommunity/mycommunity/join','',true);
-
-        $url='';
-
-        $data['breadcrumbs'] = array();
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home')
-        );
-
-        
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_mycommunity'),
-            'href' => $this->url->link('mycommunity/mycommunity')
-        );
-
-        $data['breadcrumbs'][] = array(
-            'text' =>  $this->language->get('text_shared_books'),
-            'href' => $this->url->link('mycommunity/mycommunity')
-        );
-
-        $data['footer'] = $this->load->controller('common/footer');
-        $data['header'] = $this->load->controller('common/header');
-        $data['heading_title'] = $this->language->get('heading_title');
-        
-        $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity/sharedbooks', '', true);
-        $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
-        $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
-        $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
-
-        $this->load->model('mycommunity/mycommunity');
-
-        $shared_books = $this->model_mycommunity_mycommunity->getSharedbooks();
-
-      
-
-        $this->response->setOutput($this->load->view('mycommunity/readingclub', $data));
-
-
-    }
     
-    public function requested(){
+	    public function autocomplete() {
 
-       $isbn = $this->request->get['isbn'];
+		$json = array();
 
-       $this->load->language('mycommunity/mycommunity');
+		if (isset($this->request->get['filter_name']))  {
+		$this->load->model('mycommunity/mycommunity');
 
-       $this->load->model('mycommunity/mycommunity');
-
-       $this->load->model('mylibrary/mylibrary');
-
-       $this->model_mycommunity_mycommunity->requestedbooks($isbn);   
-
-       $books =  $this->model_mycommunity_mycommunity->getProductId($isbn);  
-
-       foreach($books as $book) 
-          {
-
-          $book_data = array(
-
-              'product_id' => $book['product_id'],
-              'quantity' => $book['quantity']
-
-          );
-      }
-
-        $this->model_mycommunity_mycommunity->addTocart($book_data);
-
-        $data['button_sharedbooks'] = $this->language->get('button_sharedbooks');
-        $data['button_reading_club'] = $this->language->get('button_reading_club');
-        $data['button_authors'] = $this->language->get('button_authors');
-        $data['button_publishers'] = $this->language->get('button_publishers');
-        $data['text_available_books'] = $this->language->get('text_available_books');
-        $data['text_requested_books'] = $this->language->get('text_requested_books');  
-        $data['button_share_with_me'] = $this->language->get('button_share_with_me');
-        $data['button_shared'] = $this->language->get('button_shared');
-
-        $data['breadcrumbs'] = array();
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home')
-        );
-
-        
-
-        $data['breadcrumbs'][] = array(
-            'text' =>$this->language->get('text_shared_books'),
-            'href' => $this->url->link('mycommunity/mycommunity')
-        );
-
-    
-        $data['footer'] = $this->load->controller('common/footer');
-        $data['header'] = $this->load->controller('common/header');
-        $data['heading_title'] = $this->language->get('heading_title');
-
-        $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity', '', true);
-        $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
-        $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
-        $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
-
-        $data['text_available_books'] = $this->language->get('text_available_books');
-        $data['text_requested_books'] = $this->language->get('text_requested_books');  
-
-
-        $shared_books = $this->model_mycommunity_mycommunity->getSharedbooks();
-
-        $data['shared_books'] = array();
-
-        foreach($shared_books as $shared_book)
-        {
-            if (is_file(DIR_IMAGE . $shared_book['image'])) {
-				$image = $this->model_tool_image->resize($shared_book['image'], 228, 228);
+			if (isset($this->request->get['filter_name'])) {
+				$filter_name = $this->request->get['filter_name'];
 			} else {
-				$image = $this->model_tool_image->resize('no_image.png', 228, 228);
+				$filter_name = '';
 			}
 
-            $data['shared_books'][]=array(
-
-                'title' => $shared_book['title'],
-                'author' => $shared_book['author'],
-                'isbn'  => $shared_book['isbn'],
-                //'share_price' => $shared_book['share_price'],
-                'image' => $image
-            );
-        }
-   
-     $bookresults = $this->model_mycommunity_mycommunity->getrequestedbooks();  
-
-        $data['books'] = array();
-
-        foreach($bookresults as $bookresult)
-        {
-            if (is_file(DIR_IMAGE . $bookresult['image'])) {
-				$image = $this->model_tool_image->resize($bookresult['image'], 228, 228);
+            if (isset($this->request->get['limit'])) {
+				$limit = $this->request->get['limit'];
 			} else {
-				$image = $this->model_tool_image->resize('no_image.png', 228, 228);
+				$limit = 5;
 			}
 
-            $data['books'][]=array(
+			$filter_data = array(
+				'filter_name'  => $filter_name,
+                'start'        => 0,
+				'limit'        => $limit
+				
+		    );
 
-                'title' => $bookresult['title'],
-                'author' => $bookresult['author'],
-                'isbn'  => $bookresult['isbn'],
-                //'share_price' => $shared_book['share_price'],
-                'image' => $image
-            );
-        }
-       
-        $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity', '', true);
-        $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
-        $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
-        $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
+		   $results = $this->model_mycommunity_mycommunity->getAllauthors($filter_data);
+      //     $option_data = array();
 
-         $this->response->setOutput($this->load->view('checkout/checkout', $data));
 
-        
-
-    }
-     
-     public function share(){
-
-        $isbn = $this->request->post[$shared_book['isbn']];   
-
-        if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$this->response->redirect($this->url->link('checkout/cart'));
-		}
-
-        
-
-		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
-
-		foreach ($products as $product) {
-			$product_total = 0;
-
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
-				}
-			}
-
-			if ($product['minimum'] > $product_total) {
-				$this->response->redirect($this->url->link('checkout/cart'));
+			foreach ($results as $result) {
+				
+				$json[] = array(
+					'author_id' => $result['author_id'],
+					'name'       => strip_tags(html_entity_decode($result['author_name'], ENT_QUOTES, 'UTF-8')),
+					//'model'      => $result['model'],
+					//'option'     => $option_data,
+					//'price'      => $result['price']
+				);
 			}
 		}
 
-		$this->load->language('checkout/checkout');
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 
-		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.js');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+     public function autocomplete_pub() {
 
-		// Required by klarna
-		if ($this->config->get('klarna_account') || $this->config->get('klarna_invoice')) {
-			$this->document->addScript('http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js');
+		$json = array();
+
+		if (isset($this->request->get['publisher_name']))  {
+		$this->load->model('mycommunity/mycommunity');
+
+			if (isset($this->request->get['publisher_name'])) {
+				$filter_name = $this->request->get['publisher_name'];
+			} else {
+				$filter_name = '';
+			}
+
+            if (isset($this->request->get['limit'])) {
+				$limit = $this->request->get['limit'];
+			} else {
+				$limit = 5;
+			}
+
+			$filter_data = array(
+				'publisher_name'  => $filter_name,
+                'start'        => 0,
+				'limit'        => $limit
+				
+		    );
+
+		   $results = $this->model_mycommunity_mycommunity->getAllpublishers($filter_data);
+      //     $option_data = array();
+
+
+			foreach ($results as $result) {
+				
+				$json[] = array(
+					'publisher_id' => $result['publisher_id'],
+					'name'       => strip_tags(html_entity_decode($result['publisher_name'], ENT_QUOTES, 'UTF-8')),
+					//'model'      => $result['model'],
+					//'option'     => $option_data,
+					//'price'      => $result['price']
+				);
+			}
 		}
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_cart'),
-			'href' => $this->url->link('checkout/cart')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('checkout/checkout', '', true)
-		);
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-	    $this->load->language('mycommunity/mycommunity');
-
-        $data['button_share_with_me'] = $this->language->get('button_share_with_me');
-
-		$data['text_checkout_option'] = sprintf($this->language->get('text_checkout_option'), 1);
-		$data['text_checkout_account'] = sprintf($this->language->get('text_checkout_account'), 2);
-		$data['text_checkout_payment_address'] = sprintf($this->language->get('text_checkout_payment_address'), 2);
-		$data['text_checkout_shipping_address'] = sprintf($this->language->get('text_checkout_shipping_address'), 3);
-		$data['text_checkout_shipping_method'] = sprintf($this->language->get('text_checkout_shipping_method'), 4);
-		
-		if ($this->cart->hasShipping()) {
-			$data['text_checkout_payment_method'] = sprintf($this->language->get('text_checkout_payment_method'), 5);
-			$data['text_checkout_confirm'] = sprintf($this->language->get('text_checkout_confirm'), 6);
-		} else {
-			$data['text_checkout_payment_method'] = sprintf($this->language->get('text_checkout_payment_method'), 3);
-			$data['text_checkout_confirm'] = sprintf($this->language->get('text_checkout_confirm'), 4);	
-		}
-
-		if (isset($this->session->data['error'])) {
-			$data['error_warning'] = $this->session->data['error'];
-			unset($this->session->data['error']);
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		$data['logged'] = $this->customer->isLogged();
-
-		if (isset($this->session->data['account'])) {
-			$data['account'] = $this->session->data['account'];
-		} else {
-			$data['account'] = '';
-		}
-
-		$data['shipping_required'] = $this->cart->hasShipping();
-
-        $data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
-		$data['footer'] = $this->load->controller('common/footer');
-		$data['header'] = $this->load->controller('common/header');
-
-         $this->response->setOutput($this->load->view('checkout/checkout', $data));
-
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
      }
 
-
-	public function uploadImage()
-	{
-
-      
-
-}
 }
