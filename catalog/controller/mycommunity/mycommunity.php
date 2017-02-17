@@ -74,6 +74,8 @@ class ControllerMyCommunitymycommunity extends Controller {
 
         $shared_books = $this->model_mycommunity_mycommunity->getSharedbooks();
 
+        $data['shared_books']=array();
+
         foreach($shared_books as $shared_book)
         {
             if (is_file(DIR_IMAGE . $shared_book['image'])) {
@@ -98,11 +100,11 @@ class ControllerMyCommunitymycommunity extends Controller {
         $booklink = "mycommunity/mycommunity/requested&isbn=";
         $data['share_with_me']   = $this->url->link($booklink, '', true);
 
-<<<<<<< HEAD
+
         $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
-=======
+
       //   $bookresults = $this->model_mycommunity_mycommunity->getrequestedbooks();  
->>>>>>> 6b134bf6005acff2edaa4c2941499e8d3658effa
+
 
 //      $data['text_requested_books'] = $this->url->link('mycommunity/mycommunity/getrequestedbooks' , '' , true);
 
