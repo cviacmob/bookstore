@@ -22,20 +22,55 @@
 <div id="content" class="col-sm-9">
 <h3><?php echo $text_purchased_books; ?></h3>
 <div class="row">
+
+<div class="tabbable-panel">
+<div class="tabbable-line">
+<ul class="nav nav-tabs ">
+<li class="active"><a href="#tab_default_1" data-toggle="tab"> <?php echo $text_purchased_books;?> </a></li>
+<li><a href="#tab_default_2" data-toggle="tab"> Requested books</a></li>
+
+
+
+</ul>
+
+
+
+
+<div class="tab-content">
+<div class="tab-pane active" id="tab_default_1">
+<div class="row">
 <?php foreach($books as $book) {?>
-<div class="product-layout col-lg-4 col-md-3 col-sm-6 col-xs-12 " style="float:left">
+<div class="product-layout col-lg-4 col-md-3 col-sm-6 col-xs-12 " style="float:left" margin-left="16px">
 <div class="product-thumb transition ">
 <div class="image">
-<a href="<?php echo $book['href']; ?>"><img class="img-responsive" src="<?php echo $book['image']; ?>"></a>
-</div>
-<!--<img class="img-responsive" src="<?php echo $book['image']; ?>">-->
+<a href="<?php echo $book['href']; ?>"><img class="img-responsive" src="<?php echo $book['image']; ?>"></a></div>
 <div class="caption">
-<h4><?php echo $book['name']; ?></h4>
-<!--<p><?php echo $book['author']; ?></p>-->
+    <h4><?php echo $book['name']; ?></h4>
+</div>
+<div class="btn-group btn-width">
+  <button type="button" class="review-button" onclick="location.href='<?php echo $review.$book['product_id']; ?>'"><i class="fa fa-star"></i></button>
+  <button type="button" class="wishlist-button" onclick="location.href='<?php echo $add_to_favorite.$book['product_id']; ?>'"><i class="fa fa-heart"></i></button>
+  <!--<button type="button" class="btn btn-default btn-like" onclick="wishlist.add('<?php echo $book['product_id']; ?>');"><i class="fa fa-heart"></i></button> -->
 </div>
 
+</div>
+</div>
+<?php } ?>
+</div>
+</div> 
 
 
+
+<div class="tab-pane" id="tab_default_2">
+<div class="row">
+<?php foreach($books as $book) {?>
+<div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+<div class="product-thumb transition ">
+ <div class="image">
+<a href="<?php echo $book['href']; ?>"><img class="img-responsive" src="<?php echo $book['image']; ?>"></a></div>
+<div class="caption">
+    <h4><?php echo $book['name']; ?></h4>
+</div>
 
 <div class="btn-group btn-width">
   <button type="button" class="review-button" onclick="location.href='<?php echo $review.$book['product_id']; ?>'"><i class="fa fa-star"></i></button>
@@ -43,19 +78,44 @@
   <!--<button type="button" class="btn btn-default btn-like" onclick="wishlist.add('<?php echo $book['product_id']; ?>');"><i class="fa fa-heart"></i></button> -->
 </div>
 
-
-
 </div>
 </div>
 <?php } ?>
 </div>
-
+</div> 
 
 
 </div>
 
+
+
+
+
 </div>
-</div>        
+</div>
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
 <?php echo $footer; ?>
 
 

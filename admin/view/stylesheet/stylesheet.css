@@ -644,3 +644,14 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 #filemanager .fa-folder.fa-5x {
 	font-size: 10.5em;
 }
+.addfrontimage{
+width: 360px;
+height: 470px;
+font-size: 25px;
+margin-left: 16px;
+text-align: center;
+}
+.form{
+margin-left: 400px;
+margin-top: -962px;
+}

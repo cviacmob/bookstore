@@ -74,6 +74,7 @@ $_['text_translation']               = 'Language Editor';
 $_['text_theme']                     = 'Theme Editor';
 $_['text_tools']                     = 'Tools';
 $_['text_upload']                    = 'Uploads';
+$_['text_uploaded_image']            = 'Uploaded Image';
 $_['text_user']                      = 'Users';
 $_['text_users']                     = 'Users';
 $_['text_user_group']                = 'User Groups';

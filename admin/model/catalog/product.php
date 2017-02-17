@@ -709,4 +709,9 @@ class ModelCatalogProduct extends Model {
 
 		return $query->row['total'];
 	}
+
+	public function getUploadedImage()
+	{
+	$query = $this->db->query("SELECT*FROM uploaded_image");
+	}
 }
