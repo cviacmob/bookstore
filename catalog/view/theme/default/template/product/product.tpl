@@ -308,18 +308,18 @@
               </div>
 
 
-              <form action="<?php echo $selected_price; ?>" method="post">
+              <!-- <form action="<?php echo $selected_price; ?>" method="post"> -->
               <div class="bestseller-display">
                <br>
               <?php foreach($seller_prices as $seller_price) { ?>
-                <input type="radio" name="radio" value = "<?php echo $seller_price['sell_price']; ?>" onclick="javascript: submit()" style="font-size: 27px;"
+                <input type="radio" name="sell_price" value = "<?php echo $seller_price['sell_price']; ?>" onclick="javascript: submit()" style="font-size: 27px;"
                  /> &nbsp;<i class="fa fa-inr" style="font-size: 27px;" aria-hidden="true"></i> 
                    <!-- <?php echo $seller_price['first_name']; ?>&nbsp;<?php echo $seller_price['last_name']; ?> --> 
                     <?php echo $seller_price['sell_price']; ?><br><br>
               <?php } ?> 
 
               </div>
-              </form>
+              <!-- </form> -->
 
 
               

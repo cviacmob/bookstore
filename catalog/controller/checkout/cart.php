@@ -115,6 +115,7 @@ class ControllerCheckoutCart extends Controller {
 					);
 				}
 
+				//$product['price'] = 143;
 				// Display prices
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
@@ -292,6 +293,23 @@ class ControllerCheckoutCart extends Controller {
 			$product_id = 0;
 		}
 
+
+
+
+		if (isset($this->request->post['sell_price'])) {
+			$sell_price = (int)$this->request->post['sell_price'];
+		} else {
+			$sell_price = 0;
+		}
+		if (isset($this->request->post['share_price'])) {
+			$share_price = (int)$this->request->post['share_price'];
+		} else {
+			$share_price = 0;
+		}
+
+
+
+
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
@@ -338,7 +356,7 @@ class ControllerCheckoutCart extends Controller {
 			}
 
 			if (!$json) {
-				$this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
+				$this->cart->add($this->request->post['product_id'], $quantity, $sell_price, $share_price, $option, $recurring_id);
 
 				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
 
