@@ -72,13 +72,19 @@ class ControllerMyCommunitymycommunity extends Controller {
 
 // Shared Books Tab
 
-        $shared_books = $this->model_mycommunity_mycommunity->getSharedbooks();
+        $shared_books = $this->model_mycommunity_mycommunity->getSharedbooksFromMyLibrary();
+
+        //$shared_books = $this->model_mycommunity_mycommunity->getSharedbooks();
+
+        $data['shared_books'] = array();
 
         $data['shared_books']=array();
 
         foreach($shared_books as $shared_book)
         {
-            if (is_file(DIR_IMAGE . $shared_book['image'])) {
+            if(!empty($shared_book)){
+
+                if (is_file(DIR_IMAGE . $shared_book['image'])) {
 				$image = $this->model_tool_image->resize($shared_book['image'], 228, 228);
 			} else {
 				$image = $this->model_tool_image->resize('no_image.png', 228, 228);
@@ -95,16 +101,29 @@ class ControllerMyCommunitymycommunity extends Controller {
                 'image'       => $image,
                 'href'       =>$this->url->link('mycommunity/mycommunity/productDetail&product_id='.$shared_book['product_id'],'',true)
             );
+
+            } 
+
+        
+            
         } 
 
-        $booklink = "mycommunity/mycommunity/requested&isbn=";
-        $data['share_with_me']   = $this->url->link($booklink, '', true);
+        //$booklink = "mycommunity/mycommunity/requested&isbn=";
+        $data['share_with_me']   = $this->url->link('mycommunity/mycommunity/productDetail&product_id=' ,'',true);
 
+
+<<<<<<< HEAD
 
         $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
 
       //   $bookresults = $this->model_mycommunity_mycommunity->getrequestedbooks();  
 
+=======
+        $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
+ 
+      //   $bookresults = $this->model_mycommunity_mycommunity->getrequestedbooks();  
+ 
+>>>>>>> 8fc1ebcfeda812a56ed170caef6edf699d9eb6d8
 
 //      $data['text_requested_books'] = $this->url->link('mycommunity/mycommunity/getrequestedbooks' , '' , true);
 
@@ -470,23 +489,7 @@ class ControllerMyCommunitymycommunity extends Controller {
 
 			
 
-			$data['seller_prices'] = array();
-
-			foreach($isbn as $ISBN){
-
-					$customer_prices = $this->model_catalog_product->bestSeller($ISBN);
-					asort($customer_prices);
-
-			}
-			
-			foreach($customer_prices as $customer_price){
-				$data['seller_prices'][] =array(
-					'sell_price'=>$customer_price['sell_price'],
-					//'first_name'=>$customer_price['first_name'],
-					//'last_name'=>$customer_price['last_name']
-				);
-
-			}
+			 
 
 			foreach($isbn as $ISBN){
 
@@ -495,9 +498,12 @@ class ControllerMyCommunitymycommunity extends Controller {
 
 			}
 			
-			foreach($shared_prices as $shared_price){
+            $data['shared_prices'] = array();
+
+			foreach($shared_prices as $key => $value){
 				$data['shared_prices'][] =array(
-					'share_price'=>$shared_price['share_price'],
+					'customer_id'=>"_".$key,
+					'share_price' =>$value['share_price']
 					//'first_name'=>$customer_price['first_name'],
 					//'last_name'=>$customer_price['last_name']
 				);

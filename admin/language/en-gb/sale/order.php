@@ -70,6 +70,7 @@ $_['column_total']               = 'Total';
 $_['column_product']             = 'Product';
 $_['column_model']               = 'Model';
 $_['column_quantity']            = 'Quantity';
+$_['seller_id']                  = 'Seller ID';
 $_['column_price']               = 'Unit Price';
 $_['column_comment']             = 'Comment';
 $_['column_notify']              = 'Customer Notified';

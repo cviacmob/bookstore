@@ -150,6 +150,7 @@
               <td class="text-left"><?php echo $column_product; ?></td>
               <td class="text-left"><?php echo $column_model; ?></td>
               <td class="text-right"><?php echo $column_quantity; ?></td>
+              <td class="text-right"><?php echo $seller_id; ?></td>
               <td class="text-right"><?php echo $column_price; ?></td>
               <td class="text-right"><?php echo $column_total; ?></td>
             </tr>
@@ -168,6 +169,7 @@
                 <?php } ?></td>
               <td class="text-left"><?php echo $product['model']; ?></td>
               <td class="text-right"><?php echo $product['quantity']; ?></td>
+              <td class="text-right"><?php echo $product['seller_id']; ?></td>
               <td class="text-right"><?php echo $product['price']; ?></td>
               <td class="text-right"><?php echo $product['total']; ?></td>
             </tr>

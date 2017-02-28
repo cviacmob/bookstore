@@ -145,27 +145,86 @@ class ControllerMylibraryMylibrary extends Controller {
 
 		$data['books'] = array();
 
-		$bookresults = $this->model_mylibrary_mylibrary->getPurchasedBooks($customer_id);
+		$data['Purchasedbooks'] = array();
+		$data['Sharedbooks'] = array();
 
-		foreach($bookresults as $bookresult)
+		$PurchasedBooks = $this->model_mylibrary_mylibrary->getPurchasedBooks($customer_id);
+
+		foreach($PurchasedBooks as $PurchasedBook)
 		{
-			if (is_file(DIR_IMAGE . $bookresult['image'])) {
-				$image = $this->model_tool_image->resize($bookresult['image'], 228, 228);
+			if (is_file(DIR_IMAGE . $PurchasedBook['image'])) {
+				$image = $this->model_tool_image->resize($PurchasedBook['image'], 228, 228);
 			} else {
 				$image = $this->model_tool_image->resize('no_image.png', 228, 228);
 			}
 
-			$data['books'][]=array(
+			$data['Purchasedbooks'][]=array(
 
-				'name' 		 =>$bookresult['name'],
-				'product_id' 		 =>$bookresult['product_id'],
-				'image'		 => $image,
-				'href'       =>$this->url->link('mylibrary/mylibrary/productDetail&product_id='.$bookresult['product_id'],'',true)
+				'name' 		 	=>$PurchasedBook['name'],
+				'product_id' 	=>$PurchasedBook['product_id'],
+				'image'		 	=> $image,
+				'href'       	=>$this->url->link('mylibrary/mylibrary/productDetail&product_id='.$PurchasedBook['product_id'],'',true),
+				 
 				//'model'		 =>$bookresult['model']
 				 
 
 			);
 		}
+
+		$SharedBooks = $this->model_mylibrary_mylibrary->getSharedBooks($customer_id);
+		
+		foreach($SharedBooks as $SharedBook)
+		{
+			$SharedBook_status = $this->model_mylibrary_mylibrary->getSharedBookStatus($SharedBook['order_id']);
+
+			if($SharedBook['return_status']=='Complete'){
+
+				$status = 'returned';
+
+			}elseif($SharedBook['return_status']=='Awaiting Products'){	
+				$status = 'return_in_progress';
+			}else{
+				
+				if($SharedBook_status == 'Shipped'||$SharedBook_status == 'Processed'||$SharedBook_status == 'Complete')
+				{
+				$status = 'return';
+				}else{
+				$status = 'shipment_in_progress';
+				}
+
+			}
+
+			
+
+			 
+
+			if (is_file(DIR_IMAGE . $SharedBook['image'])) {
+				$image = $this->model_tool_image->resize($SharedBook['image'], 228, 228);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 228, 228);
+			}
+			
+
+			$data['Sharedbooks'][]=array(
+
+				'name' 		 	=>$SharedBook['name'],
+				'product_id' 	=>$SharedBook['product_id'],
+				'image'		 	=> $image,
+				'href'       	=>$this->url->link('mylibrary/mylibrary/productDetail&product_id='.$SharedBook['product_id'],'',true),
+				'status'		=> $status,
+				//'model'		 =>$bookresult['model']
+				'sharedbook_return' => $this->url->link('account/order/info&order_id='.$SharedBook['order_id'], '',true)
+				 
+
+			);
+		}
+
+
+
+		
+
+		
+		
 
         $productlink =  "mylibrary/mylibrary/review&product_id=";
 		$data['review'] = $this->url->link($productlink, '' , true);

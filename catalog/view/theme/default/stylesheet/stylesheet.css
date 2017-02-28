@@ -1081,8 +1081,12 @@ margin-top: -275px;
 #show_hide{
 	display: none;
 }
+<<<<<<< HEAD
 
 
+=======
+ 
+>>>>>>> 8fc1ebcfeda812a56ed170caef6edf699d9eb6d8
 .tabbable-panel {
  border:1px solid #eee;
  padding: 10px;
@@ -1155,6 +1159,7 @@ margin-top: -275px;
 	cursor: pointer;
 	opacity: 0;
 	filter: alpha(opacity=0);
+<<<<<<< HEAD
 }
 .invite-button{
 	color: #777;
@@ -1174,3 +1179,13 @@ margin-top: -275px;
     border-radius: 6px; 
 
 }
+=======
+ 
+}
+
+.requested{
+
+	width: 100%;
+   
+}
+>>>>>>> 8fc1ebcfeda812a56ed170caef6edf699d9eb6d8

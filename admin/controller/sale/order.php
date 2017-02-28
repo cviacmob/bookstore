@@ -809,6 +809,7 @@ class ControllerSaleOrder extends Controller {
 			$data['column_product'] = $this->language->get('column_product');
 			$data['column_model'] = $this->language->get('column_model');
 			$data['column_quantity'] = $this->language->get('column_quantity');
+			$data['seller_id'] = $this->language->get('seller_id');
 			$data['column_price'] = $this->language->get('column_price');
 			$data['column_total'] = $this->language->get('column_total');
 
@@ -935,6 +936,8 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_method'] = $order_info['shipping_method'];
 			$data['payment_method'] = $order_info['payment_method'];
 
+			 
+
 			// Payment Address
 			if ($order_info['payment_address_format']) {
 				$format = $order_info['payment_address_format'];
@@ -1043,6 +1046,7 @@ class ControllerSaleOrder extends Controller {
 					'product_id'       => $product['product_id'],
 					'name'    	 	   => $product['name'],
 					'model'    		   => $product['model'],
+					'seller_id'    	   => $product['seller_id'],
 					'option'   		   => $option_data,
 					'quantity'		   => $product['quantity'],
 					'price'    		   => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
@@ -1328,6 +1332,8 @@ class ControllerSaleOrder extends Controller {
 			
 			// API login
 			$this->load->model('user/api');
+
+			
 
 			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
