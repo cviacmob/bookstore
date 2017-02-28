@@ -562,7 +562,7 @@ class ModelCatalogProduct extends Model {
 
 	public function bestSeller($isbn)
 {
-	$query = $this->db->query("SELECT customer_id FROM mylibrary WHERE isbn = '".$isbn."'");
+	$query = $this->db->query("SELECT customer_id FROM mylibrary WHERE isbn = '".$isbn."' AND sell_price > 0 AND status != 'sold'");
 
 	$book_data = array();
 	foreach($query->rows as $result)
@@ -575,13 +575,14 @@ class ModelCatalogProduct extends Model {
 
 public function bestPrice($customer_id)
 {
-	$query = $this->db->query("SELECT my.sell_price, c.firstname, c.lastname FROM mylibrary my INNER JOIN oc_customer c ON c.customer_id = my.customer_id WHERE my.customer_id = '".$customer_id."'");
+	$query = $this->db->query("SELECT my.sell_price,c.customer_id, c.firstname, c.lastname FROM mylibrary my INNER JOIN oc_customer c ON c.customer_id = my.customer_id WHERE my.customer_id = '".$customer_id."'");
 
 	if($query->num_rows){
 
 			return array(
 
-				'sell_price'=>$query->row['sell_price'],
+				//'customer_id'=>$query->row['customer_id'],
+				'sell_price' =>$query->row['sell_price']
 				//'first_name'=>$query->row['firstname'],
 				//'last_name'=>$query->row['lastname']
 			);
@@ -595,7 +596,7 @@ public function bestPrice($customer_id)
 
 	public function sharedCustomers($isbn)
 {
-	$query = $this->db->query("SELECT customer_id FROM mylibrary WHERE isbn = '".$isbn."' AND share_price > 0 ");
+	$query = $this->db->query("SELECT customer_id FROM mylibrary WHERE isbn = '".$isbn."' AND share_price > 0 AND status != 'sold' ");
 
 	$book_data = array();
 	foreach($query->rows as $result)

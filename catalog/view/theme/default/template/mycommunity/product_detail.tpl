@@ -332,18 +332,21 @@
               </div>
 
 
-              <form action="<?php echo $selected_price; ?>" method="post">
+              <!-- <form action="<?php echo $selected_price; ?>" method="post"> -->
               <div class="bestseller-display">
                <br>
               <?php foreach($shared_prices as $shared_price) { ?>
-                <input type="radio" name="share_price" value = "<?php echo $shared_price['share_price']; ?>" onclick="javascript: submit()" style="font-size: 27px;"
+                <input type="radio" name="share_price" value = "<?php echo $shared_price['share_price'].$shared_price['customer_id']; ?>" onclick="javascript: submit()" style="font-size: 27px;"
                  /> &nbsp;<i class="fa fa-inr" style="font-size: 27px;" aria-hidden="true"></i> 
+
+
                    <!-- <?php echo $seller_price['first_name']; ?>&nbsp;<?php echo $seller_price['last_name']; ?> --> 
                     <?php echo $shared_price['share_price']; ?><br><br>
+                   <!--  <input type="hidden" name="customer_id" value="<?php echo $shared_price['customer_id']; ?>"> -->
               <?php } ?> 
 
               </div>
-              </form>
+              <!-- </form> -->
 
 
               

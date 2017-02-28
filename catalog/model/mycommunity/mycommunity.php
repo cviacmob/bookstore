@@ -536,32 +536,47 @@ public function getPublishers($customer_id)
  
  }
 
-
- public function getSharedbooks()
+ public function getSharedbooksFromMyLibrary()
  { 
-     /*$this->load->model('mylibrary/mylibrary');
 
-     $query = $this->db->query("SELECT isbn FROM shared_books");
+     $query = $this->db->query("SELECT isbn FROM mylibrary WHERE share_price > 0 GROUP BY isbn "); 
 
-     $book_data = array();
-		foreach($query->rows as $result)
-	 	{
-		 	$book_data[$result['isbn']] = $this->model_mylibrary_mylibrary->getBook($result['isbn']);
-	 	}
-     
-	  	return $book_data;*/
-          $query = $this->db->query("SELECT pd.name, p.image,p.model,p.author,p.share_price, p.product_id FROM oc_product_description pd INNER JOIN oc_product p ON pd.product_id = p.product_id WHERE p.share_price > 0");             
-          //$query = $this->db->query("SELECT product_id, model, author, publisher, image, share_price FROM oc_product where share_price > 0"); 
+     $shared = array();
 
-          foreach($query->rows as $result) {
-            
-             $isbn = $result['model'];
-             $shared_prices[$result['model']] = $this->getBestPrice($isbn);
-
-             $x=1;
+     foreach($query->rows as $result) {
+           
+             $isbn = $result['isbn'];
+             $shared[$result['isbn']]=$this->model_mycommunity_mycommunity->getSharedbooks($isbn);
+  
           }
 
-         return $query->rows;
+          return $shared;
+
+ }    
+
+
+ public function getSharedbooks($isbn)
+ { 
+    
+          $query = $this->db->query("SELECT pd.name, p.image,p.model,p.author,p.share_price, p.product_id FROM oc_product_description pd INNER JOIN oc_product p ON pd.product_id = p.product_id WHERE p.model = '".$isbn."' AND p.status = 1 ");             
+        
+
+         if($query->num_rows){
+
+             return array(
+
+                 'name'           => $query->row['name'],
+                 'image'          => $query->row['image'],
+                 'model'          => $query->row['model'],
+                 'author'         => $query->row['author'],
+                 'share_price'    => $query->row['share_price'],
+                 'product_id'     => $query->row['product_id']
+                         
+             );
+         }else{
+
+             return ;
+         }
 
  } 
 

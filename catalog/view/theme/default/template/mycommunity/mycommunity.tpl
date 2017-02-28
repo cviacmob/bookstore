@@ -45,7 +45,7 @@
 <button type="button" class="sh"  onclick="cart.add('<?php echo $shared_book['product_id']; ?>');"><?php echo $button_share_with_me;?> </button>
 </form>  -->
  <!--<button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="sh"><?php echo $button_share_with_me;?> </button>-->
-<button type="button" class="sh"  onclick="cart.add('<?php echo $shared_book['product_id']; ?>');"><?php echo $button_share_with_me;?> </button>
+<a href="<?php echo $shared_book['href']; ?>"><button type="button" class="sh" ><?php echo $button_share_with_me;?> </button></a>
 
 </div>
 </div>

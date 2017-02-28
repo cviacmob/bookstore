@@ -293,19 +293,32 @@ class ControllerCheckoutCart extends Controller {
 			$product_id = 0;
 		}
 
+		
 
 
 
 		if (isset($this->request->post['sell_price'])) {
-			$sell_price = (int)$this->request->post['sell_price'];
-		} else {
-			$sell_price = 0;
-		}
-		if (isset($this->request->post['share_price'])) {
-			$share_price = (int)$this->request->post['share_price'];
-		} else {
+
+			$price = explode("_", $_REQUEST['sell_price']);
+			$sell_price = $price[0];
+			$customer_id = $price[1];
 			$share_price = 0;
-		}
+
+		} elseif(isset($this->request->post['share_price'])) {
+
+			$price = explode("_", $_REQUEST['share_price']);
+			$share_price = $price[0];
+			$customer_id = $price[1];
+			$sell_price = 0;
+			
+		}else {
+
+			$sell_price = 0;
+			$share_price = 0;
+			$customer_id = 0;
+			
+	    }
+
 
 
 
@@ -356,7 +369,9 @@ class ControllerCheckoutCart extends Controller {
 			}
 
 			if (!$json) {
-				$this->cart->add($this->request->post['product_id'], $quantity, $sell_price, $share_price, $option, $recurring_id);
+
+				$isbn = $product_info['model'];
+				$this->cart->add($this->request->post['product_id'], $quantity, $sell_price, $share_price, $customer_id, $isbn, $option, $recurring_id);
 
 				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
 

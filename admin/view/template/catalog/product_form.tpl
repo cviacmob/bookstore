@@ -110,25 +110,25 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-author"><?php echo $entry_author; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="sku" value="<?php echo $sku; ?>" placeholder="<?php echo $entry_author; ?>" id="input-sku" class="form-control" />
+                  <input type="text" name="sku" value="<?php echo $author; ?>" placeholder="<?php echo $entry_author; ?>" id="input-sku" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-publisher"><?php echo $entry_publisher; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="sku" value="<?php echo $sku; ?>" placeholder="<?php echo $entry_publisher; ?>" id="input-sku" class="form-control" />
+                  <input type="text" name="sku" value="<?php echo $publisher; ?>" placeholder="<?php echo $entry_publisher; ?>" id="input-sku" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-covertype"><?php echo $entry_covertype; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="sku" value="<?php echo $sku; ?>" placeholder="<?php echo $entry_covertype; ?>" id="input-sku" class="form-control" />
+                  <input type="text" name="sku" value="<?php echo $cover_type; ?>" placeholder="<?php echo $entry_covertype; ?>" id="input-sku" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-pages"><?php echo $entry_pages; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="sku" value="<?php echo $sku; ?>" placeholder="<?php echo $entry_pages; ?>" id="input-sku" class="form-control" />
+                  <input type="text" name="sku" value="<?php echo $no_of_pages; ?>" placeholder="<?php echo $entry_pages; ?>" id="input-sku" class="form-control" />
                 </div>
               </div>
 

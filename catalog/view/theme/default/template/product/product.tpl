@@ -122,12 +122,14 @@
             <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
             <!-- <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button> -->
           </div>
-          <h1><?php echo $heading_title; ?></h1>
+          <h1><?php echo $heading_title; ?></h1>by <?php echo $author; ?>
           <ul class="list-unstyled">
             <?php if ($manufacturer) { ?>
             <li><?php echo $text_manufacturer; ?> <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></li>
             <?php } ?>
-            <li><?php echo $text_model; ?> <?php echo $model; ?></li>
+            <li><?php echo "Publisher:"; ?> <?php echo $publisher; ?></li>
+            <li><?php echo "ISBN:"; ?> <?php echo $model; ?></li>
+            <li><?php echo $cover_type; ?>: <?php echo $no_of_pages; ?></li>
             <?php if ($reward) { ?>
             <li><?php echo $text_reward; ?> <?php echo $reward; ?></li>
             <?php } ?>
@@ -311,12 +313,21 @@
               <!-- <form action="<?php echo $selected_price; ?>" method="post"> -->
               <div class="bestseller-display">
                <br>
+
+               
               <?php foreach($seller_prices as $seller_price) { ?>
-                <input type="radio" name="sell_price" value = "<?php echo $seller_price['sell_price']; ?>" onclick="javascript: submit()" style="font-size: 27px;"
+             <!--  <FORM >  -->
+                <input type="radio" name="sell_price" value = "<?php echo $seller_price['sell_price'].$seller_price['customer_id']; ?>" onclick="javascript: submit()" style="font-size: 27px;"
                  /> &nbsp;<i class="fa fa-inr" style="font-size: 27px;" aria-hidden="true"></i> 
+
+
                    <!-- <?php echo $seller_price['first_name']; ?>&nbsp;<?php echo $seller_price['last_name']; ?> --> 
                     <?php echo $seller_price['sell_price']; ?><br><br>
-              <?php } ?> 
+
+                <!-- <input type="hidden" name="customer_id" value="<?php echo $seller_price['customer_id']; ?>"> -->
+              <!-- </FORM> -->   
+              <?php } ?>
+               
 
               </div>
               <!-- </form> -->
@@ -464,6 +475,8 @@
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
 </div>
+
+ 
 <script type="text/javascript"><!--
 $('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
 	$.ajax({

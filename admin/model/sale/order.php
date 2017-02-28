@@ -61,6 +61,7 @@ class ModelSaleOrder extends Model {
 
 			foreach ($order_product_query->rows as $product) {
 				$reward += $product['reward'];
+				$seller_id = $product['seller_id'];
 			}
 			
 			if ($order_query->row['affiliate_id']) {
@@ -146,6 +147,7 @@ class ModelSaleOrder extends Model {
 				'comment'                 => $order_query->row['comment'],
 				'total'                   => $order_query->row['total'],
 				'reward'                  => $reward,
+				'seller_id'               => $seller_id,
 				'order_status_id'         => $order_query->row['order_status_id'],
 				'order_status'            => $order_query->row['order_status'],
 				'affiliate_id'            => $order_query->row['affiliate_id'],

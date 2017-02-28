@@ -108,17 +108,77 @@ class ModelMylibraryMylibrary extends Model {
 
 	 $book_data = array();
 
-	 $query = $this->db->query("SELECT op.product_id FROM oc_order_product op INNER JOIN oc_order o ON o.order_id = op.order_id WHERE o.customer_id = '". $customer_id ."'");
+	 $query = $this->db->query("SELECT op.product_id,op.order_id FROM oc_order_product op INNER JOIN oc_order o ON o.order_id = op.order_id WHERE o.customer_id = '". $customer_id ."' AND  mode = 'sell'");
 
      foreach($query->rows as $result)
 	 {
-		 $book_data[$result['product_id']] = $this->getCustomerBook($result['product_id']);
+		 $book_data[$result['product_id']] = $this->getCustomerBook($result['product_id'],$result['order_id']);
 	 }
      
 	  return $book_data;
  }
+
+
+
+ public function getSharedBooks($customer_id)
+ {
+
+	 $book_data = array();
+
+	 $query = $this->db->query("SELECT op.product_id,op.order_id  FROM oc_order_product op INNER JOIN oc_order o ON o.order_id = op.order_id WHERE o.customer_id = '". $customer_id ."' AND  mode = 'share'");
+
+     foreach($query->rows as $result)
+	 {
+		 $book_data[$result['product_id']] = $this->getSharedBookDetails($result['product_id'],$result['order_id']);
+
+		 //$book_status[$result['product_id']] = $this->getSharedbookReturnStatus($result['order_id']);
+
+		// $x[] = array_merge($book_data,$book_status);
+
+		// $y;
+
+		 
+	 }
+     
+	  return $book_data;
+ }
+
+ public function getSharedbookReturnStatus($order_id)
+ {
+	 $query = $this->db->query("SELECT return_status_id FROM oc_return WHERE order_id = '".$order_id."'");
+
+	 if($query->num_rows){
+
+		 $query = $this->db->query("SELECT name FROM oc_return_status WHERE return_status_id = '".$query->row['return_status_id']."'");
+
+		  return $query->row['name'];
+	 }
+ }
  
- public function getCustomerBook($product_id)
+ public function getSharedBookDetails($product_id,$order_id)
+ {
+
+	 $query = $this->db->query("SELECT pd.name, p.image, p.product_id FROM oc_product_description pd INNER JOIN oc_product p ON pd.product_id = p.product_id WHERE pd.product_id = '" .$product_id. "'");
+
+	 $return_status = $this->getSharedbookReturnStatus($order_id);
+
+    if ($query->num_rows) {
+			return array(
+				 
+				'name'              => $query->row['name'],
+				'image'             => $query->row['image'],
+				'product_id'        => $query->row['product_id'],
+				'order_id'          => $order_id,
+				'return_status'     => $return_status
+				  
+			);
+		}
+		else {
+			return false;
+		     }
+ }
+
+ public function getCustomerBook($product_id,$order_id)
  {
 
 	 $query = $this->db->query("SELECT pd.name, p.image, p.product_id FROM oc_product_description pd INNER JOIN oc_product p ON pd.product_id = p.product_id WHERE pd.product_id = '" .$product_id. "'");
@@ -128,13 +188,21 @@ class ModelMylibraryMylibrary extends Model {
 				 
 				'name'              => $query->row['name'],
 				'image'             => $query->row['image'],
-				'product_id'        => $query->row['product_id']
+				'product_id'        => $query->row['product_id'],
+				'order_id'          => $order_id
 				  
 			);
 		}
 		else {
 			return false;
 		     }
+ }
+
+ public function getSharedBookStatus($order_id)
+ {
+	  $query = $this->db->query("SELECT os.name  FROM oc_order_status os INNER JOIN oc_order o ON o.order_status_id = os.order_status_id WHERE o.order_id = '". $order_id ."'");
+
+	  return $query->row['name'];
  }
 
  public function getReviewedBooks($customer_id)
