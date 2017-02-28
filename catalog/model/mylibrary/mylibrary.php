@@ -130,13 +130,6 @@ class ModelMylibraryMylibrary extends Model {
      foreach($query->rows as $result)
 	 {
 		 $book_data[$result['product_id']] = $this->getSharedBookDetails($result['product_id'],$result['order_id']);
-
-		 //$book_status[$result['product_id']] = $this->getSharedbookReturnStatus($result['order_id']);
-
-		// $x[] = array_merge($book_data,$book_status);
-
-		// $y;
-
 		 
 	 }
      

@@ -29,7 +29,9 @@ $_['column_action']          = 'Action';
 $_['entry_author']                 = 'Author';
 $_['entry_publisher']              = 'Publisher';
 $_['entry_covertype']              = 'Cover Type';
-$_['entry_pages']              = 'No of Pages';
+$_['entry_pages']                  = 'No of Pages';
+$_['entry_sell_price']             = 'Sell Price';
+$_['entry_share_price']            = 'Share Price';
  
 
 
