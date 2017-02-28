@@ -1521,7 +1521,6 @@ class ControllerMyCommunitymycommunity extends Controller {
 		 } 
 
 
-
         $data['first_name'] = $firstname;
         $data['last_name']  = $lastname;
 
@@ -1540,7 +1539,7 @@ class ControllerMyCommunitymycommunity extends Controller {
          public function createclub(){
            
          $clubname = $this->request->post['club_name'];
-	        
+
          $this->load->model('mycommunity/mycommunity');
 
 	     $this->model_mycommunity_mycommunity->addtomyclub($clubname);
@@ -2126,7 +2125,6 @@ class ControllerMyCommunitymycommunity extends Controller {
        }
 
        public function club_info(){
-
        
        $group_id = $this->request->get['group_id'];    
        $this->load->language('mycommunity/mycommunity');
@@ -2154,7 +2152,7 @@ class ControllerMyCommunitymycommunity extends Controller {
             'href' => $this->url->link('mycommunity/mycommunity')
         );
 
-          $this->load->language('mycommunity/mycommunity');
+        $this->load->language('mycommunity/mycommunity');
 
         $data['button_sharedbooks'] = $this->language->get('button_sharedbooks');
         $data['button_reading_club'] = $this->language->get('button_reading_club');
@@ -2204,6 +2202,7 @@ class ControllerMyCommunitymycommunity extends Controller {
 			        'group_image'           => $image
                     
         );
+
         
         $this->load->model('mycommunity/mycommunity');
         $rec = $this->model_mycommunity_mycommunity->getMember($group_id);
@@ -2267,6 +2266,10 @@ class ControllerMyCommunitymycommunity extends Controller {
 
          $grouplink = "mycommunity/mycommunity/club_share&group_id=";
          $data['club_share'] = $this->url->link($grouplink, '', true); 
+
+         $data['editimage'] = $this->url->link('mycommunity/mycommunity/changeclub_image&group_id=' , '' , true);
+
+        $data['deleteclub'] = $this->url->link('mycommunity/mycommunity/deleteclub&group_id=' , '' , true);
      
          $data['search_mail'] = $this->url->link('mycommunity/mycommunity/mailsearch&group_id=' , '' , true);
 
@@ -2279,14 +2282,534 @@ class ControllerMyCommunitymycommunity extends Controller {
 
        }
 
+       public function changeclub_image(){
+
+        $group_id = $this->request->get['group_id'];    
+ 
+       //uploadImage
+		
+ 		$target_dir = "C:\wamp64\www\bookstore\image\catalog/";
+		$target_file_front = $target_dir . basename($_FILES["image"]["name"]);
+		$uploadOk = 1;
+	
+		$imageFileType = pathinfo($target_file_front,PATHINFO_EXTENSION);
+		// Check if image file is a actual image or fake image
+		if(isset($_POST["submit"]) && $_FILES["image"]["name"] ) {
+  		  $check = getimagesize($_FILES["image"]["tmp_name"]);
+  		  if($check !== false) {
+  	      //echo "File is an image - " . $check["mime"] . ".";
+  	      $uploadOk = 1;
+  		  } else {
+  	 	    $data['upload_success'] = "File is not an image.";
+   	  	   $uploadOk = 0;
+   		  }
+		}
+
+	
+			// Check file size
+		/*	if ($_FILES["image"]["size"] > 500000) {
+   			 $data['upload_success'] = "Sorry, your file is too large.";
+   			 $uploadOk = 0;
+			} */
+
+			// Allow certain file formats
+		/*	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+			  && $imageFileType != "gif" ) {
+  			  $data['upload_success'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+  			  $uploadOk = 0;
+			}*/
+
+			// Check if $uploadOk is set to 0 by an error
+			if ($uploadOk == 0) {
+ 	 		  $data['upload_success'] = "Sorry, your file was not uploaded.";
+			// if everything is ok, try to upload file
+			} else {
+ 	   		if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file_front)) 
+                {
+ 	     	 // echo "The file ". basename( $_FILES["front_image"]["name"]). " has been uploaded.";
+			$data['upload_success'] = "Your Book Images has been uploaded" ;
+
+			 
+ 	  	 	} else {
+        		$data['upload_success'] = "Sorry, there was an error uploading your file.";
+  	 	 	}
+		}
+
+ 
+        $this->load->model('mycommunity/mycommunity');
+        $this->model_mycommunity_mycommunity->updateclubimage($group_id);
+
+         $this->load->language('mycommunity/mycommunity');
+
+       $this->document->setTitle($this->language->get('heading_title'));
+
+       $this->load->model('mycommunity/mycommunity');
+
+       $url='';
+
+        $data['breadcrumbs'] = array();
+
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/home')
+        );
+
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_mycommunity'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+        $data['breadcrumbs'][] = array(
+            'text' =>  $this->language->get('text_club'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+        $this->load->language('mycommunity/mycommunity');
+
+        $data['button_sharedbooks'] = $this->language->get('button_sharedbooks');
+        $data['button_reading_club'] = $this->language->get('button_reading_club');
+        $data['button_authors'] = $this->language->get('button_authors');
+        $data['button_publishers'] = $this->language->get('button_publishers');
+        $data['text_recommended'] = $this->language->get('text_recommended');
+        $data['text_members'] = $this->language->get('text_members');
+        $data['text_yours'] = $this->language->get('text_yours');
+        $data['text_name_this_club'] = $this->language->get('text_name_this_club');
+        $data['text_club'] = $this->language->get('text_club');
+        $data['text_description'] = $this->language->get('text_description');
+        $data['text_sharesomething'] = $this->language->get('text_sharesomething');  
+        $data['button_create_club'] = $this->language->get('button_create_club');
+        $data['button_cancel'] = $this->language->get('button_cancel');
+        $data['button_done'] = $this->language->get('button_done');
+        $data['button_send'] = $this->language->get('button_send');
+        $data['button_join'] = $this->language->get('button_join');
+        $data['button_post'] = $this->language->get('button_post');
+       	$data['type_text_search'] = $this->language->get('type_text_search');
+        $data['text_invite_people'] = $this->language->get('text_invite_people');
+        $data['text_enter_name'] = $this->language->get('text_enter_name');
+        $data['text_enter_mailid'] = $this->language->get('text_enter_mailid');
+
+        $data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
+        $data['heading_title'] = $this->language->get('heading_title');
+
+        $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity', '', true);
+        $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
+        $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
+        $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
+
+        $this->load->model('mycommunity/mycommunity');
+        $clubinfo = $this->model_mycommunity_mycommunity->getMember($group_id);
+
+         if (is_file(DIR_IMAGE.$clubinfo['group_image'])) {
+				$image = $this->model_tool_image->resize($clubinfo['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+        $data['club_info'] = array(
+             
+            
+                    'group_id'              => $clubinfo['group_id'],
+                    'group_name'            => $clubinfo['group_name'],
+			        'group_image'           => $image
+                    
+        );
+
+        
+        $this->load->model('mycommunity/mycommunity');
+        $rec = $this->model_mycommunity_mycommunity->getMember($group_id);
+
+         if (is_file(DIR_IMAGE.$rec['group_image'])) {
+				$image = $this->model_tool_image->resize($rec['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+        $data['group_info'] = array(
+             
+            
+                    'group_id'              => $rec['group_id'],
+                    'group_name'            => $rec['group_name'],
+			        'group_image'           => $image
+                    
+        );
+        
+        $this->load->model('mycommunity/mycommunity');
+        $customer_id = (int)$this->customer->getId();
+        $firstname = $this->customer->getFirstName();
+        $lastname = $this->customer->getLastName();
+
+        $this->load->model('mycommunity/mycommunity');
+        $customer_id = (int)$this->customer->getId();
+        $firstname = $this->customer->getFirstName();
+        $lastname = $this->customer->getLastName();
+        $email = $this->customer->getEmail();
+
+        $data['first_name'] = $firstname;
+        $data['last_name']  = $lastname;
+        $data['email']      = $email;
+
+         $customer_id = (int)$this->customer->getId();
+		 $data['post_info'] = array();
+		 $postresults = $this->model_mycommunity_mycommunity->getClubposts($group_id);
+		 foreach($postresults as $postresult)
+		 {	
+
+              if (is_file(DIR_IMAGE.$postresult['image'])) {
+				$image = $this->model_tool_image->resize($postresult['image'], 417, 417);
+			} else {
+				$image = '';
+			}
+
+			
+			 $data['post_info'][] = array (
+
+                  'post_id'              =>$postresult['post_id'],
+                  'customer_image'      =>$postresult['customer_image'],
+				  'message'             =>$postresult['message'],
+			      'image'               =>$image,
+                  'link'                =>$postresult['link']
+					);
+			 
+		 } 
+
+         
+         $data['invite_people'] = $this->url->link('mycommunity/mycommunity/invite_people&group_id=', '', true);   
+
+         $grouplink = "mycommunity/mycommunity/club_share&group_id=";
+         $data['club_share'] = $this->url->link($grouplink, '', true); 
+
+         $data['editimage'] = $this->url->link('mycommunity/mycommunity/changeclub_image&group_id=' , '' , true);
+
+         $data['deleteclub'] = $this->url->link('mycommunity/mycommunity/deleteclub&group_id=' , '' , true);
+     
+         $data['search_mail'] = $this->url->link('mycommunity/mycommunity/mailsearch&group_id=' , '' , true);
+
+         $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+
+         $data['upload_image'] = $this->url->link('mycommunity/mycommunity/uploadImage','',true);
+     
+        
+        $this->response->setOutput($this->load->view('mycommunity/club_info', $data));
+
+
+
+       }
+
+        public function deleteclub(){
+
+        $group_id = $this->request->get['group_id'];   
+
+        $this->load->model('mycommunity/mycommunity');
+        $this->model_mycommunity_mycommunity->deleteclub($group_id);
+
+        $this->load->language('mycommunity/mycommunity');
+
+        $data['button_sharedbooks'] = $this->language->get('button_sharedbooks');
+        $data['button_reading_club'] = $this->language->get('button_reading_club');
+        $data['button_authors'] = $this->language->get('button_authors');
+        $data['button_publishers'] = $this->language->get('button_publishers');
+        $data['text_recommended'] = $this->language->get('text_recommended');
+        $data['text_members'] = $this->language->get('text_members');
+        $data['text_yours'] = $this->language->get('text_yours');
+        $data['text_name_this_club'] = $this->language->get('text_name_this_club');
+        $data['text_description'] = $this->language->get('text_description');
+        $data['text_sharesomething'] = $this->language->get('text_sharesomething');  
+        $data['text_mycommunity'] = $this->language->get('text_mycommunity');   
+        $data['text_reading_club'] = $this->language->get('text_reading_club');   
+        $data['button_create_club'] = $this->language->get('button_create_club');
+        $data['button_cancel'] = $this->language->get('button_cancel');
+        $data['button_done'] = $this->language->get('button_done');
+        $data['button_join'] = $this->language->get('button_join');
+        $data['button_member'] = $this->language->get('button_member');
+
+      $this->document->setTitle($this->language->get('heading_title'));
+
+      $this->load->model('mycommunity/mycommunity');
+
+    //  $data['addmember']=$this->url->link('mycommunity/mycommunity/join','',true);
+
+        $url='';
+
+        $data['breadcrumbs'] = array();
+
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/home')
+        );
+
+        
+
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_mycommunity'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+        $data['breadcrumbs'][] = array( 
+            'text' =>  $this->language->get('text_reading_club'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+         
+        $data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
+        $data['heading_title'] = $this->language->get('heading_title');
+        
+        $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity', '', true);
+        $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
+        $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
+        $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
+
+        $this->load->model('mycommunity/mycommunity');
+
+// for recommended tab
+
+        $recommended = $this->model_mycommunity_mycommunity->getRecommended();
+
+        foreach($recommended as $result)
+       {
+          $recommended_groups[] = $this->model_mycommunity_mycommunity->memberstatus($result['group_id']);
+       }
+
+         
+        
+        foreach($recommended_groups as $recom)
+        {
+           
+             if (is_file(DIR_IMAGE.$recom['group_image'])) {
+				$image = $this->model_tool_image->resize($recom['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+
+            $data['groups'][] = array (
+
+                    'group_id'    =>$recom['group_id'],
+                    'group_name'  =>$recom['group_name'],
+                    'group_image' =>$image,
+                    'status'      =>$recom['status']
+                    
+                 
+                    );
+             
+        }  
+
+// for members tab
+
+         $member_in_groups = $this->model_mycommunity_mycommunity->groupmember();
+
+         $data['members'] = array();
+
+         foreach($member_in_groups as $memberresult)
+		 {
+            
+            if (is_file(DIR_IMAGE.$memberresult['group_image'])) {
+				$image = $this->model_tool_image->resize($memberresult['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+              
+			 $data['members'][] = array (
+
+				 'group_id'    =>$memberresult['group_id'],
+			     'group_name'  =>$memberresult['group_name'],
+			     'group_image' =>$image,
+                 'status'      =>$memberresult['status']
+
+					);
+			 
+		 } 
+
+  // yours tab      
+
+         $customer_id = (int)$this->customer->getId();
+		 $data['clubs'] = array();
+		 $clubresults = $this->model_mycommunity_mycommunity->getclubs();
+		 foreach($clubresults as $clubresult)
+		 {
+             
+            if (is_file(DIR_IMAGE.$clubresult['group_image'])) {
+				$image = $this->model_tool_image->resize($clubresult['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+			 $data['clubs'][] = array (
+
+                 'group_id'          =>$clubresult['group_id'],
+				 'group_name'        =>$clubresult['group_name'],
+				 'group_image'       =>$image,
+			     'group_description' =>$clubresult['group_description']
+					);
+			 
+		 }   
+
+       $data['deleteclub'] = $this->url->link('mycommunity/mycommunity/deleteclub&group_id=' , '' , true);  
+
+      $data['create_club'] = $this->url->link('mycommunity/mycommunity/createclub', '', true);
+    //  $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
+
+      $data['member_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
+
+      $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+     
+      $data['addmember']   = $this->url->link('mycommunity/mycommunity/join', '', true);
+
+      $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity', '', true);
+      $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
+      $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
+      $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
+
+      $data['create_newclub'] = $this->url->link('mycommunity/mycommunity/create_newclub', '', true);
+ 
+      $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
+      $data['active_tab'] = 'tab_default_3';
+
+      $this->response->setOutput($this->load->view('mycommunity/readingclub', $data));
+
+       }
+
+       public function acceptinvite(){
+
+        
+       if (!$this->customer->isLogged()) {
+            $this->session->data['redirect'] = $this->config->get('config_url') . 'index.php?route=mycommunity/mycommunity/acceptinvite&group_id=' . $this->request->get['group_id'] . "\n\n";
+
+            $this->response->redirect($this->url->link('account/login', '', true));
+       }
+
+        $group_id = $this->request->get['group_id'];     
+
+        $this->load->model('mycommunity/mycommunity');
+
+        $this->load->language('mycommunity/mycommunity');
+
+        $data['button_sharedbooks'] = $this->language->get('button_sharedbooks');
+        $data['button_reading_club'] = $this->language->get('button_reading_club');
+        $data['button_authors'] = $this->language->get('button_authors');
+        $data['button_publishers'] = $this->language->get('button_publishers');
+        $data['text_recommended'] = $this->language->get('text_recommended');
+        $data['text_members'] = $this->language->get('text_members');
+        $data['text_accept_invite'] = $this->language->get('text_accept_invite');
+        $data['text_yours'] = $this->language->get('text_yours');
+        $data['text_name_this_club'] = $this->language->get('text_name_this_club');
+        $data['text_description'] = $this->language->get('text_description');
+        $data['text_sharesomething'] = $this->language->get('text_sharesomething');  
+        $data['text_mycommunity'] = $this->language->get('text_mycommunity');   
+        $data['text_reading_club'] = $this->language->get('text_reading_club');   
+        $data['button_create_club'] = $this->language->get('button_create_club');
+        $data['button_cancel'] = $this->language->get('button_cancel');
+        $data['button_done'] = $this->language->get('button_done');
+        $data['button_join'] = $this->language->get('button_join');
+        $data['button_member'] = $this->language->get('button_member');
+
+      $this->document->setTitle($this->language->get('heading_title'));
+
+      $this->load->model('mycommunity/mycommunity');
+
+    //  $data['addmember']=$this->url->link('mycommunity/mycommunity/join','',true);
+
+        $url='';
+
+        $data['breadcrumbs'] = array();
+
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/home')
+        );
+
+        
+
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_mycommunity'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+        $data['breadcrumbs'][] = array( 
+            'text' =>  $this->language->get('text_reading_club'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+        $data['breadcrumbs'][] = array( 
+            'text' =>  $this->language->get('text_accept_invite'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+         
+        $data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
+        $data['heading_title'] = $this->language->get('heading_title');
+        
+        $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity', '', true);
+        $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
+        $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
+        $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
+
+        $clubinfo = $this->model_mycommunity_mycommunity->getMember($group_id);
+
+         if (is_file(DIR_IMAGE.$clubinfo['group_image'])) {
+				$image = $this->model_tool_image->resize($clubinfo['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+        $data['club_info'] = array(
+             
+            
+                    'group_id'              => $clubinfo['group_id'],
+                    'group_name'            => $clubinfo['group_name'],
+			        'group_image'           => $image
+                    
+        );
+
+       $data['deleteclub'] = $this->url->link('mycommunity/mycommunity/deleteclub&group_id=' , '' , true);  
+
+      $data['create_club'] = $this->url->link('mycommunity/mycommunity/createclub', '', true);
+
+      $data['member_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
+
+      $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+     
+      $data['addmember']   = $this->url->link('mycommunity/mycommunity/join', '', true);
+
+      $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity', '', true);
+      $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
+      $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
+      $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
+
+      $data['create_newclub'] = $this->url->link('mycommunity/mycommunity/create_newclub', '', true);
+
+       $data['acceptclub'] = $this->url->link('mycommunity/mycommunity/acceptclub&group_id=', '', true);
+
+       $data['join_community']   = $this->url->link('mycommunity/mycommunity/join_communtiy&group_id=', '', true);
+ 
+      $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
+      $data['active_tab'] = 'tab_default_3';
+
+      $this->response->setOutput($this->load->view('mycommunity/acceptinvite', $data));
+
+
+       }
+
+       public function acceptclub(){
+
+        $group_id = $this->request->get['group_id'];
+        $this->load->model('mycommunity/mycommunity');
+        
+        $this->model_mycommunity_mycommunity->acceptinvite($group_id); 
+
+
+      
+
+       }
+
        public function mailsearch(){
 
        $group_id = $this->request->get['group_id'];    
             
        $this->load->language('mycommunity/mycommunity');
 
-      
-    
            if(isset($_POST['texts'])) {
 
             $texts = $_POST['texts'];
@@ -2312,21 +2835,177 @@ class ControllerMyCommunitymycommunity extends Controller {
        public function invite_people() 
        
        {
-         if(isset($_POST['emails'])) {
+
+          $group_id = $this->request->get['group_id'];    
+
+          if(isset($_POST['emails'])) {
 
             $emails = $_POST['emails'];
             foreach($emails as $email){
 
+           $this->load->language('mycommunity/mycommunity');   
            $this->load->model('mycommunity/mycommunity');   
            $this->model_mycommunity_mycommunity->addinvite($email);
-         
 
             }
          }
 
-         $group_id = $this->request->get['group_id'];    
-   
-         $this->load->language('mycommunity/mycommunity');
+       
+
+       $group_id = $this->request->get['group_id'];    
+       $this->load->language('mycommunity/mycommunity');
+
+       $this->document->setTitle($this->language->get('heading_title'));
+
+       $this->load->model('mycommunity/mycommunity');
+
+       $url='';
+
+        $data['breadcrumbs'] = array();
+
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/home')
+        );
+
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_mycommunity'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+        $data['breadcrumbs'][] = array(
+            'text' =>  $this->language->get('text_club'),
+            'href' => $this->url->link('mycommunity/mycommunity')
+        );
+
+        $this->load->language('mycommunity/mycommunity');
+
+        $data['button_sharedbooks'] = $this->language->get('button_sharedbooks');
+        $data['button_reading_club'] = $this->language->get('button_reading_club');
+        $data['button_authors'] = $this->language->get('button_authors');
+        $data['button_publishers'] = $this->language->get('button_publishers');
+        $data['text_recommended'] = $this->language->get('text_recommended');
+        $data['text_members'] = $this->language->get('text_members');
+        $data['text_yours'] = $this->language->get('text_yours');
+        $data['text_name_this_club'] = $this->language->get('text_name_this_club');
+        $data['text_club'] = $this->language->get('text_club');
+        $data['text_description'] = $this->language->get('text_description');
+        $data['text_sharesomething'] = $this->language->get('text_sharesomething');  
+        $data['button_create_club'] = $this->language->get('button_create_club');
+        $data['button_cancel'] = $this->language->get('button_cancel');
+        $data['button_done'] = $this->language->get('button_done');
+        $data['button_send'] = $this->language->get('button_send');
+        $data['button_join'] = $this->language->get('button_join');
+        $data['button_post'] = $this->language->get('button_post');
+       	$data['type_text_search'] = $this->language->get('type_text_search');
+        $data['text_invite_people'] = $this->language->get('text_invite_people');
+        $data['text_enter_name'] = $this->language->get('text_enter_name');
+        $data['text_enter_mailid'] = $this->language->get('text_enter_mailid');
+
+        $data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
+        $data['heading_title'] = $this->language->get('heading_title');
+
+        $data['sharedbooks'] = $this->url->link('mycommunity/mycommunity', '', true);
+        $data['readingclub'] = $this->url->link('mycommunity/mycommunity/readingclub', '', true);
+        $data['authors'] = $this->url->link('mycommunity/mycommunity/author', '', true);
+        $data['publishers'] = $this->url->link('mycommunity/mycommunity/publisher', '', true);
+
+        $this->load->model('mycommunity/mycommunity');
+        $clubinfo = $this->model_mycommunity_mycommunity->getMember($group_id);
+
+         if (is_file(DIR_IMAGE.$clubinfo['group_image'])) {
+				$image = $this->model_tool_image->resize($clubinfo['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+        $data['club_info'] = array(
+             
+            
+                    'group_id'              => $clubinfo['group_id'],
+                    'group_name'            => $clubinfo['group_name'],
+			        'group_image'           => $image
+                    
+        );
+
+        
+        $this->load->model('mycommunity/mycommunity');
+        $rec = $this->model_mycommunity_mycommunity->getMember($group_id);
+
+         if (is_file(DIR_IMAGE.$rec['group_image'])) {
+				$image = $this->model_tool_image->resize($rec['group_image'], 189, 95);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 189, 95);
+			}
+
+        $data['group_info'] = array(
+             
+            
+                    'group_id'              => $rec['group_id'],
+                    'group_name'            => $rec['group_name'],
+			        'group_image'           => $image
+                    
+        );
+        
+        $this->load->model('mycommunity/mycommunity');
+        $customer_id = (int)$this->customer->getId();
+        $firstname = $this->customer->getFirstName();
+        $lastname = $this->customer->getLastName();
+
+        $this->load->model('mycommunity/mycommunity');
+        $customer_id = (int)$this->customer->getId();
+        $firstname = $this->customer->getFirstName();
+        $lastname = $this->customer->getLastName();
+        $email = $this->customer->getEmail();
+
+        $data['first_name'] = $firstname;
+        $data['last_name']  = $lastname;
+        $data['email']      = $email;
+
+         $customer_id = (int)$this->customer->getId();
+		 $data['post_info'] = array();
+		 $postresults = $this->model_mycommunity_mycommunity->getClubposts($group_id);
+		 foreach($postresults as $postresult)
+		 {	
+
+              if (is_file(DIR_IMAGE.$postresult['image'])) {
+				$image = $this->model_tool_image->resize($postresult['image'], 417, 417);
+			} else {
+				$image = '';
+			}
+
+			
+			 $data['post_info'][] = array (
+
+                  'post_id'              =>$postresult['post_id'],
+                  'customer_image'      =>$postresult['customer_image'],
+				  'message'             =>$postresult['message'],
+			      'image'               =>$image,
+                  'link'                =>$postresult['link']
+					);
+			 
+		 } 
+
+         
+         $data['invite_people'] = $this->url->link('mycommunity/mycommunity/invite_people&group_id=', '', true);   
+
+         $grouplink = "mycommunity/mycommunity/club_share&group_id=";
+         $data['club_share'] = $this->url->link($grouplink, '', true); 
+
+         $data['editimage'] = $this->url->link('mycommunity/mycommunity/changeclub_image&group_id=' , '' , true);
+
+        $data['deleteclub'] = $this->url->link('mycommunity/mycommunity/deleteclub&group_id=' , '' , true);
+     
+         $data['search_mail'] = $this->url->link('mycommunity/mycommunity/mailsearch&group_id=' , '' , true);
+
+         $data['club_image'] = $this->url->link('mycommunity/mycommunity/club_info&group_id=', '', true);
+
+         $data['upload_image'] = $this->url->link('mycommunity/mycommunity/uploadImage','',true);
+     
+        
+        $this->response->setOutput($this->load->view('mycommunity/club_info', $data));
+
 
         
       //   $this->response->setOutput($this->load->view('mycommunity/club_info', $data));
@@ -3327,7 +4006,7 @@ class ControllerMyCommunitymycommunity extends Controller {
 	
         $this->response->setOutput($this->load->view('mycommunity/publisher_list', $data));
 		 
-	}
+    	}
 
     
 	    public function autocomplete() {
@@ -3422,5 +4101,52 @@ class ControllerMyCommunitymycommunity extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
      }
+
+
+   /* public function autocomplete_name() {
+
+		$json = array();
+
+		if (isset($this->request->get['filter_email']))  {
+		$this->load->model('mycommunity/mycommunity');
+
+			if (isset($this->request->get['filter_email'])) {
+				$filter_name = $this->request->get['filter_email'];
+			} else {
+				$filter_name = '';
+			}
+
+            if (isset($this->request->get['limit'])) {
+				$limit = $this->request->get['limit'];
+			} else {
+				$limit = 5;
+			}
+
+			$filter_data = array(
+				'filter_email'  => $filter_name,
+                'start'        => 0,
+				'limit'        => $limit
+				
+		    );
+
+		   $results = $this->model_mycommunity_mycommunity->getAllemail($filter_data);
+      //     $option_data = array();
+
+
+			foreach ($results as $result) {
+				
+				$json[] = array(
+					'customer_id' => $result['customer_id'],
+					'name'       => strip_tags(html_entity_decode($result['email'], ENT_QUOTES, 'UTF-8')),
+					//'model'      => $result['model'],
+					//'option'     => $option_data,
+					//'price'      => $result['price']
+				);
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+     } */
 
 }

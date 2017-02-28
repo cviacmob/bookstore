@@ -141,7 +141,7 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);		
 			}
-			
+				
 			if ($this->user->hasPermission('access', 'catalog/information')) {		
 				$catalog[] = array(
 					'name'	   => $this->language->get('text_information'),
@@ -160,6 +160,29 @@ class ControllerCommonColumnLeft extends Controller {
 				);		
 			}
 			
+			//mycommunity 
+
+			$mycommunity = array();
+
+			
+			if ($this->user->hasPermission('access', 'mycommunity/customergroups')) {		
+				$mycommunity[] = array(
+					'name'	   => "Customer Groups",
+					'href'     => $this->url->link('mycommunity/customergroups', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);					
+			}
+
+			if ($mycommunity) {					
+				$data['menus'][] = array(
+					'id'       => 'menu-mycommunity',
+					'icon'	   => 'fa-users', 
+					'name'	   => "MyCommunity",
+					'href'     => '',
+					'children' => $mycommunity
+				);		
+			}
+
 	
 			// Extension
 			$extension = array();

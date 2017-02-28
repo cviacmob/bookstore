@@ -89,10 +89,10 @@
 
 <div class="<?php if($active_tab == 'tab_default_3' ) echo 'tab-pane active'; else echo 'tab-pane' ?>" id="tab_default_3">
 <div class="row">
-  <button type="button" style="float:left" onclick="location.href='<?php echo $create_newclub;?>'" class="add" value="add books"/><?php echo $button_create_club;?> <i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+  <button type="button" style="float:left" onclick="location.href='<?php echo $create_newclub;?>'" class="add" value="add books"><?php echo $button_create_club;?> <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
 <!--<button type="button" style="float:left" data-toggle="modal" data-target="#myModal" class="add" value="add books"/><?php echo $button_create_club;?> <i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>-->
 <?php foreach($clubs as $club) {?>
-<div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+<div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 " >
 <div class="product-thumb transition ">
 <h4><?php echo $club['group_name']; ?></h4>
 <div class="image">
@@ -105,7 +105,8 @@
 </div>
 <?php } ?>
 </div>
-</div>   
+</div>
+
 
  <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">

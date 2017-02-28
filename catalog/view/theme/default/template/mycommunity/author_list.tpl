@@ -25,50 +25,30 @@
 
 <form name="myForm" action="<?php echo $searchauthor; ?>" onsubmit="return validateForm()" method="post" >
 
-<FORM name="TestText" > 
+<FORM name="TestText_author"> 
 
 <div id="search" class="input-group">
-<input type="text" class="form-control input-lg" onfocus="document.getElementById('show_hide').style.display='block';"  onblur="document.getElementById('show_div').style.display='none';" placeholder="<?php echo $text_type_author_name;?>" name="filter_name" id="input-name" required>
+<input type="text" onfocus="document.getElementById('hide').style.display='block';"  onblur="document.getElementById('div').style.display='none';" class="form-control input-lg"  placeholder="<?php echo $text_type_author_name;?>" name="filter_name" id="input-name" required>
 <span class="input-group-btn">
 <button type="submit" class="btn btn-default btn-lg"><i class="fa fa-search"></i></button>
 </span>
 </div>
 
-</form>
 
-<br>
-<br>
-<?php foreach($authors as $author) {?>
-<div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 " style="float:left">
-<div class="product-thumb transition ">
-<div class="image">
-<a href= "<?php echo $author_image.$author['author_id'];?>"><img class="img-responsive" src="<?php echo $author['author_image']; ?>" style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"> </a>
-</div>
-
-<h4><?php echo $author['author_name']; ?></h4>
-
-</div>
-</div>
-<?php } ?>
+<div id="div">
 
 </div>
 
-</div>
-</div> 
-
-<div id="show_div">
-
-</div>
-
-<div id="show_hide">
+<div id="hide">
 <CENTER>
 
- <SCRIPT LANGUAGE="JavaScript" type="text/javascript"> 
- <!-- 
- function AppendCharacter ( ChrToAppend ) 
+<SCRIPT LANGUAGE="JavaScript" type="text/javascript"> 
+
+function AppendCharacter ( ChrToAppend ) 
  { 
- 	
-   document.TestText.search.value += ChrToAppend; 
+ 
+ document.TestText_author.search.value += ChrToAppend; 
+ 
  } //end AppendCharacter 
  document.write('<table>'); 
  document.write('<TR>'); 
@@ -411,6 +391,43 @@
   
  
  </FORM> 
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<?php foreach($authors as $author) {?>
+<div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 " style="float:left">
+<div class="product-thumb transition ">
+<div class="image">
+<a href= "<?php echo $author_image.$author['author_id'];?>"><img class="img-responsive" src="<?php echo $author['author_image']; ?>" style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"> </a>
+</div>
+
+<h4><?php echo $author['author_name']; ?></h4>
+
+</div>
+</div>
+<?php } ?>
+
+</div>
+
+</div>
+</div> 
+
+
+
 
 
 

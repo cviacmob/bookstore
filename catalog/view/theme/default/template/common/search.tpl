@@ -1,25 +1,26 @@
-<!--<div id="search" class="input-group">
+<!-- <div id="search" class="input-group">
   <input type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo $text_search; ?>" class="form-control input-lg" />
   <span class="input-group-btn">
-    <button type="button" class="btn btn-default btn-lg"><i class="fa fa-search"></i></button>
+    <button type="button" class="btn btn-default btn-lg" ><button><i class="fa fa-keyboard-o" aria-hidden="true"></i>
+</button><i class="fa fa-search"></i></button>
   </span>
-</div>-->
+</div> -->
 
 
 <FORM name="TestText" > 
-
-<!-- <INPUT TYPE=TEXT NAME="Phrase" style="font-size: 16" Value=""SIZE=80> -->
+  
+  <!-- <INPUT TYPE=TEXT NAME="Phrase" style="font-size: 16" Value=""SIZE=80> -->
 <div id="search" class="input-group">
+   
+  
+  <input type="text" onfocus="document.getElementById('show_hide').style.display='block';"  onblur="document.getElementById('show_div').style.display='none';" name="search" id="key" value="<?php echo $search; ?>" placeholder="<?php echo $text_search; ?>" class="form-control input-lg" />
+  
+  <span class="input-group-btn">
+    <button type="button" class="btn btn-default btn-lg" ><i class="fa fa-search"></i></button>
+  </span>
 
-<input type="text" onfocus="document.getElementById('show_hide').style.display='block';"  onblur="document.getElementById('show_div').style.display='none';" name="search" id="key" value="<?php echo $search; ?>" placeholder="<?php echo $text_search; ?>" class="form-control input-lg" />
-
-<span class="input-group-btn">
-<button type="button" class="btn btn-default btn-lg" ><i class="fa fa-search"></i></button>
-</span>
-
-</div>
-<br>
-
+ </div>
+   
 <div id="show_div">
 
 </div>
@@ -27,9 +28,9 @@
 <div id="show_hide">
 <CENTER>
 
-<SCRIPT LANGUAGE="JavaScript" type="text/javascript"> 
- 
-function AppendCharacter ( ChrToAppend ) 
+ <SCRIPT LANGUAGE="JavaScript" type="text/javascript"> 
+ <!-- 
+ function AppendCharacter ( ChrToAppend ) 
  { 
  	
    document.TestText.search.value += ChrToAppend; 
