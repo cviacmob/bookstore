@@ -133,9 +133,9 @@
 
         
     
-    <input type='file' class = "upload" name="image" onchange="readURL(this);"  />
-    
-    <img id="blah" src="#" alt="" />
+        <input type='file' class = "upload" name="image" onchange="readURL(this);"  />
+        
+        <img id="blah" src="#" alt="" />
   
 
  

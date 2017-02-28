@@ -1,37 +1,37 @@
 <?php
 // Heading
-$_['heading_title']        = 'Address Book';
+$_['heading_title']        = 'என் முகவரி';
 
 // Text
-$_['text_account']         = 'Account';
-$_['text_address_book']    = 'Address Book Entries';
-$_['text_edit_address']    = 'Edit Address';
-$_['text_add']             = 'Your address has been successfully inserted';
-$_['text_edit']            = 'Your address has been successfully updated';
-$_['text_delete']          = 'Your address has been successfully deleted';
-$_['text_empty']           = 'You have no addresses in your account.';
+$_['text_account']         = 'விவரம்';
+$_['text_address_book']    = 'முகவரி ';
+$_['text_edit_address']    = 'முகவரியை தொகு';
+$_['text_add']             = 'உங்கள் முகவரி வெற்றிகரமாக சேர்க்கப்பட்டது';
+$_['text_edit']            = 'உங்கள் முகவரி வெற்றிகரமாக புதுப்பிக்கப்பட்டது';
+$_['text_delete']          = 'உங்கள் முகவரி வெற்றிகரமாக நீக்கப்பட்டது';
+$_['text_empty']           = 'உங்கள் விவரத்தில் முகவரி இல்லை.';
 
 // Entry
-$_['entry_firstname']      = 'First Name';
-$_['entry_lastname']       = 'Last Name';
-$_['entry_company']        = 'Company';
-$_['entry_address_1']      = 'Address 1';
-$_['entry_address_2']      = 'Address 2';
-$_['entry_postcode']       = 'Post Code';
-$_['entry_city']           = 'City';
-$_['entry_country']        = 'Country';
-$_['entry_zone']           = 'Region / State';
-$_['entry_default']        = 'Default Address';
+$_['entry_firstname']      = 'முதல் பெயர்';
+$_['entry_lastname']       = 'கடைசி பெயர்';
+$_['entry_company']        = 'நிறுவனம்';
+$_['entry_address_1']      = 'முகவரி 1';
+$_['entry_address_2']      = 'முகவரி 2';
+$_['entry_postcode']       = 'தபால் எண்';
+$_['entry_city']           = 'நகரம் ';
+$_['entry_country']        = 'நாடு ';
+$_['entry_zone']           = 'பிராந்தியம் / மாநிலம்';
+$_['entry_default']        = 'தற்போதைய முகவரி';
 
 // Error
-$_['error_delete']                = 'Warning: You must have at least one address!';
-$_['error_default']               = 'Warning: You can not delete your default address!';
-$_['error_firstname']             = 'First Name must be between 1 and 32 characters!';
-$_['error_lastname']              = 'Last Name must be between 1 and 32 characters!';
-$_['error_vat']                   = 'VAT number is invalid!';
-$_['error_address_1']             = 'Address must be between 3 and 128 characters!';
-$_['error_postcode']              = 'Postcode must be between 2 and 10 characters!';
-$_['error_city']                  = 'City must be between 2 and 128 characters!';
-$_['error_country']               = 'Please select a country!';
-$_['error_zone']                  = 'Please select a region / state!';
-$_['error_custom_field']          = '%s required!';
+$_['error_delete']                = 'எச்சரிக்கை: குறைந்தது ஒரு முகவரி இருக்க வேண்டும்!';
+$_['error_default']               = 'எச்சரிக்கை: உங்களது தற்போதைய முகவரியை அளிக்க முடியாது!';
+$_['error_firstname']             = 'முதல் பெயர் 1 மற்றும் 32 எழுத்துகளுக்கு இடையில் இருக்க வேண்டும்!';
+$_['error_lastname']              = 'கடைசி பெயர் 1 மற்றும் 32 எழுத்துகள் இடையே இருக்க வேண்டும்!';
+$_['error_vat']                   = 'VAT எண் தவறானது!';
+$_['error_address_1']             = 'முகவரி 3 மற்றும் 128 எழுத்துக்கள் இருக்க வேண்டும்!';
+$_['error_postcode']              = 'அஞ்சல் எண் 2 மற்றும் 10 எழுத்துகளுக்கு இடையில் இருக்க வேண்டும்!';
+$_['error_city']                  = 'நகரம் பெயர் 2 மற்றும் 128 எழுத்துகளுக்கு இடையில் இருக்க வேண்டும்!';
+$_['error_country']               = 'தயவுச் செய்து ஒரு நாட்டைத் தேர்ந்தெடுக்கவும்!';
+$_['error_zone']                  = 'தயவுச் செய்து ஒரு பிராந்தியத்தில் / மாநில தேர்ந்தெடுக்கவும்!';
+$_['error_custom_field']          = '%s தேவையானவை!';

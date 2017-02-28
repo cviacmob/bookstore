@@ -19,13 +19,13 @@ $_['text_publisher_mastersearch']  = 'பதிப்பகத்தார் �
 $_['text_publisher_info_page']     = 'பதிப்பகத்தாரைப் பற்றி';			 
 $_['text_available_books']         = 'கிடைக்கும் புத்தகங்கள்';			
 $_['text_requested_books']         = 'கோரிய புத்தகங்கள்';			
-$_['text_shared_books']            = 'பகிர்வு புத்தகங்கள்';			
+$_['text_shared_books']            = 'பகிர்ந்துக்கொண்ட புத்தகங்கள்';			
 $_['text_reading_club']            = 'புத்தக வாசிப்பு சங்கம்';			
 $_['text_publishers']              = 'பதிப்பகத்தார்கள்';		
 $_['text_club']                    = 'சங்கம்';			
 $_['text_thanks']                  = 'நன்றி';		
 $_['text_subject']                 = '%s - You ve been invited to join Olaichuvadi book reading club';			
-$_['text_welcome']                 = 'http://www.olaichuvadi.cviac.com/index.php?route=account/register';			
+$_['text_welcome']                 = 'Click this link below to join the Club';			
 $_['type_text_search']             = 'தேடல்';			
 $_['text_location']                = 'இடம்';			
 $_['text_search_byauthor']         = 'எழுத்தாளரைத்தேடு ';			
@@ -44,6 +44,14 @@ $_['text_references']              = 'குறிப்பு';
 $_['text_links']                   = 'வெளி இணைப்புகள்';
 $_['text_address']                 = 'முகவரி';
 $_['text_create_reading_club']     = 'புத்தகம் வாசிப்பு கிளப் உருவுக்காக';
+$_['text_search_by_author']        = 'எழுத்தாளரைத்தேடு';
+$_['text_accept_invite']           = 'அழைப்பை ஏற்க';
+
+$_['text_jane']                     = ' Jane Josphine:';
+$_['text_invite']                   = 'Invited you to join';
+$_['text_olai']                     = ' jane invited you to join Olaichuvadi';
+$_['text_cviac']                    = ' CVIAC';
+$_['text_member']                   = '1 member';
 			
 //Button			
 $_['button_reading_club']      = 'புத்தக வாசிப்பு சங்கம்';			

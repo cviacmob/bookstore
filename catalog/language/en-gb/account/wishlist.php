@@ -1,20 +1,20 @@
 <?php
 // Heading
-$_['heading_title'] = 'My Wish List';
+$_['heading_title'] = 'எனக்கு பிடித்தது';
 
 // Text
-$_['text_account']  = 'Account';
-$_['text_instock']  = 'In Stock';
-$_['text_wishlist'] = 'Wish List (%s)';
-$_['text_login']    = 'You must <a href="%s">login</a> or <a href="%s">create an account</a> to save <a href="%s">%s</a> to your <a href="%s">wish list</a>!';
-$_['text_success']  = 'Success: You have added <a href="%s">%s</a> to your <a href="%s">wish list</a>!';
-$_['text_remove']   = 'Success: You have modified your wish list!';
-$_['text_empty']    = 'Your wish list is empty.';
+$_['text_account']  = 'விவரம்';
+$_['text_instock']  = 'கையிருப்பில் உள்ளது';
+$_['text_wishlist'] = 'எனக்கு பிடித்தது(%s)';
+$_['text_login']    = 'நீங்கள் <a href="%s">உள்நுழையவும் </a> அல்லது  <a href="%s">உங்கள் விவரத்தை பதிவு செய்யவும் </a> இதை  <a href="%s">%s</a> உங்கள்  <a href="%s">ஆசைபட்டியலில் சேர்க்க </a>!';
+$_['text_success']  = 'வெற்றி: நீங்கள் இதை  <a href="%s">%s</a> உங்கள் <a href="%s">ஆசைபட்டியலில் சேர்த்துவிட்டீர்கள் </a>!';
+$_['text_remove']   = 'வெற்றி: நீங்கள் உங்கள் ஆசைபட்டியலை மாற்றி விட்டீர்கள்!';
+$_['text_empty']    = 'உங்கள் ஆசைபட்டியல் காலியாக உள்ளது.';
 
 // Column
-$_['column_image']  = 'Image';
-$_['column_name']   = 'Product Name';
-$_['column_model']  = 'Model';
-$_['column_stock']  = 'Stock';
-$_['column_price']  = 'Unit Price';
-$_['column_action'] = 'Action';
+$_['column_image']  = 'படம்';
+$_['column_name']   = 'பொருளின் பெயர்';
+$_['column_model']  = 'மாதிரி';
+$_['column_stock']  = 'பங்கு';
+$_['column_price']  = 'அலகு விலை';
+$_['column_action'] = 'செயல்';

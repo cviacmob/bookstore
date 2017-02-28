@@ -28,7 +28,7 @@
        
       </div>
       <div class="form">
-      <form action="<?php echo $update_details.$upload_info['upload_id']; ?>" method="post">
+      <form action="<?php echo $update_details.$club_info['group_id']; ?>" method="post">
 
       
 

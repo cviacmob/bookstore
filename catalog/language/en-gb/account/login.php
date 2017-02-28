@@ -1,22 +1,24 @@
 <?php
 // Heading
-$_['heading_title']                = 'Account Login';
+$_['heading_title']                = 'விவர நுழைவு';
 
 // Text
-$_['text_account']                 = 'Account';
-$_['text_login']                   = 'Login';
-$_['text_new_customer']            = 'New Customer';
-$_['text_register']                = 'Register Account';
-$_['text_register_account']        = 'By creating an account you will be able to shop faster, be up to date on an order\'s status, and keep track of the orders you have previously made.';
-$_['text_returning_customer']      = 'Returning Customer';
-$_['text_i_am_returning_customer'] = 'I am a returning customer';
-$_['text_forgotten']               = 'Forgotten Password';
+$_['text_account']                 = 'விவரம்';
+$_['text_login']                   = 'உள்ள வாங்க';
+$_['text_new_customer']            = 'புதிய வாடிக்கையாளர்';
+$_['text_register']                = 'பதிவு';
+$_['text_register_account']        = 'உங்கள் தனிப்பட்ட விவரத்தை உருவாக்குவதன் மூலம் நீங்கள் வேகமாக ஷாப்பிங் செய்யலாம் மற்றும் நீங்கள் முன்பு செய்த ஆடரை பின் தொடரலாம் .';
+$_['text_returning_customer']      = 'ஓலைச்சுவடி வாடிக்கையாளர்';
+$_['text_i_am_returning_customer'] = 'நான் ஓலைச்சுவடியின் வாடிக்கையாளர்';
+$_['text_forgotten']               = 'கடவுச்சொல் மறந்துவிட்டதா ?';
 
 // Entry
-$_['entry_email']                  = 'E-Mail Address';
-$_['entry_password']               = 'Password';
+$_['entry_email']                  = 'மின்னஞ்சல்';
+$_['entry_password']               = 'கடவுச்சொல்';
 
 // Error
-$_['error_login']                  = 'Warning: No match for E-Mail Address and/or Password.';
-$_['error_attempts']               = 'Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.';
-$_['error_approved']               = 'Warning: Your account requires approval before you can login.';
+$_['error_login']                  = 'எச்சரிக்கை: மின்னஞ்சல் முகவரி மற்றும் / அல்லது கடவுச்சொல் எந்த கடவுச்சொல்லுக்கு எந்த சம்பந்தமும் இல்லை .';
+$_['error_attempts']               = 'எச்சரிக்கை: உங்கள் உள்நுழைவு முயற்சிகள் மீறிவிட்டன. தயவு செய்து ஒரு மணி நேரம் கழித்து, மீண்டும் முயற்சிக்கவும்.';
+$_['error_approved']               = 'எச்சரிக்கை: நீங்கள் உள்நுழைய முன் ஒப்புதல் தேவை.';
+
+

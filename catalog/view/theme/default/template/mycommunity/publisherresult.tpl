@@ -24,12 +24,13 @@
 <h3>Search by Publisher</h3>
 
 <form action="<?php echo $searchpublisher; ?>" method="post" >
- <div class="input-group col-xs-3">
-        <input type="text"  class="form-control" placeholder="<?php echo $text_type_publisher_name;?>" name="text_publisher_mastersearch" >
-        <div class="input-group-btn">
-            <button class="btn btn-default" id="publisher-search" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+<div id="search" class="input-group">
+        <input type="text"  class="form-control input-lg" placeholder="<?php echo $text_type_publisher_name;?>" name="publisher_name" required id="input-name">
+       <span class="input-group-btn">
+            <button class="btn btn-default btn-lg" id="publisher-search" type="submit"><i class="fa fa-search"></i></button>
+       </span>
         </div>
-   </div>
+  
  </form>
 
 <div class="image">
@@ -73,7 +74,27 @@ $("#myBtn").click(function(){
 </div>
 </div>
 
-
+<script type="text/javascript"><!--
+$('input[name=\'publisher_name\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=mycommunity/mycommunity/autocomplete_pub&token=<?php echo $token; ?>&publisher_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['publisher_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'publisher_name\']').val(item['label']);
+	}
+});
+</script>
 
 
 <?php echo $footer; ?> 

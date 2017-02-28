@@ -1,8 +1,8 @@
 <?php
 // Heading
-$_['heading_title'] = 'Account Logout';
+$_['heading_title'] = 'வெளியேறு';
 
 // Text
-$_['text_message']  = '<p>You have been logged off your account. It is now safe to leave the computer.</p><p>Your shopping cart has been saved, the items inside it will be restored whenever you log back into your account.</p>';
-$_['text_account']  = 'Account';
-$_['text_logout']   = 'Logout';
+$_['text_message']  = '<p>நீங்கள் வெளியேறி விட்டீர்கள். கணினியை விட்டு செல்வது பாதுகாப்பானது.</p><p>உங்கள் பை சேமிக்கப்பட்டது, நீங்கள் மீண்டும் உள்நுழையும் போதெல்லாம் அதே பொருட்களை மீட்டெடுக்க முடியும்.</p>';
+$_['text_account']  = 'விவரம்';
+$_['text_logout']   = 'வெளியேறு';

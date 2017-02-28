@@ -10,7 +10,7 @@ class ControllerAccountVerification extends Controller {
         }
         
         $customer_id = $this->request->get['u'];
-       $verification_code = $this->request->get['v'];
+        $verification_code = $this->request->get['v'];
         
         $customer = $this->db->query("SELECT verification_code FROM " . DB_PREFIX . "customer_verification WHERE customer_id='" . $customer_id . "'");
         
@@ -20,7 +20,6 @@ class ControllerAccountVerification extends Controller {
         
         $this->db->query("UPDATE " . DB_PREFIX . "customer SET approved = '1'");
         $this->db->query("DELETE FROM " . DB_PREFIX . "customer_verification WHERE customer_id='" . $customer_id . "'"); 
-
         
         $this->language->load('account/verification');
 
@@ -32,14 +31,12 @@ class ControllerAccountVerification extends Controller {
         );
 
         
-
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_account_verification'),
             'href' => $this->url->link('account/verification')
         );
 
       
-
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');
         $data['heading_title'] = $this->language->get('heading_title');
@@ -50,7 +47,7 @@ class ControllerAccountVerification extends Controller {
         $data['login'] = $this->url->link('account/login', '', true);
         
         
-      if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/verification.tpl')) {
+       if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/verification.tpl')) {
             $this->template = $this->config->get('config_template') . '/template/account/verification.tpl';
         } else {
             $this->template = 'default/template/account/verification.tpl';
@@ -64,7 +61,7 @@ class ControllerAccountVerification extends Controller {
             'common/footer',
             'common/header'     
         );
-                
+        
       //  $this->response->setOutput($this->render());  */
     
 

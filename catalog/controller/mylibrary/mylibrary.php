@@ -1650,6 +1650,7 @@ class ControllerMylibraryMylibrary extends Controller {
 	public function booksearch() 
 	{
  
+        
 		 $this->load->language('mylibrary/mylibrary');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -1705,12 +1706,60 @@ class ControllerMylibraryMylibrary extends Controller {
 		}else{
 			$data['invalid_isbn'] = '';
 		}
-
+	
 		$data['upload_image'] = $this->url->link('mylibrary/mylibrary/uploadImage','',true);
 
 		$this->response->setOutput($this->load->view('mylibrary/book_search', $data));
 
 
+	}
+
+	public function autocomplete_author(){
+
+		$json = array();
+
+	    $filter_name = $this->request->get['filter_name'];
+
+		if (isset($this->request->get['filter_name']))  {
+		$this->load->model('mylibrary/mylibrary');
+
+			if (isset($this->request->get['filter_name'])) {
+				$filter_name = $this->request->get['filter_name'];
+			} else {
+				$filter_name = '';
+			}
+
+            if (isset($this->request->get['limit'])) {
+				$limit = $this->request->get['limit'];
+			} else {
+				$limit = 5;
+			}
+
+			$filter_data = array(
+				'filter_name'  => $filter_name,
+                'start'        => 0,
+				'limit'        => $limit
+				
+		    );
+
+		   $results = $this->model_mylibrary_mylibrary->getAllauthors($filter_data);
+      //     $option_data = array();
+
+
+			foreach ($results as $result) {
+				
+				$json[] = array(
+					'author_id' => $result['author_id'],
+					'name'       => strip_tags(html_entity_decode($result['author_name'], ENT_QUOTES, 'UTF-8')),
+					//'model'      => $result['model'],
+					//'option'     => $option_data,
+					//'price'      => $result['price']
+				);
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 
@@ -2449,5 +2498,7 @@ class ControllerMylibraryMylibrary extends Controller {
         $this->index();
 
 	 }
+
+	
  
 	 }

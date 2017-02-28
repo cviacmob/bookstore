@@ -199,14 +199,7 @@ class ControllerCatalogUploaded extends Controller {
 		}
 
 		
-
-
-
-
-
 		$data['cancel'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, true);
-
-		
 
 		$data['token'] = $this->session->data['token'];
 
@@ -371,14 +364,11 @@ class ControllerCatalogUploaded extends Controller {
 
 		$data['products'] = array();
 
-
 		$this->load->model('tool/image');
 
 		$this->load->model('catalog/uploaded');
 
 		$uploaded_images = $this->model_catalog_uploaded->getTotalUploadedImage();
-
-		
 
 		foreach ($uploaded_images->rows as $uploaded_image) {
 			if (is_file(DIR_IMAGE . $uploaded_image['front_image'])) {

@@ -388,7 +388,32 @@ public function uploadImage()
 	$query = $this->db->query("INSERT INTO uploaded_image SET customer_id = '". (int)$this->customer->getId() . "', front_image = '" .$front_image. "',back_image = '" .$back_image. "'");
 }
 
+ public function getAllauthors($data = array()){
 
+          $sql = "SELECT * FROM authors_master " ;
+
+		  if (!empty($data['filter_name'])) {
+			$sql .= " WHERE author_name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+          }
+
+            if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+	    	}
+
+            $query = $this->db->query($sql);
+
+		   return $query->rows;
+
+            
+		     }
 
 
 }

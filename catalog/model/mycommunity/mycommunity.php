@@ -26,9 +26,9 @@ class ModelMyCommunityMycommunity extends Model {
 
 public function getRecommended() {
 
-      $group_data = array();
+      //$group_data = array();
 
-       $query = $this->db->query("SELECT * FROM readingclub where recommended= 'true' AND status= 'active'");
+       $query = $this->db->query("SELECT * FROM readingclub where recommended= 'true'");
 
        
 
@@ -156,25 +156,25 @@ public function groupdetails($group_id){
 }
   }
 
-/*public function getMembers($customer_id)
- {
+ public function deleteclub($group_id){
 
-     $member_data = array();
-     $query = $this->db->query("SELECT group_id from group_members WHERE customer_id = '". (int)$this->customer->getId() ."'");
+      $query = $this->db->query("DELETE FROM readingclub WHERE group_id = '" . $group_id. "'");
 
-     foreach($query->rows as $result)
-     {
-         $member_data[$result['group_id']] = $this->getMember($result['group_id']);
-     }
+ }
 
-     return $member_data;
- }  */
+ public function updateclubimage($group_id){
+
+      $image = "catalog/".$_FILES["image"]["name"];
+      $this->db->query("UPDATE  readingclub SET  group_image = '" .$image. "' WHERE group_id = '" . $group_id. "'");
+      
+
+ }
 
  public function addtomyclub($club_name)
   {
      $this->db->query("DELETE FROM readingclub WHERE group_name = '" . $club_name. "'");
 
-     $this->db->query("INSERT INTO readingclub SET created_by = '" . (int)$this->customer->getId() . "' , group_image = 'catalog/book.jpg', group_name = '" . $club_name. "',group_description = '" . $this->request->post['club_description']. "', date_added = NOW()");
+     $this->db->query("INSERT INTO readingclub SET created_by = '" . (int)$this->customer->getId() . "' , group_image = '', group_name = '" . $club_name. "',group_description = '" . $this->request->post['club_description']. "',privacy='".$this->request->post['status']."',location='".$this->request->post['location']."', date_added = NOW()");
     
   }
 
@@ -204,7 +204,7 @@ return false;
  public function getclubs()
   {
       $group_id = array();
-      $query = $this->db->query("SELECT group_id FROM readingclub WHERE created_by = '" . (int)$this->customer->getId() . "' ");
+      $query = $this->db->query("SELECT group_id FROM readingclub WHERE created_by = '" . (int)$this->customer->getId() . "'  ");
 
       foreach($query->rows as $result)
       {
@@ -609,34 +609,6 @@ public function getPublishers($customer_id)
 
  }  
 
- /*public function getrequestedbooks(){
-
-    $order_ids = $this->db->query("SELECT order_id FROM oc_order WHERE customer_id = '" . (int)$this->customer->getId() . "'" );
-
-    foreach($order_ids as $order_id)
-    {
-        $order_status_ids = $this->db->query("SELECT order_status_id FROM oc_order_history WHERE order_id = '" . $order_id['order_id']  . "'" );
-
-        foreach($order_status_ids as $order_status_id)
-        {
-            $check[$order_status_id] = $this->check($order_status_id);
-        }
-    } 
-
- }
-
- public function check($order_status_id){
-
-     $check = $this->db->query("SELECT*FROM oc_order_status WHERE order_status_id = '" . $order_status_id  . "' AND name = 'processed'" );
-
-            if($check->rows){
-
-                return true;
-            }else{
-                return false;
-            }
-
- }*/
 
  public function getProductId($isbn){
 
@@ -644,12 +616,7 @@ public function getPublishers($customer_id)
 
      $query = $this->db->query("SELECT product_id FROM oc_product WHERE model = '" .$isbn. "'" );
 
-    //  foreach($query->rows as $result) {
-
-         //$book_data[$result['product_id']]=$this->model_mycommunity_mycommunity->getProduct($result['product_id']);
-   //  }
-
-  return $product_id;
+    return $product_id;
 
  }
 
@@ -665,8 +632,6 @@ public function getPublishers($customer_id)
 			       			 
 			);
 
-         
-   
 		}
 		else {
 			return false;
@@ -682,15 +647,32 @@ public function getPublishers($customer_id)
 
  public function addinvite($email){
 
-        $this->load->language('mycommunity/mycommunity');
+        $this->load->language('mycommunity/mycommunity');   
+
+        
 
         $query = $this->db->query("INSERT INTO addinvite SET customer_id = '" . (int)$this->customer->getId() . "', mail_id ='" .$email."' , group_id = '" . $this->request->get['group_id']. "', date_added = NOW()");
 
         $subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
-        $message = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
+        $data = array();
+
+           $data['text_jane'] = $this->language->get('text_jane');
+           $data['text_invite'] = $this->language->get('text_invite');
+           $data['text_olai'] = $this->language->get('text_olai');
+           $data['text_cviac'] = $this->language->get('text_cviac');
+           $data['text_member'] = $this->language->get('text_member'); 
+
+
+        if ($this->request->server['HTTPS']) {
+			$server = $this->config->get('config_ssl');
+		} else {
+			$server = $this->config->get('config_url');
+		}
         
-      //  $link = sprintf($this->language->get('text_link'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
+     /*   $message = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";*/
+        $message = $this->config->get('config_url') . 'index.php?route=mycommunity/mycommunity/acceptinvite&group_id=' . $this->request->get['group_id'] . "\n\n";
+       //$link = sprintf($this->language->get('text_link'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
 
         $email=$email;
 		$mail = new Mail();
@@ -701,15 +683,17 @@ public function getPublishers($customer_id)
 		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
 		$mail->smtp_port = $this->config->get('config_mail_smtp_port'); 
 		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
+        
 		$mail->setTo($email);
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 		$mail->setSubject($subject);
+    //  $mail->setHtml($this->load->view('mycommunity/invitemail',$data));
 		$mail->setText($message);
-        
+    
 		$mail->send();
- }
+       
+        }
 
         public function getMailid($firstname){
         
@@ -795,4 +779,93 @@ public function getPublishers($customer_id)
 	     return $post_id;
          }
 
+         public function getAllauthors($data = array()){
+
+          $sql = "SELECT * FROM authors_master " ;
+
+		  if (!empty($data['filter_name'])) {
+			$sql .= " WHERE author_name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+          }
+
+            if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+	    	}
+
+            $query = $this->db->query($sql);
+
+		   return $query->rows;
+
+            
+		     }
+
+
+        public function getAllpublishers($data = array()){
+
+           $sql = "SELECT * FROM publishers_master " ;
+
+		  if (!empty($data['publisher_name'])) {
+			$sql .= " WHERE publisher_name LIKE '" . $this->db->escape($data['publisher_name']) . "%'";
+          }
+
+            if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+	    	}
+
+            $query = $this->db->query($sql);
+
+		   return $query->rows;
+
+            
+		     }     
+
+
+
+          public function getAllemail($data = array()){
+
+          $sql = "SELECT * FROM oc_customer " ;
+
+		  if (!empty($data['filter_email'])) {
+			$sql .= " WHERE email LIKE '" . $this->db->escape($data['filter_email']) . "%'";
+          }
+
+            if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+	    	}
+
+            $query = $this->db->query($sql);
+
+		   return $query->rows;
+
+            
+		     }
+
+             public function acceptinvite($group_id){
+
+              $this->db->query("UPDATE  addinvite SET  status = 'member' WHERE group_id = '" . $group_id. "'");
+      
+             }
         }

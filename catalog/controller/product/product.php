@@ -383,6 +383,11 @@ class ControllerProductProduct extends Controller {
 				);
 			}
 
+<<<<<<< HEAD
+			$isbn = $this->model_catalog_product->getProductBestPrices($this->request->get['product_id']);
+
+			
+=======
 			
 		
 			$data['selected_price'] = $this->url->link('product/product/selectedPrice','',true);
@@ -421,6 +426,7 @@ class ControllerProductProduct extends Controller {
 					'required'             => $option['required']
 				);
 			}
+>>>>>>> 8fc1ebcfeda812a56ed170caef6edf699d9eb6d8
 
 			if ($product_info['minimum']) {
 				$data['minimum'] = $product_info['minimum'];

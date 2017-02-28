@@ -1,14 +1,14 @@
 <?php
 // Heading
-$_['heading_title']      = 'Your Transactions';
+$_['heading_title']      = 'உங்கள் கொடுக்கல் வாங்கல்';
 
 // Column
-$_['column_date_added']  = 'Date Added';
-$_['column_description'] = 'Description';
-$_['column_amount']      = 'Amount (%s)';
+$_['column_date_added']  = 'தேதி சேர்க்கப்பட்டது';
+$_['column_description'] = 'விளக்கம்';
+$_['column_amount']      = 'தொகை (%s)';
 
 // Text
-$_['text_account']       = 'Account';
-$_['text_transaction']   = 'Your Transactions';
-$_['text_total']         = 'Your current balance is:';
-$_['text_empty']         = 'You do not have any transactions!';
+$_['text_account']       = 'விவரம்';
+$_['text_transaction']   = 'உங்கள் கொடுக்கல் வாங்கல்';
+$_['text_total']         = 'உங்கள் தற்போதைய இருப்பு தொகை:';
+$_['text_empty']         = 'உங்களிடம்  எந்த பரிமாற்றங்கழும்  இல்லை!';
