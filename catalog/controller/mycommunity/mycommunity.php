@@ -112,18 +112,18 @@ class ControllerMyCommunitymycommunity extends Controller {
         $data['share_with_me']   = $this->url->link('mycommunity/mycommunity/productDetail&product_id=' ,'',true);
 
 
-<<<<<<< HEAD
+
 
         $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
 
       //   $bookresults = $this->model_mycommunity_mycommunity->getrequestedbooks();  
 
-=======
+
         $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
  
       //   $bookresults = $this->model_mycommunity_mycommunity->getrequestedbooks();  
  
->>>>>>> 8fc1ebcfeda812a56ed170caef6edf699d9eb6d8
+
 
 //      $data['text_requested_books'] = $this->url->link('mycommunity/mycommunity/getrequestedbooks' , '' , true);
 
@@ -451,8 +451,41 @@ class ControllerMyCommunitymycommunity extends Controller {
 				);
 			}
 
+            
+			$isbn = $this->model_catalog_product->getProductBestPrices($this->request->get['product_id']);
+
+			foreach($isbn as $ISBN){
+
+					$shared_prices = $this->model_catalog_product->sharedCustomers($ISBN);
+					asort($shared_prices);
+
+			}
+
+            if($shared_prices){
+
+					$lowest_customer_price = array_values($shared_prices)[0];
+
+			}else{
+
+					$lowest_customer_price = '';
+
+			}
+			
+            $data['shared_prices'] = array();
+
+			foreach($shared_prices as $key => $value){
+				$data['shared_prices'][] =array(
+					'customer_id'=>"_".$key,
+					'share_price' =>$value['share_price']
+					//'first_name'=>$customer_price['first_name'],
+					//'last_name'=>$customer_price['last_name']
+				);
+
+			}
+            
+        
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$data['price'] = $this->currency->format($this->tax->calculate($lowest_customer_price['share_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 			} else {
 				$data['price'] = false;
 			}
@@ -480,48 +513,7 @@ class ControllerMyCommunitymycommunity extends Controller {
 				);
 			}
 
-
-
-
-
-
-			$isbn = $this->model_catalog_product->getProductBestPrices($this->request->get['product_id']);
-
-			
-
-			 
-
-			foreach($isbn as $ISBN){
-
-					$shared_prices = $this->model_catalog_product->sharedCustomers($ISBN);
-					asort($shared_prices);
-
-			}
-			
-            $data['shared_prices'] = array();
-
-			foreach($shared_prices as $key => $value){
-				$data['shared_prices'][] =array(
-					'customer_id'=>"_".$key,
-					'share_price' =>$value['share_price']
-					//'first_name'=>$customer_price['first_name'],
-					//'last_name'=>$customer_price['last_name']
-				);
-
-			}
-
-			
-
-
-			$data['selected_price'] = $this->url->link('product/product/selectedPrice','',true);
-
-			
-			
-
-
-
-
-
+ 		
 			$data['options'] = array();
 
 			foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
@@ -666,7 +658,9 @@ class ControllerMyCommunitymycommunity extends Controller {
 			$data['header'] = $this->load->controller('common/header');
 
 			$this->response->setOutput($this->load->view('mycommunity/product_detail', $data));
-		} else 
+		 
+        
+        }else 
 		{
 			$url = '';
 

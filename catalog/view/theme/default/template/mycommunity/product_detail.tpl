@@ -467,6 +467,11 @@
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
 </div>
+
+<script type="text/javascript">
+document.querySelectorAll('[name=share_price]')[0].checked = true;
+</script>
+
 <script type="text/javascript"><!--
 $('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
 	$.ajax({
