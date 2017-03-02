@@ -478,8 +478,7 @@ class ControllerCheckoutCart extends Controller {
 
 			$this->cart->remove($this->request->post['key'],$seller_id);
 
-			//$this->cart->remove($this->request->post['key']);
-
+			
 			unset($this->session->data['vouchers'][$this->request->post['key']]);
 
 			$json['success'] = $this->language->get('text_remove');
