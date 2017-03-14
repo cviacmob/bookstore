@@ -45,4 +45,22 @@ public function getClubs($group_id)
     
     }   
 
+    public function getCus_name($customer_id){
+
+        $query = $this->db->query("SELECT * FROM oc_customer WHERE customer_id ='".$customer_id."' ");
+
+         if($query->num_rows){
+
+            return array(
+
+                'firstname'            => $query->row['firstname'],
+                'lastname'             => $query->row['lastname']
+               
+        
+        );
+        }else{
+                return false;
+        }
+    }
+
 }

@@ -87,6 +87,7 @@
 </div>
 
 
+
 <div class="<?php if($active_tab == 'tab_default_3' ) echo 'tab-pane active'; else echo 'tab-pane' ?>" id="tab_default_3">
 <div class="row">
   <button type="button" style="float:left" onclick="location.href='<?php echo $create_newclub;?>'" class="add" value="add books"><?php echo $button_create_club;?> <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
@@ -96,11 +97,16 @@
 <div class="product-thumb transition ">
 <h4><?php echo $club['group_name']; ?></h4>
 <div class="image">
-<a href= "<?php echo $club_image.$club['group_id'];?>"><img class="img-responsive" src="<?php echo $club['group_image']; ?>"/> </a>
-
-<!--<input type = "image" img class="img-responsive" src="<?php echo $club['group_image']; ?>"/>-->
+<?php if($club['status'] == 'active'){ ?>
+<a href= "<?php echo $club_image.$club['group_id'];?>" ><img class="img-responsive"  src="<?php echo $club['group_image']; ?>"/> </a>
+<h5>Status: Approved </h5>
+<?php }else { ?>
+<img class="img-responsive" src="<?php echo $club['group_image']; ?>" />
+<h5>Status: Waiting for approval </h5>
+<?php } ?>
 </div>
-<h5><?php echo $club['group_description']; ?></h5>
+<!--<h5><?php echo $club['group_description']; ?></h5>-->
+
 </div>
 </div>
 <?php } ?>

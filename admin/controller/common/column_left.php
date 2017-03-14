@@ -183,6 +183,30 @@ class ControllerCommonColumnLeft extends Controller {
 				);		
 			}
 
+
+           //mylibrary 
+
+			$mylibrary = array();
+
+			
+			if ($this->user->hasPermission('access', 'mylibrary/customerbooks')) {		
+				$mylibrary[] = array(
+					'name'	   => "Customer Books",
+					'href'     => $this->url->link('mylibrary/customerbooks', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);					
+			}
+
+			if ($mylibrary) {					
+				$data['menus'][] = array(
+					'id'       => 'menu-mylibrary',
+					'icon'	   => 'fa-book', 
+					'name'	   => "MyLibrary",
+					'href'     => '',
+					'children' => $mylibrary
+				);		
+			}
+
 	
 			// Extension
 			$extension = array();

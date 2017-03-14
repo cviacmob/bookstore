@@ -24,7 +24,7 @@
       <br>
       
       
-      <div class="clubform">
+      <div class="clubform" style=" margin-left: 400px; margin-top: -483px;">
       <form action="<?php echo $update_details.$club_info['group_id']; ?>" method="post">
 
       

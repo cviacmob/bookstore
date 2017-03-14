@@ -183,20 +183,28 @@ class ControllerMycommunityCustomergroups extends Controller {
 				$group_image = $this->model_tool_image->resize($club['group_image'], 40, 40);
 			} else {
 				$group_image = $this->model_tool_image->resize('no_image.png', 40, 40);
+
 			}
 			
+			$customer_name = $this->model_mycommunity_customergroups->getCus_name($club['created_by']);
+
+			$customer_full_name = $customer_name['firstname'].$customer_name['lastname'];
 
 			$data['clubs'][] = array(
 
 				'group_id' 	       => $club['group_id'],
 				'group_name'       => $club['group_name'],
+				'customer_name'    => $customer_full_name,
 				'group_image'      => $group_image,
                 'privacy'          => $club['privacy'],
 				'location'     	   => $club['location'],
-                'created_by' 	   => $club['created_by'],
+                //'created_by' 	   => $club['created_by'],
             	'edit'       	   => $this->url->link('mycommunity/customergroups/edit','token=' . $this->session->data['token'] .'&group_id='.$club['group_id'],'',true)
 			);
 		}
+
+
+        
 
 		$data['heading_title'] = $this->language->get('heading_title');
 

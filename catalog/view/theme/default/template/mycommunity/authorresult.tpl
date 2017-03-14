@@ -37,70 +37,31 @@
    
  </form>
 <br>
+
+<div class="tabbable-panel">
+<div class="tabbable-line"> 
 <h4>எழுத்தாளர்ப்பெயர்: <?php echo $authorresult['author_name'];?></h4>
 
 
-<a href= "<?php echo $author_image.$authorresult['author_id'];?>"><img class="" src="<?php echo $authorresult['author_image'];?>" style="margin-left:6px;" vspace="20" hspace="20"> </a>
+<a href= "<?php echo $author_image.$authorresult['author_id'];?>"><img class="" src="<?php echo $authorresult['author_image'];?>" > </a>
+<br>
+<br>
 
-
-<!--<img class ="img-responsive" src="<?php echo $authorresult['author_image'];?>"style="height:300px;width:250px;" align="left" alt="" vspace="20" hspace="20"><br>-->
-
-<form action="<?php echo $add_to_liked_author.$authorresult['author_id'];?>" method="post" >
-
-<!--<input type="hidden" name="author_id" value="<?php echo $authorresult['author_id']; ?>"> -->
-<!--<h4><?php echo $authorresult['total_votes'];?></h4>-->
-<!--<input class = "join" id="btn" type="submit" value="LIKE"> -->
-<button type="submit"> <?php echo $authorresult['total_votes'];?> LIKES  </button>
+<div class="">
+<button type="button"  id="like_<?php echo $authorresult['author_id']; ?>" class="like" style="color:#2091bc;"  data-tooltip="tooltip" title="லைக் போடு"> <i class="fa fa-hand-rock-o" style="font-size: 1.5em;"aria-hidden="true"></i></button>&nbsp
+<span id="likes_<?php echo $authorresult['author_id']; ?>"  style="color:#2091bc;">
+    <?php echo $authorresult['totalLikes']; ?></span>&nbsp
+</div>
 
 </div>
-<!-- <button type = "submit"  onclick="insert_like();" id="like_button"> LIKE </button>
-<div id="totalvotes"></div> -->
-
-</form>
-
+</div>
+</div>
 
 
 </div>
 
 </div>
-</div>
 
-<!--<script type="text/javascript">
-var like = 0;
-$("#myBtn").click(function(){
-     like++;
-    $(this).text(""+like+" like");
-});
-
-</script>
-
-<!--<script type="text/javascript">
-  function insert_like()
-    {
-	  $.ajax({
-	    type: 'post',
-	    url: 'index.php?route=mycommunity/mycommunity/addToLikedauthor&author_id=<?php echo $author_id; ?>',
-	    data: {
-	      post_like:"like"
-	    },
-	    success: function (response) {
- 	      $('#totalvotes').slideDown()
-	      {			
-	        $('#totalvotes').html(response);
-	      }
-	    }
-	    });
-    }
-
-</script> -->
-
-
-
-
-</div>
-
-</div>
-</div>
 
 <script type="text/javascript"><!--
 $('input[name=\'filter_name\']').autocomplete({
@@ -124,5 +85,45 @@ $('input[name=\'filter_name\']').autocomplete({
 });
 </script>
 
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+    // like  click
+    $(".like").click(function(){
+        var id = this.id;   // Getting Button id
+        var split_id = id.split("_");
+
+        var text = split_id[0];
+        var author_id = split_id[1];  // postid
+
+        // AJAX Request
+        $.ajax({
+            url: 'index.php?route=mycommunity/mycommunity/author_addLikeCount',
+            type: 'post',
+            data: {author_id:author_id},
+            dataType: 'json',
+            success: function(data){
+    
+              var likes = data['likes'];
+              
+              $("#likes_"+author_id).text(likes).css("color","#2091bc");        // setting likes
+              
+             
+            }
+            
+        });
+
+    });
+
+});
+
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('[data-tooltip="tooltip"]').tooltip();   
+});
+</script>
 
 <?php echo $footer; ?> 

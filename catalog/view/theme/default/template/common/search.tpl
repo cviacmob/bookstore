@@ -29,7 +29,7 @@
 <CENTER>
 
  <SCRIPT LANGUAGE="JavaScript" type="text/javascript"> 
- <!-- 
+
  function AppendCharacter ( ChrToAppend ) 
  { 
  	

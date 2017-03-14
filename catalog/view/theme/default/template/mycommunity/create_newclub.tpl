@@ -32,21 +32,20 @@
           <label for="fname"><?php echo $text_location;?></label>
           <input type="text" name="location" value="" required placeholder="" class="form-control input-lg" /> <br>
            <div class="form-group required">
-                <label class="control-label" for="input-status">Privacy</label>
+                <label class="control-label" for="input-status">தனியுரிமை</label>
               
                   <select name="status" id="input-status" class="form-control">
-                   <!-- <?php if ($status) { ?>-->
-                    <option value="public" selected="selected">Public</option>
-                    <option value="private">Private</option>
-                 <!--   <?php } else { ?>-->
-                    <option value="public">Public</option>
-                    <option value="private" selected="selected">Private</option>
+                    <!-- <?php if ($status) { ?>-->
+                    <option value="public" selected="selected">பொது</option>
+                    <option value="private">தனிமை </option>
+                    <!-- <?php } else { ?>-->
+                    <option value="public">பொது</option>
+                    <option value="private" selected="selected">தனிமை </option>
                   <!--  <?php } ?>-->
                   </select>
               
               </div>
           
-
 <br>
  <div class="done">
  <button id = "done" type="submit" class="btn btn-primary" ><?php echo $button_done;?></button>

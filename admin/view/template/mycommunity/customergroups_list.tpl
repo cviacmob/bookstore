@@ -22,7 +22,7 @@
                   
                   <td class="text-center">Group Image</td>
                   <td class="text-center">Group Name</td>
-                  <td class="text-center">Customer_id</td>         
+                  <td class="text-center">Customer Name</td>         
                   <td class="text-center">Privacy</td>
                   <td class="text-right">Action</td>
                 </tr>
@@ -40,7 +40,7 @@
                  
                   <td class="text-left"><?php echo $club['group_name']; ?></td>
 
-                  <td class="text-left"><?php echo $club['created_by']; ?></td>
+                  <td class="text-left"><?php echo $club['customer_name']; ?></td>
                 
                   <td class="text-left"><?php echo $club['privacy']; ?></td>
                   <td class="text-right"><a href="<?php echo $club['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>

@@ -620,6 +620,10 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .alert {
 	overflow: auto;
 }
+.clubform{
+	margin-left: 400px;
+    margin-top: -483px;
+}
 
 /* Menu Fix For System -> Layout -> Banner */
 .collapse.in {
@@ -654,8 +658,4 @@ text-align: center;
 .form{
 margin-left: 400px;
 margin-top: -962px;
-}
-.clubform{
-	margin-left: 400px;
-    margin-top: -483px;
 }

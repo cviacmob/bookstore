@@ -32,8 +32,14 @@
         </span>
  </div>
  </form>
+
+
 <br>
-<br>
+
+<div class="tabbable-panel">
+<div class="tabbable-line">
+
+<div class="row">   
  <?php foreach($publishers as $publisher) {?>
 <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 " style="float:left">
 <div class="product-thumb transition ">
@@ -43,13 +49,14 @@
 <div class="caption">
 <h4><?php echo $publisher['publisher_name']; ?></h4>
 
-
 </div>
-
-
 </div>
 </div>
 <?php } ?>
+
+</div>
+</div>
+</div>
 
 </div>
 

@@ -496,7 +496,7 @@ $('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
 		}
 	});
 });
-//--></script>
+</script>
 <script type="text/javascript"><!--
 $('#button-cart').on('click', function() {
 	$.ajax({

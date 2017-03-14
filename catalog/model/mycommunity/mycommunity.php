@@ -11,8 +11,6 @@ class ModelMyCommunityMycommunity extends Model {
                 'group_id'                => $query->row['group_id'],
                 'group_name'              => $query->row['group_name'],
                 'group_image'             => $query->row['group_image'],
-                'likes'                   => $query->row['likes'],
-                'total_votes'             => $query->row['total_votes'],
                 'status'                  => $query->row['status']
 
                   
@@ -28,9 +26,8 @@ public function getRecommended() {
 
       //$group_data = array();
 
-       $query = $this->db->query("SELECT * FROM readingclub where recommended= 'true'");
+       $query = $this->db->query("SELECT * FROM readingclub where recommended= 'true' AND status='active' AND created_by!= '" . (int)$this->customer->getId() . "'");
 
-       
 
       return $query ->rows;
        
@@ -132,6 +129,8 @@ public function groupdetails($group_id){
                 'group_id'                => $query->row['group_id'],
                 'group_name'              => $query->row['group_name'],
                 'group_image'             => $query->row['group_image'],
+                'created_by'              => $query->row['created_by'],
+                'customer_image'          => $query->row['customer_image'],
                 'status'                  => "member"
 
             );
@@ -147,6 +146,8 @@ public function groupdetails($group_id){
                 'group_id'                => $query->row['group_id'],
                 'group_name'              => $query->row['group_name'],
                 'group_image'             => $query->row['group_image'],
+                'created_by'              => $query->row['created_by'],
+                'customer_image'          => $query->row['customer_image'],
                 'status'                  => "join"
                 
             );
@@ -158,7 +159,13 @@ public function groupdetails($group_id){
 
  public function deleteclub($group_id){
 
-      $query = $this->db->query("DELETE FROM readingclub WHERE group_id = '" . $group_id. "'");
+      $query = $this->db->query("DELETE FROM readingclub WHERE group_id = '" . $group_id. "' AND created_by='" . $created_by. "'");
+
+ }
+
+  public function deletepost($post_id){
+
+      $query = $this->db->query("DELETE FROM readingclub_post WHERE post_id = '" . $post_id. "'");
 
  }
 
@@ -174,7 +181,7 @@ public function groupdetails($group_id){
   {
      $this->db->query("DELETE FROM readingclub WHERE group_name = '" . $club_name. "'");
 
-     $this->db->query("INSERT INTO readingclub SET created_by = '" . (int)$this->customer->getId() . "' , group_image = '', group_name = '" . $club_name. "',group_description = '" . $this->request->post['club_description']. "',privacy='".$this->request->post['status']."',location='".$this->request->post['location']."', date_added = NOW()");
+     $this->db->query("INSERT INTO readingclub SET created_by = '" . (int)$this->customer->getId() . "' , group_image = '', customer_image='catalog/usericon.png' , group_name = '" . $club_name. "',group_description = '" . $this->request->post['club_description']. "',privacy='".$this->request->post['status']."',location='".$this->request->post['location']."', date_added = NOW()");
     
   }
 
@@ -190,8 +197,7 @@ public function groupdetails($group_id){
                     'group_name'               => $query->row['group_name'],
 			        'group_description'        => $query->row['group_description'],
 					'group_image'              => $query->row['group_image'],
-                    'likes'                    => $query->row['likes'],
-                    'total_votes'              => $query->row['total_votes']
+                    'status'                   => $query->row['status']
 
 						);
 			  }
@@ -219,15 +225,14 @@ return false;
      $query = $this->db->query("SELECT * from readingclub_post WHERE   post_id = '". $post_id ."' ORDER BY date_added DESC");
      if($query->num_rows) {
 		   	  return array(
- 
+
+                    'customer_id'           => $query->row['customer_id'], 
                     'group_id'              => $query->row['group_id'], 
                     'post_id'               => $query->row['post_id'], 
                     'message'               => $query->row['message'],
 			        'image'                 => $query->row['image'],
 					'link'                  => $query->row['link'],
                    	'customer_image'        => $query->row['customer_image'],
-                    'likes'                 => $query->row['likes'],
-                    'total_votes'           => $query->row['total_votes'],
                     'status'                => $query->row['status']
 
 						);
@@ -242,7 +247,7 @@ return false;
   public function getposts($group_id){
       
       $post_id = array(); 
-      $query = $this->db->query("SELECT post_id from readingclub_post WHERE customer_id = '". (int)$this->customer->getId() ."' AND group_id = '". $group_id ."' ORDER BY date_added DESC");
+      $query = $this->db->query("SELECT post_id from readingclub_post WHERE  group_id = '". $group_id ."' ORDER BY date_added DESC");
 
       foreach($query->rows as $result)
       {
@@ -256,71 +261,94 @@ return false;
   {
 
    $image = "catalog/".$_FILES["image"]["name"];
-   $this->db->query("INSERT INTO readingclub_post SET  group_id = '". $groupid ."' , posted_by = 'customer' , customer_id = '" . (int)$this->customer->getId() . "', message = '" . $this->request->post['text_name']. "', image = '" .$image. "', date_added = NOW() ");
+   $this->db->query("INSERT INTO readingclub_post SET  group_id = '". $groupid ."' , posted_by = 'customer' , customer_id = '" . (int)$this->customer->getId() . "', message = '" . $this->request->post['text_name']. "', image = '" .$image. "', customer_image='catalog/usericon.png', date_added = NOW()");
 
-   $this->db->query("UPDATE  readingclub_post SET status='member' WHERE customer_id = '" . (int)$this->customer->getId() . "' AND group_id = '" . $groupid. "'");
+   //$this->db->query("UPDATE  readingclub_post SET status='member' WHERE customer_id = '" . (int)$this->customer->getId() . "' AND group_id = '" . $groupid. "'");
    
   }
 
-  public function addtolikedpost($groupid)
+ public function totallikes($post_id)
   {
-   //  $this->db->query("INSERT INTO readingclub_post SET  group_id = '". $groupid ."' , posted_by = 'customer' , image = 'image/books/book.jpg' , customer_id = '" . (int)$this->customer->getId() . "', message = '" . $this->request->post['text_name']. "', date_added = NOW() ");
+      $query = $this->db->query("SELECT COUNT(*) AS cntLike FROM oc_like WHERE post_id='".$post_id."'");
 
+       if ($query->row) {
 
-    $query=$this->db->query("SELECT * FROM liked_post WHERE group_id = '".$groupid."' AND customer_id = '" . (int)$this->customer->getId() ."'");
+       return $query->row['cntLike'];
 
-    if($query->num_rows){
+       } else {
 
-    return;
-      
+        return FALSE;
     }
-    else
+} 
+  
+
+    public function addtolikedpost($post_id)
     {
-          
-    $this->db->query("INSERT INTO  liked_post SET customer_id = '" . (int)$this->customer->getId() . "', group_id = '" . $groupid. "',date_added = NOW()");
-      
-    $this->db->query("UPDATE readingclub_post SET total_votes=total_votes+1 , likes=likes+1 WHERE group_id = '".$groupid."' AND  customer_id = '" . (int)$this->customer->getId() . "'");
 
-    $this->db->query("UPDATE readingclub SET total_votes=total_votes+1 AND likes=likes+1 WHERE group_id = '".$groupid."' AND customer_id = '" . (int)$this->customer->getId() . "' ");
+    $query = $this->db->query("SELECT COUNT(*) AS cntpost FROM oc_like WHERE post_id='".$post_id."' and customer_id='".(int)$this->customer->getId()."'");
 
-    $query1=$this->db->query("SELECT * FROM readingclub_post WHERE group_id = '".$groupid."' AND customer_id = '" . (int)$this->customer->getId() . "'");
-
-    if($query1->num_rows) {
-		   	  
-    return array(
-
-    'total_votes'                => $query1->row['total_votes'],
-	'likes'                      => $query1->row['likes']
-					
-     );
-			  
+    foreach($query->rows as $result)
+      {
+         $count = $result['cntpost'];
+      }
+     if($count == 0){
+    
+            $query = $this->db->query("INSERT INTO oc_like SET  post_id = '". $post_id ."' , customer_id = '" . (int)$this->customer->getId() ."',date_added=NOW()");
      }
-		  
-	else 
-    {
-    return false;
-	}
+     $query = $this->db->query("SELECT COUNT(*) AS cntLike FROM oc_like WHERE post_id='".$post_id."'");
 
-    $query=$this->db->query("SELECT * FROM readingclub WHERE group_id = '".$groupid."' AND customer_id = '" . (int)$this->customer->getId() . "'");
+       if ($query->row) {
 
-    if($query->num_rows) {
-		   	  
-    return array(
+       return $query->row['cntLike'];
+  }
 
-    'total_votes'                => $query->row['total_votes'],
-	'likes'                      => $query->row['likes']
-					
-     );
-			  
-     }
-		  
-	else 
-    {
-    return false;
-	}
-      
+  else{
+      return 0;
+  }
+
     }
- }
+
+     public function author_totallikes($author_id)
+  {
+      $query = $this->db->query("SELECT COUNT(*) AS cntLike FROM oc_authorlike WHERE author_id='".$author_id."'");
+
+       if ($query->row) {
+
+       return $query->row['cntLike'];
+
+       } else {
+
+        return FALSE;
+    }
+} 
+
+    public function author_addtolike($author_id){
+
+    $query = $this->db->query("SELECT COUNT(*) AS cntpost FROM oc_authorlike WHERE author_id='".$author_id."' and customer_id='".(int)$this->customer->getId()."'");
+
+    foreach($query->rows as $result)
+      {
+         $count = $result['cntpost'];
+      }
+     if($count == 0){
+    
+        $query = $this->db->query("INSERT INTO oc_authorlike SET  author_id = '". $author_id ."' , customer_id = '" . (int)$this->customer->getId() ."',date_added=NOW()");
+
+
+     }
+     $query = $this->db->query("SELECT COUNT(*) AS cntLike FROM oc_authorlike WHERE author_id='".$author_id."'");
+
+       if ($query->row) {
+
+       return $query->row['cntLike'];
+       }
+
+      else{
+
+      return 0;
+      }
+
+      }
 
     public function getAuthorFromMaster($author_name) 
     
@@ -339,9 +367,8 @@ return false;
                 'author_education'         => $query->row['author_education'],
                 'author_awards'            => $query->row['author_awards'],
                 'author_references'        => $query->row['author_references'],
-                'author_external_links'    => $query->row['author_external_links'], 
-				'total_votes'              => $query->row['total_votes'],
-                'likes'                    => $query->row['likes']
+                'author_external_links'    => $query->row['author_external_links']
+				
 				 
 			);
 		}
@@ -351,47 +378,8 @@ return false;
  
  }
 
- public function addToLikedauthor($author_id)
-   {
-     
-    $query=$this->db->query("SELECT * FROM liked_author WHERE author_id = '".$author_id."'AND customer_id = '" . (int)$this->customer->getId() ."'");
 
-    if($query->num_rows){
-
-    return;
-      
-    }
-    else
-    {
-          
-    $this->db->query("INSERT INTO  liked_author SET customer_id = '" . (int)$this->customer->getId() . "', author_id = '" . $author_id. "',date_added = NOW()");
-      
-    $this->db->query("UPDATE authors_master SET total_votes=total_votes+1,likes=likes+1 WHERE author_id = '".$author_id."' ");
-
-    $query=$this->db->query("SELECT * FROM authors_master WHERE author_id = '".$author_id."'");
-
-    if($query->num_rows) {
-		   	  
-    return array(
-
-    'total_votes'                => $query->row['total_votes'],
-	'likes'                      => $query->row['likes']
-					
-     );
-			  
-     }
-		  
-	else 
-    {
-    return false;
-	}
-      
-    }
-   
-    }
-
-
-  public function getAuthor($author_id) {
+ public function getAuthor($author_id) {
 
        $query = $this->db->query("SELECT * FROM authors_master WHERE author_id = '".$author_id."'");
 
@@ -407,9 +395,8 @@ return false;
                 'author_education'         => $query->row['author_education'],
                 'author_awards'            => $query->row['author_awards'],
                 'author_references'        => $query->row['author_references'],
-                'author_external_links'    => $query->row['author_external_links'], 
-				'total_votes'              => $query->row['total_votes'],
-                'likes'                    => $query->row['likes']
+                'author_external_links'    => $query->row['author_external_links']
+				
 					
 
 						);
@@ -425,7 +412,7 @@ public function getAuthors($customer_id)
  {
 
      $author_id = array();
-     $query = $this->db->query("SELECT author_id from liked_author WHERE customer_id = '". (int)$this->customer->getId() ."'");
+     $query = $this->db->query("SELECT author_id from oc_authorlike WHERE customer_id = '". (int)$this->customer->getId() ."'");
 
      foreach($query->rows as $result)
      {
@@ -433,47 +420,53 @@ public function getAuthors($customer_id)
      }
 
      return $author_id;
- }
+ } 
 
-
- public function addToLikedpublisher($publisher_id)
+  public function publisher_totallikes($publisher_id)
   {
-   
-    $query=$this->db->query("SELECT * FROM liked_publisher WHERE publisher_id = '".$publisher_id."'AND customer_id = '" . (int)$this->customer->getId() ."'");
+      $query = $this->db->query("SELECT COUNT(*) AS cntLike FROM oc_publisherlike WHERE publisher_id='".$publisher_id."'");
 
-      if($query->num_rows){
+       if ($query->row) {
 
-          return;
+       return $query->row['cntLike'];
+
+       } else {
+
+        return FALSE;
+    }
+} 
+
+    public function publisher_addtolike($publisher_id){
+
+    $query = $this->db->query("SELECT COUNT(*) AS cntpost FROM oc_publisherlike WHERE publisher_id='".$publisher_id."' and customer_id='".(int)$this->customer->getId()."'");
+
+    foreach($query->rows as $result)
+      {
+         $count = $result['cntpost'];
       }
+     if($count == 0){
+    
+        $query = $this->db->query("INSERT INTO oc_publisherlike SET  publisher_id = '". $publisher_id ."' , customer_id = '" . (int)$this->customer->getId() ."',date_added=NOW()");
+
+
+     }
+     $query = $this->db->query("SELECT COUNT(*) AS cntLike FROM oc_publisherlike WHERE publisher_id='".$publisher_id."'");
+
+       if ($query->row) {
+
+       return $query->row['cntLike'];
+       }
+
       else{
-           $this->db->query("INSERT INTO  liked_publisher SET customer_id = '" . (int)$this->customer->getId() . "', publisher_id = '" . $publisher_id. "',date_added = NOW()");
-      
-       $this->db->query("UPDATE publishers_master SET total_votes=total_votes+1,likes=likes+1 WHERE publisher_id = '".$publisher_id."' ");
 
-      $query=$this->db->query("SELECT * FROM publishers_master WHERE publisher_id = '".$publisher_id."'");
+      return 0;
+      }
 
-      if($query->num_rows) {
-		   	  return array(
-
-                'total_votes'                => $query->row['total_votes'],
-				'likes'                      => $query->row['likes']
-					
-
-						);
-			  }
-		  
-	else {
-return false;
-	}
-      
       }
 
 
 
-  }
-
-
-  public function getPublisher($publisher_id) {
+ public function getPublisher($publisher_id) {
 
        $query = $this->db->query("SELECT * FROM publishers_master WHERE publisher_id = '".$publisher_id."'");
 
@@ -484,9 +477,8 @@ return false;
                     'publisher_name'            => $query->row['publisher_name'],
 			        'publisher_image'           => $query->row['publisher_image'],
                     'publisher_description'     => $query->row['publisher_description'],
-					'publisher_address'         => $query->row['publisher_address'],
-                    'total_votes'               => $query->row['total_votes'],
-                    'likes'                     => $query->row['likes']
+					'publisher_address'         => $query->row['publisher_address']
+                   
 
 						);
 			  }
@@ -501,7 +493,7 @@ public function getPublishers($customer_id)
  {
 
      $publisher_id = array();
-     $query = $this->db->query("SELECT publisher_id from liked_publisher WHERE customer_id = '". (int)$this->customer->getId() ."'");
+     $query = $this->db->query("SELECT publisher_id from oc_publisherlike WHERE customer_id = '". (int)$this->customer->getId() ."'");
 
      foreach($query->rows as $result)
      {
@@ -509,7 +501,7 @@ public function getPublishers($customer_id)
      }
 
      return $publisher_id;
- }
+ } 
 
  public function getPublisherFromMaster($publisher_name) 
  {
@@ -523,9 +515,8 @@ public function getPublishers($customer_id)
                     'publisher_name'            => $query->row['publisher_name'],
 			        'publisher_image'           => $query->row['publisher_image'],
                     'publisher_description'     => $query->row['publisher_description'],
-					'publisher_address'         => $query->row['publisher_address'],
-                    'total_votes'              => $query->row['total_votes'],
-                    'likes'                    => $query->row['likes']
+					'publisher_address'         => $query->row['publisher_address']
+                    
 
 				 
 			);
@@ -539,7 +530,7 @@ public function getPublishers($customer_id)
  public function getSharedbooksFromMyLibrary()
  { 
 
-     $query = $this->db->query("SELECT isbn FROM mylibrary WHERE share_price > 0 GROUP BY isbn "); 
+     $query = $this->db->query("SELECT isbn FROM mylibrary WHERE share_price > 0 AND status!='sold' GROUP BY isbn "); 
 
      $shared = array();
 

@@ -46,6 +46,8 @@ $_['text_address']                 = 'முகவரி';
 $_['text_create_reading_club']     = 'புத்தகம் வாசிப்பு கிளப் உருவுக்காக';
 $_['text_search_by_author']        = 'எழுத்தாளரைத்தேடு';
 $_['text_accept_invite']           = 'அழைப்பை ஏற்க';
+$_['text_mylibrary']               = 'என் நூலகம்';
+$_['text_search_by_publisher']     = 'பதிப்பகத்தாரைத்தேடு ';
 
 $_['text_jane']                     = ' Jane Josphine:';
 $_['text_invite']                   = 'Invited you to join';
