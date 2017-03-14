@@ -290,18 +290,11 @@ class Cart {
 		return $product_data;
 	}
 
-	public function add($product_id, $quantity = 1,$sell_price,$share_price, $customer_id, $isbn, $option = array(), $recurring_id = 0) {
+	public function add($product_id, $quantity = 1,$sell_price,$share_price, $seller_id, $isbn, $option = array(), $recurring_id = 0) {
 
 		
 
-		if(!empty($sell_price||$share_price)){
-
-			$this->db->query("INSERT " . DB_PREFIX . "cart SET api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "', customer_id = '" . (int)$this->customer->getId() . "', session_id = '" . $this->db->escape($this->session->getId()) . "', product_id = '" . (int)$product_id . "', recurring_id = '" . (int)$recurring_id . "', `option` = '" . $this->db->escape(json_encode($option)) . "', quantity = '" . (int)$quantity . "', sell_price = '".$sell_price."',share_price = '".$share_price."', seller_id='".$customer_id."',  date_added = NOW()");
-
-			$this->db->query("UPDATE mylibrary SET status = 'sold' WHERE customer_id = '".$customer_id."' AND isbn = '".$isbn."'");
-
-
-		}else{
+		if(empty($seller_id)){
 
 			$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "cart WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "' AND product_id = '" . (int)$product_id . "' AND recurring_id = '" . (int)$recurring_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
 
@@ -310,6 +303,19 @@ class Cart {
 			} else {
 			$this->db->query("UPDATE " . DB_PREFIX . "cart SET quantity = (quantity + " . (int)$quantity . ") WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "' AND product_id = '" . (int)$product_id . "' AND recurring_id = '" . (int)$recurring_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
 			}
+
+			
+
+
+		}else{
+
+			$this->db->query("INSERT " . DB_PREFIX . "cart SET api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "', customer_id = '" . (int)$this->customer->getId() . "', session_id = '" . $this->db->escape($this->session->getId()) . "', product_id = '" . (int)$product_id . "', recurring_id = '" . (int)$recurring_id . "', `option` = '" . $this->db->escape(json_encode($option)) . "', quantity = '" . (int)$quantity . "', sell_price = '".$sell_price."',share_price = '".$share_price."', seller_id='".$seller_id."',  date_added = NOW()");
+
+			$this->db->query("UPDATE mylibrary SET status = 'sold' WHERE customer_id = '".$seller_id."' AND isbn = '".$isbn."'");
+
+
+
+			
 
 		}
 
@@ -321,8 +327,28 @@ class Cart {
 		$this->db->query("UPDATE " . DB_PREFIX . "cart SET quantity = '" . (int)$quantity . "' WHERE cart_id = '" . (int)$cart_id . "' AND api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
 	}
 
-	public function remove($cart_id) {
+	public function remove($cart_id,$seller_id) {
+
+	if(empty($seller_id)){
+
+			$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE cart_id = '" . (int)$cart_id . "' AND api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+ 
+
+		}else{
+
+
+		$product_id = $this->db->query("SELECT product_id FROM oc_cart WHERE cart_id = '" . (int)$cart_id . "'");
+
+		$ISBN = $this->db->query("SELECT model FROM oc_product WHERE product_id = '" . $product_id->row['product_id'] . "'");
+
 		$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE cart_id = '" . (int)$cart_id . "' AND api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+
+		
+
+		$this->db->query("UPDATE mylibrary SET status = '' WHERE customer_id = '".$seller_id."' AND isbn = '".$ISBN->row['model']."'");
+
+
+		}
 	}
 
 	public function clear() {

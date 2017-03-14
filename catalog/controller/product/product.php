@@ -160,12 +160,9 @@ class ControllerProductProduct extends Controller {
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
-
-
-
 		$isbn = $this->model_catalog_product->getProductBestPrices($this->request->get['product_id']);
 
-			$data['seller_prices'] = array();
+		$data['seller_prices'] = array();
 
 			foreach($isbn as $ISBN){
 
@@ -177,11 +174,11 @@ class ControllerProductProduct extends Controller {
 			
 			if($customer_prices){
 
-					$first_element = array_values($customer_prices)[0];
+					$lowest_customer_price = array_values($customer_prices)[0];
 
 			}else{
 
-				$first_element = '';
+					$lowest_customer_price = '';
 
 			}
 			
@@ -197,10 +194,6 @@ class ControllerProductProduct extends Controller {
 				);
 
 			}
-
-
-
-
 
 		if ($product_info) {
 			$url = '';
@@ -354,35 +347,36 @@ class ControllerProductProduct extends Controller {
 			}
 
 
-		if($first_element && $product_info['price']==0.0000){
+			if($lowest_customer_price && $product_info['price']==0.0000){
 
 					 
 
-					$data['price'] =$this->currency->format($this->tax->calculate($first_element['sell_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$data['price'] =$this->currency->format($this->tax->calculate($lowest_customer_price['sell_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 
-								if ((float)$product_info['special']) {
-				$data['special'] = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-			} else {
-				$data['special'] = false;
-			}
+				if ((float)$product_info['special']) {
+					$data['special'] = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				} else {
+					$data['special'] = false;
+				}
 
-			if ($this->config->get('config_tax')) {
-				$data['tax'] = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);
-			} else {
-				$data['tax'] = false;
-			}
+				if ($this->config->get('config_tax')) {
+					$data['tax'] = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);
+				} else {
+					$data['tax'] = false;
+				}
 
-			$discounts = $this->model_catalog_product->getProductDiscounts($this->request->get['product_id']);
+				$discounts = $this->model_catalog_product->getProductDiscounts($this->request->get['product_id']);
 
-			$data['discounts'] = array();
+				$data['discounts'] = array();
 
-			foreach ($discounts as $discount) {
-				$data['discounts'][] = array(
-					'quantity' => $discount['quantity'],
-					'price'    => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
-				);
-			}
+				foreach ($discounts as $discount) {
+					$data['discounts'][] = array(
+						'quantity' => $discount['quantity'],
+						'price'    => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
+					);
+				}
 
+<<<<<<< HEAD
 
 			$isbn = $this->model_catalog_product->getProductBestPrices($this->request->get['product_id']);
 
@@ -391,10 +385,16 @@ class ControllerProductProduct extends Controller {
 			
 		
 			$data['selected_price'] = $this->url->link('product/product/selectedPrice','',true);
+=======
 
-			$data['options'] = array();
+				$isbn = $this->model_catalog_product->getProductBestPrices($this->request->get['product_id']);
 
-			foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
+				$data['selected_price'] = $this->url->link('product/product/selectedPrice','',true);
+>>>>>>> a5d53604272d2093b0b926312755c3b2f6d179e0
+
+				$data['options'] = array();
+
+				foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
 				$product_option_value_data = array();
 
 				foreach ($option['product_option_value'] as $option_value) {
@@ -412,10 +412,11 @@ class ControllerProductProduct extends Controller {
 							'image'                   => $this->model_tool_image->resize($option_value['image'], 50, 50),
 							'price'                   => $price,
 							'price_prefix'            => $option_value['price_prefix']
-						);
+							);
+						}
 					}
-				}
 
+<<<<<<< HEAD
 				$data['options'][] = array(
 					'product_option_id'    => $option['product_option_id'],
 					'product_option_value' => $product_option_value_data,
@@ -427,120 +428,133 @@ class ControllerProductProduct extends Controller {
 				);
 			}
 
+=======
+					$data['options'][] = array(
+						'product_option_id'    => $option['product_option_id'],
+						'product_option_value' => $product_option_value_data,
+						'option_id'            => $option['option_id'],
+						'name'                 => $option['name'],
+						'type'                 => $option['type'],
+						'value'                => $option['value'],
+						'required'             => $option['required']
+						);
+				}
+ 
+>>>>>>> a5d53604272d2093b0b926312755c3b2f6d179e0
 
-			if ($product_info['minimum']) {
-				$data['minimum'] = $product_info['minimum'];
-			} else {
-				$data['minimum'] = 1;
-			}
+				if ($product_info['minimum']) {
+					$data['minimum'] = $product_info['minimum'];
+				} else {
+					$data['minimum'] = 1;
+				}
 
-			$data['review_status'] = $this->config->get('config_review_status');
+				$data['review_status'] = $this->config->get('config_review_status');
 
-			if ($this->config->get('config_review_guest') || $this->customer->isLogged()) {
-				$data['review_guest'] = true;
-			} else {
-				$data['review_guest'] = false;
-			}
+				if ($this->config->get('config_review_guest') || $this->customer->isLogged()) {
+					$data['review_guest'] = true;
+				} else {
+					$data['review_guest'] = false;
+				}
 
-			if ($this->customer->isLogged()) {
-				$data['customer_name'] = $this->customer->getFirstName() . '&nbsp;' . $this->customer->getLastName();
-			} else {
-				$data['customer_name'] = '';
-			}
+				if ($this->customer->isLogged()) {
+					$data['customer_name'] = $this->customer->getFirstName() . '&nbsp;' . $this->customer->getLastName();
+				} else {
+					$data['customer_name'] = '';
+				}
 
-			$data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
-			$data['rating'] = (int)$product_info['rating'];
+				$data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
+				$data['rating'] = (int)$product_info['rating'];
 
-			// Captcha
-			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('review', (array)$this->config->get('config_captcha_page'))) {
-				$data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha'));
-			} else {
-				$data['captcha'] = '';
-			}
+				// Captcha
+				if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('review', (array)$this->config->get('config_captcha_page'))) {
+					$data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha'));
+				} else {
+					$data['captcha'] = '';
+				}
 
-			$data['share'] = $this->url->link('product/product', 'product_id=' . (int)$this->request->get['product_id']);
+				$data['share'] = $this->url->link('product/product', 'product_id=' . (int)$this->request->get['product_id']);
 
-			$data['attribute_groups'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
+				$data['attribute_groups'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
 
-			$data['products'] = array();
+				$data['products'] = array();
 
-			$results = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
+				$results = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
 			 
 
-			foreach ($results as $result) {
-				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
-				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
-				}
+				foreach ($results as $result) {
+					if ($result['image']) {
+						$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
+					} else {
+						$image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
+					}
 
-				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				} else {
-					$price = false;
-				}
+					if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+						$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					} else {
+						$price = false;
+					}
 
-				if ((float)$result['special']) {
-					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				} else {
-					$special = false;
-				}
+					if ((float)$result['special']) {
+						$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					} else {
+						$special = false;
+					}
 
-				if ($this->config->get('config_tax')) {
-					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
-				} else {
-					$tax = false;
-				}
+					if ($this->config->get('config_tax')) {
+						$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
+					} else {
+						$tax = false;
+					}
 
-				if ($this->config->get('config_review_status')) {
-					$rating = (int)$result['rating'];
-				} else {
-					$rating = false;
-				}
+					if ($this->config->get('config_review_status')) {
+						$rating = (int)$result['rating'];
+					} else {
+						$rating = false;
+					}	
 
-				$data['products'][] = array(
-					'product_id'  => $result['product_id'],
-					'thumb'       => $image,
-					'name'        => $result['name'],
-					'author'      => $author,
-					'publisher'   => $publisher,
-					'cover_type'  => $cover_type,
-					'no_of_pages' => $no_of_pages,
-					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
-					'price'       => $price,
-					'special'     => $special,
-					'tax'         => $tax,
-					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
-				);
-			}
-
-			$data['tags'] = array();
-
-			if ($product_info['tag']) {
-				$tags = explode(',', $product_info['tag']);
-
-				foreach ($tags as $tag) {
-					$data['tags'][] = array(
-						'tag'  => trim($tag),
-						'href' => $this->url->link('product/search', 'tag=' . trim($tag))
+					$data['products'][] = array(
+						'product_id'  => $result['product_id'],
+						'thumb'       => $image,
+						'name'        => $result['name'],
+						'author'      => $author,
+						'publisher'   => $publisher,
+						'cover_type'  => $cover_type,
+						'no_of_pages' => $no_of_pages,
+						'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
+						'price'       => $price,
+						'special'     => $special,
+						'tax'         => $tax,
+						'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
+						'rating'      => $rating,
+						'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 					);
-				}
-			}
+					}
 
-			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
+					$data['tags'] = array();
 
-			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
+					if ($product_info['tag']) {
+						$tags = explode(',', $product_info['tag']);
 
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
-			$data['footer'] = $this->load->controller('common/footer');
-			$data['header'] = $this->load->controller('common/header');
+					foreach ($tags as $tag) {
+						$data['tags'][] = array(
+							'tag'  => trim($tag),
+							'href' => $this->url->link('product/search', 'tag=' . trim($tag))
+							);
+						}
+					}
 
-			$this->response->setOutput($this->load->view('product/product_custom', $data));
+					$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
+
+					$this->model_catalog_product->updateViewed($this->request->get['product_id']);
+
+					$data['column_left'] = $this->load->controller('common/column_left');
+					$data['column_right'] = $this->load->controller('common/column_right');
+					$data['content_top'] = $this->load->controller('common/content_top');
+					$data['content_bottom'] = $this->load->controller('common/content_bottom');
+					$data['footer'] = $this->load->controller('common/footer');
+					$data['header'] = $this->load->controller('common/header');
+
+					$this->response->setOutput($this->load->view('product/product_custom', $data));
 			}else{
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
@@ -551,54 +565,52 @@ class ControllerProductProduct extends Controller {
 
 							if ((float)$product_info['special']) {
 				$data['special'] = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-			} else {
-				$data['special'] = false;
-			}
-
-			if ($this->config->get('config_tax')) {
-				$data['tax'] = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);
-			} else {
-				$data['tax'] = false;
-			}
-
-			$discounts = $this->model_catalog_product->getProductDiscounts($this->request->get['product_id']);
-
-			$data['discounts'] = array();
-
-			foreach ($discounts as $discount) {
-				$data['discounts'][] = array(
-					'quantity' => $discount['quantity'],
-					'price'    => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
-				);
-			}
-
-			
-		
-			$data['selected_price'] = $this->url->link('product/product/selectedPrice','',true);
-
-			$data['options'] = array();
-
-			foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
-				$product_option_value_data = array();
-
-				foreach ($option['product_option_value'] as $option_value) {
-					if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
-						if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_value['price']) {
-							$price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false), $this->session->data['currency']);
-						} else {
-							$price = false;
-						}
-
-						$product_option_value_data[] = array(
-							'product_option_value_id' => $option_value['product_option_value_id'],
-							'option_value_id'         => $option_value['option_value_id'],
-							'name'                    => $option_value['name'],
-							'image'                   => $this->model_tool_image->resize($option_value['image'], 50, 50),
-							'price'                   => $price,
-							'price_prefix'            => $option_value['price_prefix']
-						);
-					}
+				} else {
+					$data['special'] = false;
 				}
+
+				if ($this->config->get('config_tax')) {
+					$data['tax'] = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);
+				} else {
+					$data['tax'] = false;
+				}
+
+					$discounts = $this->model_catalog_product->getProductDiscounts($this->request->get['product_id']);
+
+					$data['discounts'] = array();
+
+				foreach ($discounts as $discount) {
+						$data['discounts'][] = array(
+						'quantity' => $discount['quantity'],
+						'price'    => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
+					);
+				}
+
+				$data['selected_price'] = $this->url->link('product/product/selectedPrice','',true);
+
+				$data['options'] = array();
+
+				foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
+					$product_option_value_data = array();
+
+					foreach ($option['product_option_value'] as $option_value) {
+						if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
+							if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_value['price']) {
+								$price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false), $this->session->data['currency']);
+							} else {
+								$price = false;
+							}
+
+							$product_option_value_data[] = array(
+								'product_option_value_id' => $option_value['product_option_value_id'],
+								'option_value_id'         => $option_value['option_value_id'],
+								'name'                    => $option_value['name'],
+								'image'                   => $this->model_tool_image->resize($option_value['image'], 50, 50),
+								'price'                   => $price,
+								'price_prefix'            => $option_value['price_prefix']
+							);
+						}
+					}
 
 				$data['options'][] = array(
 					'product_option_id'    => $option['product_option_id'],
@@ -608,78 +620,78 @@ class ControllerProductProduct extends Controller {
 					'type'                 => $option['type'],
 					'value'                => $option['value'],
 					'required'             => $option['required']
-				);
-			}
+					);
+				}
 
-			if ($product_info['minimum']) {
-				$data['minimum'] = $product_info['minimum'];
-			} else {
-				$data['minimum'] = 1;
-			}
+				if ($product_info['minimum']) {
+					$data['minimum'] = $product_info['minimum'];
+				} else {
+					$data['minimum'] = 1;
+				}
 
-			$data['review_status'] = $this->config->get('config_review_status');
+				$data['review_status'] = $this->config->get('config_review_status');
 
-			if ($this->config->get('config_review_guest') || $this->customer->isLogged()) {
-				$data['review_guest'] = true;
-			} else {
-				$data['review_guest'] = false;
-			}
+				if ($this->config->get('config_review_guest') || $this->customer->isLogged()) {
+					$data['review_guest'] = true;
+				} else {
+					$data['review_guest'] = false;
+				}
 
-			if ($this->customer->isLogged()) {
-				$data['customer_name'] = $this->customer->getFirstName() . '&nbsp;' . $this->customer->getLastName();
-			} else {
-				$data['customer_name'] = '';
-			}
+				if ($this->customer->isLogged()) {
+					$data['customer_name'] = $this->customer->getFirstName() . '&nbsp;' . $this->customer->getLastName();
+				} else {
+					$data['customer_name'] = '';
+				}
 
-			$data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
-			$data['rating'] = (int)$product_info['rating'];
+				$data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
+				$data['rating'] = (int)$product_info['rating'];
 
-			// Captcha
-			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('review', (array)$this->config->get('config_captcha_page'))) {
-				$data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha'));
-			} else {
-				$data['captcha'] = '';
-			}
+				// Captcha
+				if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('review', (array)$this->config->get('config_captcha_page'))) {
+					$data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha'));
+				} else {
+					$data['captcha'] = '';
+				}
 
-			$data['share'] = $this->url->link('product/product', 'product_id=' . (int)$this->request->get['product_id']);
+				$data['share'] = $this->url->link('product/product', 'product_id=' . (int)$this->request->get['product_id']);
 
-			$data['attribute_groups'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
+				$data['attribute_groups'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
 
-			$data['products'] = array();
+				$data['products'] = array();
 
-			$results = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
+				$results = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
 			 
 
-			foreach ($results as $result) {
-				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
-				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
-				}
+				foreach ($results as $result) {
+					if ($result['image']) {
+						$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
+					} else {
+						$image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
+					}
 
-				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				} else {
-					$price = false;
-				}
+					if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+						$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					} else {
+						$price = false;
+					}
 
-				if ((float)$result['special']) {
-					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				} else {
-					$special = false;
-				}
+					if ((float)$result['special']) {
+						$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					} else {
+						$special = false;
+					}
 
-				if ($this->config->get('config_tax')) {
-					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
-				} else {
-					$tax = false;
-				}
+					if ($this->config->get('config_tax')) {
+						$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
+					} else {
+						$tax = false;
+					}
 
-				if ($this->config->get('config_review_status')) {
-					$rating = (int)$result['rating'];
-				} else {
-					$rating = false;
-				}
+					if ($this->config->get('config_review_status')) {
+						$rating = (int)$result['rating'];
+					} else {
+						$rating = false;
+					}
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
@@ -696,41 +708,39 @@ class ControllerProductProduct extends Controller {
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $rating,
 					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
-				);
-			}
-
-			$data['tags'] = array();
-
-			if ($product_info['tag']) {
-				$tags = explode(',', $product_info['tag']);
-
-				foreach ($tags as $tag) {
-					$data['tags'][] = array(
-						'tag'  => trim($tag),
-						'href' => $this->url->link('product/search', 'tag=' . trim($tag))
 					);
 				}
-			}
 
-			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
+				$data['tags'] = array();
 
-			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
+				if ($product_info['tag']) {
+					$tags = explode(',', $product_info['tag']);
 
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
-			$data['footer'] = $this->load->controller('common/footer');
-			$data['header'] = $this->load->controller('common/header');
+					foreach ($tags as $tag) {
+						$data['tags'][] = array(
+						'tag'  => trim($tag),
+						'href' => $this->url->link('product/search', 'tag=' . trim($tag))
+						);
+					}
+				}
 
-			$this->response->setOutput($this->load->view('product/product', $data));
+				$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
 
-			}
-				
+				$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 
+				$data['column_left'] = $this->load->controller('common/column_left');
+				$data['column_right'] = $this->load->controller('common/column_right');
+				$data['content_top'] = $this->load->controller('common/content_top');
+				$data['content_bottom'] = $this->load->controller('common/content_bottom');
+				$data['footer'] = $this->load->controller('common/footer');
+				$data['header'] = $this->load->controller('common/header');
 
-		} else 
-		{
+				$this->response->setOutput($this->load->view('product/product', $data));
+
+				}
+		
+		} else{ 
+		
 			$url = '';
 
 			if (isset($this->request->get['path'])) {

@@ -530,7 +530,11 @@ public function getPublishers($customer_id)
  public function getSharedbooksFromMyLibrary()
  { 
 
+<<<<<<< HEAD
      $query = $this->db->query("SELECT isbn FROM mylibrary WHERE share_price > 0 AND status!='sold' GROUP BY isbn "); 
+=======
+     $query = $this->db->query("SELECT isbn FROM mylibrary WHERE share_price > 0 AND status != 'sold' GROUP BY isbn "); 
+>>>>>>> a5d53604272d2093b0b926312755c3b2f6d179e0
 
      $shared = array();
 

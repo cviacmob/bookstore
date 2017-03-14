@@ -563,6 +563,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_publisher'] = $this->language->get('entry_publisher');
 		$data['entry_covertype'] = $this->language->get('entry_covertype');
 		$data['entry_pages'] = $this->language->get('entry_pages');
+		$data['entry_sell_price'] = $this->language->get('entry_sell_price');
+		$data['entry_share_price'] = $this->language->get('entry_share_price');
 		 
 		
 
@@ -808,6 +810,22 @@ class ControllerCatalogProduct extends Controller {
 			$data['no_of_pages'] = $product_info['no_of_pages'];
 		} else {
 			$data['no_of_pages'] = '';
+		}
+
+		if (isset($this->request->post['sell_price'])) {
+			$data['sell_price'] = $this->request->post['sell_price'];
+		} elseif (!empty($product_info)) {
+			$data['sell_price'] = $product_info['sell_price'];
+		} else {
+			$data['sell_price'] = '';
+		}
+
+		if (isset($this->request->post['share_price'])) {
+			$data['share_price'] = $this->request->post['share_price'];
+		} elseif (!empty($product_info)) {
+			$data['share_price'] = $product_info['share_price'];
+		} else {
+			$data['share_price'] = '';
 		}
 
 

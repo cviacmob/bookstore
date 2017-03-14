@@ -301,21 +301,21 @@ class ControllerCheckoutCart extends Controller {
 
 			$price = explode("_", $_REQUEST['sell_price']);
 			$sell_price = $price[0];
-			$customer_id = $price[1];
+			$seller_id = $price[1];
 			$share_price = 0;
 
 		} elseif(isset($this->request->post['share_price'])) {
 
 			$price = explode("_", $_REQUEST['share_price']);
 			$share_price = $price[0];
-			$customer_id = $price[1];
+			$seller_id = $price[1];
 			$sell_price = 0;
 			
 		}else {
 
 			$sell_price = 0;
 			$share_price = 0;
-			$customer_id = 0;
+			$seller_id = 0;
 			
 	    }
 
@@ -371,7 +371,7 @@ class ControllerCheckoutCart extends Controller {
 			if (!$json) {
 
 				$isbn = $product_info['model'];
-				$this->cart->add($this->request->post['product_id'], $quantity, $sell_price, $share_price, $customer_id, $isbn, $option, $recurring_id);
+				$this->cart->add($this->request->post['product_id'], $quantity, $sell_price, $share_price, $seller_id, $isbn, $option, $recurring_id);
 
 				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
 
@@ -465,11 +465,20 @@ class ControllerCheckoutCart extends Controller {
 		$this->load->language('checkout/cart');
 
 		$json = array();
-
+ 
 		// Remove
 		if (isset($this->request->post['key'])) {
-			$this->cart->remove($this->request->post['key']);
 
+			$cart_id = $this->request->post['key'];
+
+			$this->load->model('checkout/cart');
+			$this->load->model('catalog/product');
+
+			$seller_id = $this->model_checkout_cart->getSellerID($cart_id);
+
+			$this->cart->remove($this->request->post['key'],$seller_id);
+
+			
 			unset($this->session->data['vouchers'][$this->request->post['key']]);
 
 			$json['success'] = $this->language->get('text_remove');

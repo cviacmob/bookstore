@@ -118,11 +118,21 @@ class ControllerMyCommunitymycommunity extends Controller {
 
       //   $bookresults = $this->model_mycommunity_mycommunity->getrequestedbooks();  
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a5d53604272d2093b0b926312755c3b2f6d179e0
         $data['recommended_image'] = $this->url->link('mycommunity/mycommunity/recommended&group_id=', '', true);
  
       //   $bookresults = $this->model_mycommunity_mycommunity->getrequestedbooks();  
  
+<<<<<<< HEAD
       //   $data['text_requested_books'] = $this->url->link('mycommunity/mycommunity/getrequestedbooks' , '' , true);
+=======
+
+
+//      $data['text_requested_books'] = $this->url->link('mycommunity/mycommunity/getrequestedbooks' , '' , true);
+>>>>>>> a5d53604272d2093b0b926312755c3b2f6d179e0
 
 
         $this->response->setOutput($this->load->view('mycommunity/mycommunity', $data));
